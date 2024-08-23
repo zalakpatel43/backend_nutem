@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.ViewModels;
@@ -15,12 +16,12 @@ namespace Application.Services
         private readonly IWeightCheckRepository _WeightCheckRepository;
         private readonly IWeightCheckDetailsRepository _WeightCheckDetailRepository;
         private readonly IWeightCheckSubDetailsRepository _WeightCheckSubDetailRepository;
-        private readonly IAutoMapperGenericDataMapper _dataMapper;
+        private readonly IMapper _dataMapper;
 
         public WeightCheckService(IWeightCheckRepository weightCheckRepository, 
             IWeightCheckDetailsRepository weightCheckDetailRepository,
             IWeightCheckSubDetailsRepository weightCheckSubDetailRepository,
-            IAutoMapperGenericDataMapper dataMapper)
+            IMapper dataMapper)
         {
             _WeightCheckRepository = weightCheckRepository;
             _WeightCheckDetailRepository = weightCheckDetailRepository;
@@ -29,8 +30,9 @@ namespace Application.Services
         }
         public IQueryable<WeightCheckList> GetAllWeightCheckAsync()
         {
-            var entity = _WeightCheckRepository.Get(m => m.IsActive == true);
-            return _dataMapper.Project<WeightCheck, WeightCheckList>(entity);
+            //var entity = _WeightCheckRepository.Get(m => m.IsActive == true);
+            //return _dataMapper.Map<WeightCheck, WeightCheckList>(entity);
+            throw new NotImplementedException();
         }
 
         public async Task<WeightCheckAddEdit> GetWeightCheckByIdAsync(long id)
@@ -57,7 +59,7 @@ namespace Application.Services
         {
             try
             {
-                    var mappedModel = _dataMapper.Map<WeightCheckAddEdit, WeightCheck>(model);
+                    var mappedModel = _dataMapper.Map<WeightCheck>(model);
                     mappedModel.CreatedBy = userId;
                     mappedModel.CreatedDate = DateTime.Now;
                     mappedModel.ModifiedBy = userId;
@@ -67,50 +69,50 @@ namespace Application.Services
 
                     #region Details
                     mappedModel.WeightCheckDetails.Clear();
-                    foreach (var list in model.WeightCheckDetails)
+                foreach (var list in model.WeightCheckDetails)
+                {
+                    try
                     {
-                        try
+                        WeightCheckDetails det = new WeightCheckDetails();
+                        _dataMapper.Map<WeightCheckDetailsAddEdit, WeightCheckDetails>(list, det);
+
+                        if (list.DoneByUserIdList != null && list.DoneByUserIdList.Count() > 0)
                         {
-                            WeightCheckDetails det = new WeightCheckDetails();
-                            _dataMapper.Map<WeightCheckDetailsAddEdit, WeightCheckDetails>(list, det);
-
-                            if (list.DoneByUserIdList != null && list.DoneByUserIdList.Count() > 0)
-                            {
-                                det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
-                            }
-                            det.HeaderId = mappedModel.Id;
-                            det.CreatedBy = userId;
-                            det.CreatedDate = DateTime.Now;
-                            det.ModifiedBy = userId;
-                            det.ModifiedDate = DateTime.Now;
-                            det.IsActive = true;
-
-                            foreach (var item in list.WeightCheckSubDetails)
-                            {
-                                WeightCheckSubDetails det1 = new WeightCheckSubDetails();
-                                det1.DetailId = det.Id;
-                                det1.Id = 0;
-                                det1.NozzleId = item.NozzleId;
-                                det1.Weight = item.Weight;
-                                det1.CreatedBy = userId;
-                                det1.CreatedDate = DateTime.Now;
-                                det1.ModifiedBy = userId;
-                                det1.ModifiedDate = DateTime.Now;
-                                det1.IsActive = true;
-
-                                det.WeightCheckSubDetails.Add(det1);
-                            }
-
-                            mappedModel.WeightCheckDetails.Add(det);
+                            det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
                         }
-                        catch (Exception ex)
+                        det.HeaderId = mappedModel.Id;
+                        det.CreatedBy = userId;
+                        det.CreatedDate = DateTime.Now;
+                        det.ModifiedBy = userId;
+                        det.ModifiedDate = DateTime.Now;
+                        det.IsActive = true;
+
+                        foreach (var item in list.WeightCheckSubDetails)
                         {
+                            WeightCheckSubDetails det1 = new WeightCheckSubDetails();
+                            det1.DetailId = det.Id;
+                            det1.Id = 0;
+                            det1.NozzleId = item.NozzleId;
+                            det1.Weight = item.Weight;
+                            det1.CreatedBy = userId;
+                            det1.CreatedDate = DateTime.Now;
+                            det1.ModifiedBy = userId;
+                            det1.ModifiedDate = DateTime.Now;
+                            det1.IsActive = true;
+
+                            det.WeightCheckSubDetails.Add(det1);
                         }
+
+                        mappedModel.WeightCheckDetails.Add(det);
                     }
+                    catch (Exception ex)
+                    {
+                    }
+                }
 
-                    #endregion
+                #endregion
 
-                    await _WeightCheckRepository.AddAsync(mappedModel);
+                await _WeightCheckRepository.AddAsync(mappedModel);
                     // await _unitOfWork.Save();
                     return mappedModel.Id;
                 
@@ -155,46 +157,46 @@ namespace Application.Services
                 #region Details
 
                 mappedModel.WeightCheckDetails.Clear();
-                foreach (var list in model.WeightCheckDetails)
-                {
-                    try
-                    {
-                        WeightCheckDetails det = new WeightCheckDetails();
-                        _dataMapper.Map<WeightCheckDetailsAddEdit, WeightCheckDetails>(list, det);
+                //foreach (var list in model.WeightCheckDetails)
+                //{
+                //    try
+                //    {
+                //        WeightCheckDetails det = new WeightCheckDetails();
+                //        _dataMapper.Map<WeightCheckDetailsAddEdit, WeightCheckDetails>(list, det);
 
-                        if (list.DoneByUserIdList != null && list.DoneByUserIdList.Count() > 0)
-                        {
-                            det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
-                        }
-                        det.HeaderId = mappedModel.Id;
-                        det.CreatedBy = userId;
-                        det.CreatedDate = DateTime.Now;
-                        det.ModifiedBy = userId;
-                        det.ModifiedDate = DateTime.Now;
-                        det.IsActive = true;
+                //        if (list.DoneByUserIdList != null && list.DoneByUserIdList.Count() > 0)
+                //        {
+                //            det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
+                //        }
+                //        det.HeaderId = mappedModel.Id;
+                //        det.CreatedBy = userId;
+                //        det.CreatedDate = DateTime.Now;
+                //        det.ModifiedBy = userId;
+                //        det.ModifiedDate = DateTime.Now;
+                //        det.IsActive = true;
 
-                        foreach (var item in list.WeightCheckSubDetails)
-                        {
-                            WeightCheckSubDetails det1 = new WeightCheckSubDetails();
-                            det1.DetailId = det.Id;
-                            det1.Id = 0;
-                            det1.NozzleId = item.NozzleId;
-                            det1.Weight = item.Weight;
-                            det1.CreatedBy = userId;
-                            det1.CreatedDate = DateTime.Now;
-                            det1.ModifiedBy = userId;
-                            det1.ModifiedDate = DateTime.Now;
-                            det1.IsActive = true;
+                //        foreach (var item in list.WeightCheckSubDetails)
+                //        {
+                //            WeightCheckSubDetails det1 = new WeightCheckSubDetails();
+                //            det1.DetailId = det.Id;
+                //            det1.Id = 0;
+                //            det1.NozzleId = item.NozzleId;
+                //            det1.Weight = item.Weight;
+                //            det1.CreatedBy = userId;
+                //            det1.CreatedDate = DateTime.Now;
+                //            det1.ModifiedBy = userId;
+                //            det1.ModifiedDate = DateTime.Now;
+                //            det1.IsActive = true;
 
-                            det.WeightCheckSubDetails.Add(det1);
-                        }
+                //            det.WeightCheckSubDetails.Add(det1);
+                //        }
 
-                        mappedModel.WeightCheckDetails.Add(det);
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
+                //        mappedModel.WeightCheckDetails.Add(det);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //    }
+                //}
 
                 #endregion
 

@@ -9,10 +9,10 @@ namespace Domain.ViewModels
     
     public class WeightCheckSubDetailsAddEdit
     {
-        public WeightCheckSubDetailsAddEdit()
-        {
+        //public WeightCheckSubDetailsAddEdit()
+        //{
 
-        }
+        //}
         public long Id { get; set; }
         public long? DetailId { get; set; }
         public long? NozzleId { get; set; }

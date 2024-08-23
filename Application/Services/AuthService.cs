@@ -25,7 +25,7 @@ namespace Application.Services
         public async Task<LoginResponse> LoginAsync(string username, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent: false, lockoutOnFailure: false);
-
+             
             var response = new LoginResponse();
             if (result.Succeeded)
             {

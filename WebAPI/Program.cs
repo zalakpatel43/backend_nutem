@@ -59,15 +59,18 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+
 // Configure AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Register application services
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-builder.Services.AddScoped<IAutoMapperGenericDataMapper, AutoMapperGenericDataMapper>();
+builder.Services.AddTransient<IAutoMapperGenericDataMapper, AutoMapperGenericDataMapper>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<INozzleMasterRepository, NozzleMasterRepository>();

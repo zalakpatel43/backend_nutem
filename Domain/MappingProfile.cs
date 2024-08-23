@@ -20,8 +20,9 @@ namespace Domain
             CreateMap<ShiftMaster, ShiftMasterList>();
             CreateMap<WeightCheck, WeightCheckList>();
             CreateMap<WeightCheck, WeightCheckAddEdit>();
-            CreateMap<WeightCheckAddEdit, WeightCheck>();
-            CreateMap<WeightCheckDetailsAddEdit, WeightCheckDetails>();
+            CreateMap<WeightCheckAddEdit, WeightCheck>().ReverseMap();
+            CreateMap<WeightCheckDetailsAddEdit, WeightCheckDetails>().ReverseMap();
+            CreateMap<WeightCheckSubDetailsAddEdit, WeightCheckSubDetails>().ReverseMap();
         }
     }
 }

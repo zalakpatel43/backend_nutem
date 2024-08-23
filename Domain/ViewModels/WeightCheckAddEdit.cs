@@ -8,10 +8,10 @@ namespace Domain.ViewModels
 {
     public class WeightCheckAddEdit
     {
-        public WeightCheckAddEdit()
-        {
-            this.WeightCheckDetails = new List<WeightCheckDetailsAddEdit>();
-        }
+       // public WeightCheckAddEdit()
+       // {
+            //this.WeightCheckDetails = new List<WeightCheckDetailsAddEdit>();
+       // }
         public long Id { get; set; }
         public string Code { get; set; }
         public DateTime? StartDateTime { get; set; }
@@ -22,15 +22,15 @@ namespace Domain.ViewModels
         public long? ShiftId { get; set; }
         public string BottleDateCode { get; set; }
         public string PackSize { get; set; }
-        public string TargetWeight { get; set; }
+        public string? TargetWeight { get; set; }
         public decimal? MinWeightRange { get; set; }
         public decimal? MaxWeightRange { get; set; }
         public long? QAUserId { get; set; }
         public string Note { get; set; }
         public bool? IsActive { get; set; }
-      //  public string ShiftName { get; set; }
+        //  public string ShiftName { get; set; }
 
-        public List<WeightCheckDetailsAddEdit> WeightCheckDetails { get; set; }
+        public List<WeightCheckDetailsAddEdit> WeightCheckDetails { get; set; } = new List<WeightCheckDetailsAddEdit>();
 
 
         public string StartDT
