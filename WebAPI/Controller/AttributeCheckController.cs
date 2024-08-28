@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
             return Ok(data);
         }
 
-        [HttpGet("GetByIdAsync/{id}")]
+        [HttpGet("GetByIdAsync")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var data = await _attributeCheckService.GetAttributeCheckByIdAsync(id);
@@ -50,12 +50,12 @@ namespace WebAPI.Controllers
             return Ok(data);
         }
 
-        [HttpDelete("Delete/{Id}")]
-        public async Task<IActionResult> Delete(long Id)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(long id)
         {
             long userId = User.Identity.GetUserId();
 
-            await _attributeCheckService.DeleteAttributeCheckAsync(Id, userId);
+            await _attributeCheckService.DeleteAttributeCheckAsync(id, userId);
             return NoContent();
         }
     }
