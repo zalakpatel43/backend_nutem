@@ -23,6 +23,11 @@ namespace Domain
             CreateMap<WeightCheckAddEdit, WeightCheck>().ReverseMap();
             CreateMap<WeightCheckDetailsAddEdit, WeightCheckDetails>().ReverseMap();
             CreateMap<WeightCheckSubDetailsAddEdit, WeightCheckSubDetails>().ReverseMap();
+            CreateMap<AttributeCheck, AttributeCheckList>();
+            CreateMap<AttributeCheck, AttributeCheckAddEdit>();
+            CreateMap<AttributeCheckAddEdit, AttributeCheck>().ReverseMap();
+            CreateMap<AttributeCheckDetails, AttributeCheckDetailsAddEdit>();
+            CreateMap<AttributeCheckDetailsAddEdit, AttributeCheckDetails>().ReverseMap();
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
                .ConvertUsing(typeof(PaginatedListConverter<,>));
         }

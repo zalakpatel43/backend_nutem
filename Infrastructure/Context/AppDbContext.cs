@@ -11,11 +11,13 @@ namespace Infrastructure.Context
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermissionMap> RolePermissionMaps { get; set; }
         public DbSet<WeightCheck> WeightCheck { get; set; }
+        public DbSet<AttributeCheck> AttributeCheck { get; set; }
         public DbSet<ProductionOrder> ProductionOrder { get; set; }
         public DbSet<ProductMaster> ProductMaster { get; set; }
         public DbSet<ShiftMaster> ShiftMaster { get; set; }
         public DbSet<WeightCheckDetails> WeightCheckDetails { get; set; }
         public DbSet<WeightCheckSubDetails> WeightCheckSubDetails { get; set; }
+        public DbSet<AttributeCheckDetails> AttributeCheckDetails { get; set; }
         public DbSet<NozzelMaster> NozzelMaster { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -59,6 +61,33 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<WeightCheck>()
                 .ToTable("adm_WeightCheckHeader");
+            modelBuilder.Entity<AttributeCheck>()
+               .HasKey(ac => ac.Id);
+
+            modelBuilder.Entity<AttributeCheck>()
+                .HasOne(ac => ac.ProductionOrder)
+                .WithMany(po => po.AttributeCheck)
+                .HasForeignKey(ac => ac.ProductionOrderId);
+
+            modelBuilder.Entity<AttributeCheck>()
+                .HasOne(ac => ac.ProductMaster)
+                .WithMany(pm => pm.AttributeCheck)
+                .HasForeignKey(ac => ac.ProductId);
+
+            modelBuilder.Entity<AttributeCheck>()
+                .ToTable("adm_AttributeCheckHeader");
+            // AttributeCheckDetails entity configuration
+            modelBuilder.Entity<AttributeCheckDetails>()
+                .HasKey(acd => acd.Id);
+
+            modelBuilder.Entity<AttributeCheckDetails>()
+                .HasOne(acd => acd.AttributeCheck)
+                .WithMany(ac => ac.AttributeCheckDetails)
+                .HasForeignKey(acd => acd.HeaderId);
+
+            modelBuilder.Entity<AttributeCheckDetails>()
+                .ToTable("adm_AttributeCheckDetails");
+
 
             modelBuilder.Entity<ProductionOrder>()
                 .HasKey(po => po.Id);

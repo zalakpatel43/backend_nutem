@@ -85,6 +85,10 @@ builder.Services.AddScoped<IWeightCheckDetailsRepository, WeightCheckDeatilsRepo
 builder.Services.AddScoped<IWeightCheckSubDetailsRepository, WeightCheckSubDeatilsRepository>();
 builder.Services.AddScoped<IWeightCheckRepository, WeightCheckRepository>();
 builder.Services.AddScoped<IWeightCheckService, WeightCheckService>();
+builder.Services.AddScoped<IAttributeCheckRepository, AttributeCheckRepository>();
+builder.Services.AddScoped<IAttributeCheckDetailsRepository, AttributeCheckDetailsRepository>();
+builder.Services.AddScoped<IAttributeCheckService, AttributeCheckService>();
+
 
 // Register generic and specific repositories
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
