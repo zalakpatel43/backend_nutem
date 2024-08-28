@@ -4,6 +4,7 @@ using Application.Services;
 using Domain.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Controller
 {
@@ -41,7 +42,7 @@ namespace WebAPI.Controller
             return Ok(data);
         }
 
-        [HttpGet("GetByIdAsync/{id}")]
+        [HttpGet("GetByIdAsync")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var data = await _weightCheckService.GetWeightCheckByIdAsync(id);
@@ -50,7 +51,7 @@ namespace WebAPI.Controller
             return Ok(data);
         }
 
-        [HttpGet("Delete/{Id}")]
+        [HttpGet("DeleteWeightCheck")]
         public async Task<IActionResult> Delete(long Id)
         {
             long userId = User.Identity.GetUserId();

@@ -10,10 +10,10 @@ namespace Domain.Entities
     [Table("adm_WeightCheckHeader")]
     public class WeightCheck : BaseAuditable
     {
-        public WeightCheck()
-        {
-            this.WeightCheckDetails = new List<WeightCheckDetails>();
-        }
+        //public WeightCheck()
+        //{
+        //    this.WeightCheckDetails = new List<WeightCheckDetails>();
+        //}
 
         public string Code { get; set; }
         public DateTime? StartDateTime { get; set; }

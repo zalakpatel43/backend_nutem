@@ -16,5 +16,6 @@ namespace Domain.ViewModels
         public long? ProductId { get; set; }
         public string ProductName { get; set; }
         public long? ShiftId { get; set; }
+        public string ShiftName { get; set; }
     }
 }
