@@ -6,8 +6,7 @@ namespace Domain.ViewModels
     {
         public long Id { get; set; }
         public string Code { get; set; }
-        public DateTime? StartDateTime { get; set; }
-        public DateTime? EndDateTime { get; set; }
+        public DateTime? ACDate { get; set; } // Changed from StartDateTime and EndDateTime to a single ACDate
         public long? ProductionOrderId { get; set; }
         public long? ProductId { get; set; }
         public string ProductName { get; set; }
