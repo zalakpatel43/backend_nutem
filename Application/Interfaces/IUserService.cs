@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.ViewModels;
 
 namespace Application.Interfaces
 {
@@ -9,9 +10,12 @@ namespace Application.Interfaces
     {
         Task<User> GetUserByIdAsync(string id);  // Updated to User
         Task<IEnumerable<User>> GetAllUsersAsync();
+
         Task CreateUserAsync(User user);  // Updated to User
         Task UpdateUserAsync(User user);  // Updated to User
         Task DeleteUserAsync(string id);
+
+        Task<PaginatedList<User>> GetPagedUsersAsync(int pageIndex, int pageSize);
 
         Task<User> GetUserByEmailAsync(string email);  // Updated to User
         Task<IdentityResult> AssignRoleToUserAsync(User user, string role);  // Updated to User
@@ -28,5 +32,6 @@ namespace Application.Interfaces
 
         Task<bool> IsUserActiveAsync(string id);  // Existing
         Task SetUserActiveStatusAsync(string id, bool isActive);  // Existing
+
     }
 }

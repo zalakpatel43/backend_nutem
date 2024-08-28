@@ -36,6 +36,29 @@ namespace Domain
 
             CreateMap<WeightCheckSubDetails, WeightCheckSubDetailsAddEdit>()
                 .ReverseMap();
+            CreateMap<AttributeCheck, AttributeCheckList>();
+            CreateMap<AttributeCheck, AttributeCheckAddEdit>();
+            CreateMap<AttributeCheckAddEdit, AttributeCheck>().ReverseMap();
+            CreateMap<AttributeCheckDetails, AttributeCheckDetailsAddEdit>();
+            CreateMap<AttributeCheckDetailsAddEdit, AttributeCheckDetails>().ReverseMap();
+            CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
+               .ConvertUsing(typeof(PaginatedListConverter<,>));
+        }
+
+        public class PaginatedListConverter<TSource, TDestination> : ITypeConverter<PaginatedList<TSource>, PaginatedList<TDestination>>
+        {
+            private readonly IMapper _mapper;
+
+            public PaginatedListConverter(IMapper mapper)
+            {
+                _mapper = mapper;
+            }
+
+            public PaginatedList<TDestination> Convert(PaginatedList<TSource> source, PaginatedList<TDestination> destination, ResolutionContext context)
+            {
+                var mappedItems = _mapper.Map<List<TDestination>>(source.Items);
+                return new PaginatedList<TDestination>(mappedItems, source.TotalCount, source.PageNumber, source.PageSize);
+            }
         }
     }
 }

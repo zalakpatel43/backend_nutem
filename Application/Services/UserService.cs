@@ -136,5 +136,17 @@ namespace Application.Services
                 await _userManager.UpdateAsync(user);
             }
         }
+
+        public async Task<PaginatedList<User>> GetPagedUsersAsync(int pageIndex, int pageSize)
+        {
+            var query = _userManager.Users.Where(user => user.IsActive);
+            var totalCount = await query.CountAsync();
+            var users = await query
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PaginatedList<User>(users, totalCount, pageIndex, pageSize);
+        }
     }
 }
