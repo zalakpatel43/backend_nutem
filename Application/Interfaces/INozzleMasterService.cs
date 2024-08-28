@@ -9,7 +9,9 @@ namespace Application.Interfaces
 {
     public interface INozzleMasterService
     {
-        IQueryable<NozzleMasterList> GetAllNozzleMasterAsync();
+        //IQueryable<NozzleMasterList> GetAllNozzleMasterAsync();
+        Task<PaginatedList<NozzleMasterList>> GetAllNozzleMasterAsync(PaginationRequest paginationRequest);
+
         //Task<WeightCheckAddEdit> GetWeightCheckByIdAsync(long id);
         //Task<long> AddWeightCheckAsync(WeightCheckAddEdit model, Guid user);
         //Task<long> UpdateWeightCheckAsync(WeightCheckAddEdit model, Guid user);

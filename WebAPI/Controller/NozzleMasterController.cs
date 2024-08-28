@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Services;
+using Domain.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,15 @@ namespace WebAPI.Controller
         }
 
         [HttpGet("GetAllNozzle")]
-        public async Task<IActionResult> GetAllNozzle()
+        public async Task<IActionResult> GetAllNozzle([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
         {
-            var data = _nozzleMasterService.GetAllNozzleMasterAsync();
+            var paginationRequest = new PaginationRequest
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var data = await _nozzleMasterService.GetAllNozzleMasterAsync(paginationRequest);
             return Ok(data);
         }
     }

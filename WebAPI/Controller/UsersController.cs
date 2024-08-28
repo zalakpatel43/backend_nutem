@@ -258,5 +258,17 @@ namespace WebAPI.Controllers
             await _userService.SetUserActiveStatusAsync(id, isActive);
             return NoContent();
         }
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
+        {
+            if (pageIndex < 1 || pageSize < 1)
+            {
+                return BadRequest("Page index and page size must be greater than zero.");
+            }
+
+            var paginatedUsers = await _userService.GetPagedUsersAsync(pageIndex, pageSize);
+            return Ok(paginatedUsers);
+        }
+
     }
 }
