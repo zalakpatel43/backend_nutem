@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ namespace Domain.Interfaces
   
     public interface IWeightCheckRepository : IGenericRepository<WeightCheck>
     {
-        // Add methods specific to Company if needed
+       
+        IQueryable<WeightCheck> GetAllWeightChecksWithProduct();
+
+        Task<WeightCheck> GetByIdAsync(long id);
     }
 }

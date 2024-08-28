@@ -26,5 +26,7 @@ namespace Domain.Entities
         //public virtual ICollection<LiquidPreparationEntity> LiquidPreparationEntities { get; set; }
         //public virtual ICollection<PalletPackingEntity> PalletPackingEntities { get; set; }
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
+
+        public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
     }
 }

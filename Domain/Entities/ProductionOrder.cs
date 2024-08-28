@@ -17,6 +17,7 @@ namespace Domain.Entities
             //this.PostCheckListEntities = new List<PostCheckListEntity>();
             //this.PreCheckListEntities = new List<PreCheckListEntity>();
             this.WeightCheck = new List<WeightCheck>();
+            this.AttributeCheck = new List<AttributeCheck>();
             //this.AttributeCheckEntities = new List<AttributeCheckEntity>();
         }
         public string Code { get; set; }
@@ -34,6 +35,7 @@ namespace Domain.Entities
         //public virtual ICollection<PostCheckListEntity> PostCheckListEntities { get; set; }
         //public virtual ICollection<PreCheckListEntity> PreCheckListEntities { get; set; }
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
+        public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheckEntities { get; set; }
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrackingEntities { get; set; }
     }

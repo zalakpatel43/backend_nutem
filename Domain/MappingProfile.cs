@@ -26,6 +26,24 @@ namespace Domain
             CreateMap<WeightCheckAddEdit, WeightCheck>().ReverseMap();
             CreateMap<WeightCheckDetailsAddEdit, WeightCheckDetails>().ReverseMap();
             CreateMap<WeightCheckSubDetailsAddEdit, WeightCheckSubDetails>().ReverseMap();
+            CreateMap<WeightCheck, WeightCheckList>()
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.ShiftMaster.ShiftName));
+
+            CreateMap<WeightCheck, WeightCheckAddEdit>()
+            .ForMember(dest => dest.WeightCheckDetails, opt => opt.MapFrom(src => src.WeightCheckDetails))
+            .ReverseMap();
+
+            CreateMap<WeightCheckDetails, WeightCheckDetailsAddEdit>()
+                .ForMember(dest => dest.WeightCheckSubDetails, opt => opt.MapFrom(src => src.WeightCheckSubDetails))
+                .ReverseMap();
+
+            CreateMap<WeightCheckSubDetails, WeightCheckSubDetailsAddEdit>()
+                .ReverseMap();
+            CreateMap<AttributeCheck, AttributeCheckList>();
+            CreateMap<AttributeCheck, AttributeCheckAddEdit>();
+            CreateMap<AttributeCheckAddEdit, AttributeCheck>().ReverseMap();
+            CreateMap<AttributeCheckDetails, AttributeCheckDetailsAddEdit>();
+            CreateMap<AttributeCheckDetailsAddEdit, AttributeCheckDetails>().ReverseMap();
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
                .ConvertUsing(typeof(PaginatedListConverter<,>));
         }
