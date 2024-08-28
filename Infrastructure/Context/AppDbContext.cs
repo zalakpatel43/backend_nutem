@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Skyward.Model;
 
 namespace Infrastructure.Context
 {
@@ -14,6 +15,8 @@ namespace Infrastructure.Context
         public DbSet<ProductionOrder> ProductionOrder { get; set; }
         public DbSet<ProductMaster> ProductMaster { get; set; }
         public DbSet<ShiftMaster> ShiftMaster { get; set; }
+        public DbSet<CauseMaster> CauseMaster { get; set; }
+        public DbSet<MastersEntity> Master { get; set; }
         public DbSet<WeightCheckDetails> WeightCheckDetails { get; set; }
         public DbSet<WeightCheckSubDetails> WeightCheckSubDetails { get; set; }
         public DbSet<NozzelMaster> NozzelMaster { get; set; }
@@ -123,6 +126,20 @@ namespace Infrastructure.Context
             modelBuilder.Entity<Role>()
                 .HasKey(r => r.Id);
             // Configure entity relationships and constraints here
+
+            // Configure CauseMasterEntity
+            modelBuilder.Entity<CauseMaster>()
+                .HasKey(cm => cm.Id); // Ensure that Id property exists
+
+            modelBuilder.Entity<CauseMaster>()
+                .ToTable("adm_CauseMaster");
+
+            // Configure MastersEntity
+            modelBuilder.Entity<MastersEntity>()
+                .HasKey(m => m.Id); // Ensure that Id property exists
+
+            modelBuilder.Entity<MastersEntity>()
+                .ToTable("adm_Masters");
         }
     }
 }

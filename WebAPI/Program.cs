@@ -81,6 +81,10 @@ builder.Services.AddScoped<IProductionOrderRepository, ProductionOrderRepository
 builder.Services.AddScoped<IProductionOrderService, ProductionOrderService>();
 builder.Services.AddScoped<IShiftMasterRepository, ShiftMasterRepository>();
 builder.Services.AddScoped<IShiftMasterService, ShiftMasterService>();
+builder.Services.AddScoped<IMastersRepository, MastersRepository>();
+builder.Services.AddScoped<IMastersService, MastersService>();
+builder.Services.AddScoped<ICauseMasterRepository, CauseMasterRepository>();
+builder.Services.AddScoped<ICauseMasterService, CauseMasterService>();
 builder.Services.AddScoped<IWeightCheckDetailsRepository, WeightCheckDeatilsRepository>();
 builder.Services.AddScoped<IWeightCheckSubDetailsRepository, WeightCheckSubDeatilsRepository>();
 builder.Services.AddScoped<IWeightCheckRepository, WeightCheckRepository>();
