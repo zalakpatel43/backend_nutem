@@ -44,6 +44,12 @@ namespace Domain
             CreateMap<AttributeCheckAddEdit, AttributeCheck>().ReverseMap();
             CreateMap<AttributeCheckDetails, AttributeCheckDetailsAddEdit>();
             CreateMap<AttributeCheckDetailsAddEdit, AttributeCheckDetails>().ReverseMap();
+            CreateMap<DowntimeTracking, DowntimeTrackingList>();
+            CreateMap<DowntimeTracking, DowntimeTrackingAddEdit>();
+            CreateMap<DowntimeTrackingAddEdit, DowntimeTracking>().ReverseMap();
+            CreateMap<DowntimeTrackingDetails, DowntimeTrackingDetailsAddEdit>();
+            CreateMap<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>().ReverseMap();
+
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
                .ConvertUsing(typeof(PaginatedListConverter<,>));
         }

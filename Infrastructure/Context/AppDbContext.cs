@@ -12,6 +12,8 @@ namespace Infrastructure.Context
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermissionMap> RolePermissionMaps { get; set; }
         public DbSet<WeightCheck> WeightCheck { get; set; }
+        public DbSet<DowntimeTracking> DowntimeTracking { get; set; }
+        public DbSet<DowntimeTrackingDetails> DowntimeTrackingDetails { get; set; } // Ensure this is added
         public DbSet<AttributeCheck> AttributeCheck { get; set; }
         public DbSet<ProductionOrder> ProductionOrder { get; set; }
         public DbSet<ProductMaster> ProductMaster { get; set; }
@@ -169,6 +171,37 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<MastersEntity>()
                 .ToTable("adm_Masters");
+            modelBuilder.Entity<DowntimeTracking>()
+            .HasKey(dt => dt.Id); // Set primary key
+
+            modelBuilder.Entity<DowntimeTracking>()
+                .HasOne(dt => dt.ProductionOrder)
+                .WithMany(po => po.DowntimeTracking) // Ensure navigation property name is correct
+                .HasForeignKey(dt => dt.SAPProductionOrderId);
+
+            modelBuilder.Entity<DowntimeTracking>()
+                .HasOne(dt => dt.ProductMaster)
+                .WithMany(pm => pm.DowntimeTracking) // Ensure navigation property name is correct
+                .HasForeignKey(dt => dt.ProductId);
+
+            modelBuilder.Entity<DowntimeTracking>()
+                .HasOne(dt => dt.Masters)
+                .WithMany(m => m.DowntimeTracking) // Ensure navigation property name is correct
+                .HasForeignKey(dt => dt.ProductLineId);
+
+            modelBuilder.Entity<DowntimeTracking>()
+                .ToTable("adm_DowntimeTracking");
+
+            modelBuilder.Entity<DowntimeTrackingDetails>()
+                .HasKey(dtd => dtd.Id);
+
+            modelBuilder.Entity<DowntimeTrackingDetails>()
+                .HasOne(dtd => dtd.DowntimeTracking)
+                .WithMany(dt => dt.DownTimeTrackingDetails)
+                .HasForeignKey(dtd => dtd.HeaderId);
+
+            modelBuilder.Entity<DowntimeTrackingDetails>()
+                .ToTable("adm_DowntimeTrackingDetails");
         }
     }
 }

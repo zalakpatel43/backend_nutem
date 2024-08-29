@@ -95,6 +95,12 @@ builder.Services.AddScoped<IWeightCheckService, WeightCheckService>();
 builder.Services.AddScoped<IAttributeCheckRepository, AttributeCheckRepository>();
 builder.Services.AddScoped<IAttributeCheckDetailsRepository, AttributeCheckDetailsRepository>();
 builder.Services.AddScoped<IAttributeCheckService, AttributeCheckService>();
+builder.Services.AddScoped<IDowntimeTrackingRepository, DowntimeTrackingRepository>();
+builder.Services.AddScoped<IDowntimeTrackingService, DowntimeTrackingService>();
+builder.Services.AddScoped<IDowntimeTrackingDetailsRepository, DowntimeTrackingDetailsRepository>();
+
+
+
 
 
 // Register generic and specific repositories
