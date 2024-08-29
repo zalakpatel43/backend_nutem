@@ -98,6 +98,12 @@ namespace Application.Services
                 {
                     AttributeCheckDetails det = new AttributeCheckDetails();
                     _dataMapper.Map<AttributeCheckDetailsAddEdit, AttributeCheckDetails>(list, det);
+
+                    if (list.DoneByUserIdList != null && list.DoneByUserIdList.Count() > 0)
+                    {
+                        det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
+                    }
+
                     det.HeaderId = mappedModel.Id;
                     det.CreatedBy = userId;
                     det.CreatedDate = DateTime.Now;
@@ -145,6 +151,12 @@ namespace Application.Services
                 {
                     AttributeCheckDetails det = new AttributeCheckDetails();
                     _dataMapper.Map<AttributeCheckDetailsAddEdit, AttributeCheckDetails>(list, det);
+
+                    if (list.DoneByUserIdList != null && list.DoneByUserIdList.Count() > 0)
+                    {
+                        det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
+                    }
+
                     det.HeaderId = mappedModel.Id;
                     det.CreatedBy = userId;
                     det.CreatedDate = DateTime.Now;
