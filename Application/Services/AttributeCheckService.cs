@@ -24,13 +24,32 @@ namespace Application.Services
             _dataMapper = dataMapper;
         }
 
+        //public async Task<IEnumerable<AttributeCheckList>> GetAllAttributeCheckAsync()
+        //{
+        //    var entities = await _attributeCheckRepository.GetAllAsync(); // Assuming GetAllAsync is implemented in your repository
+        //    var result = _dataMapper.Map<IEnumerable<AttributeCheck>, IEnumerable<AttributeCheckList>>(entities);
+        //    return result;
+        //}
         public async Task<IEnumerable<AttributeCheckList>> GetAllAttributeCheckAsync()
         {
-            var entities = await _attributeCheckRepository.GetAllAsync(); // Assuming GetAllAsync is implemented in your repository
-            var result = _dataMapper.Map<IEnumerable<AttributeCheck>, IEnumerable<AttributeCheckList>>(entities);
+            var entities = await _attributeCheckRepository.GetAllAsync();
+
+            // Map entities to AttributeCheckList view models
+            var result = entities.Select(entity => new AttributeCheckList
+            {
+                Id = entity.Id,
+                Code = entity.Code,
+                ACDate = entity.ACDate,
+                ProductionOrderId = entity.ProductionOrderId,
+                ProductId = entity.ProductId,
+                ProductName = entity.ProductMaster?.ProductName, // Map the ProductName from the Product entity
+                BottleDateCode = entity.BottleDateCode,
+                PackSize = entity.PackSize,
+                IsWeightRange = entity.IsWeightRange
+            }).ToList();
+
             return result;
         }
-
 
         public async Task<AttributeCheckAddEdit> GetAttributeCheckByIdAsync(long id)
         {
