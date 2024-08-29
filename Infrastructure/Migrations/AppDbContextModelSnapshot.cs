@@ -30,6 +30,10 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime?>("ACDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ACDate");
+
                     b.Property<string>("BottleDateCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -40,9 +44,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EndDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -68,9 +69,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<long?>("ProductionOrderId")
                         .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("StartDateTime")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

@@ -7,8 +7,7 @@ namespace Domain.ViewModels
     {
         public long Id { get; set; }
         public string Code { get; set; }
-        public DateTime? StartDateTime { get; set; }
-        public DateTime? EndDateTime { get; set; }
+        public DateTime? ACDate { get; set; } // Changed from StartDateTime and EndDateTime to a single ACDate
         public long? ProductionOrderId { get; set; }
         public long? ProductId { get; set; }
         public string BottleDateCode { get; set; }
@@ -19,27 +18,14 @@ namespace Domain.ViewModels
 
         public List<AttributeCheckDetailsAddEdit> AttributeCheckDetails { get; set; } = new List<AttributeCheckDetailsAddEdit>();
 
-        public string StartDT
+        public string ACDateFormatted
         {
             get
             {
                 string formatDate = "";
-                if (StartDateTime != null && StartDateTime != DateTime.MinValue)
+                if (ACDate != null && ACDate != DateTime.MinValue)
                 {
-                    formatDate = StartDateTime.Value.ToString("dd-MMM-yyyy hh:mm tt");
-                }
-                return formatDate;
-            }
-        }
-
-        public string EndDT
-        {
-            get
-            {
-                string formatDate = "";
-                if (EndDateTime != null && EndDateTime != DateTime.MinValue)
-                {
-                    formatDate = EndDateTime.Value.ToString("dd-MMM-yyyy hh:mm tt");
+                    formatDate = ACDate.Value.ToString("dd-MMM-yyyy hh:mm tt");
                 }
                 return formatDate;
             }

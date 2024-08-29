@@ -1,6 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -10,6 +13,11 @@ namespace Infrastructure.Repositories
         {
         }
 
-        // Implement methods specific to AttributeCheck if needed
+        public virtual async Task<IEnumerable<AttributeCheck>> GetAllAsync()
+        {
+            return await _context.AttributeCheck
+                                 .Include(ac => ac.ProductMaster) // Assuming Product is the navigation property
+                                 .ToListAsync();
+        }
     }
 }

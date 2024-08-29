@@ -13,8 +13,9 @@ namespace Domain.Entities
         }
 
         public string Code { get; set; }
-        public DateTime? StartDateTime { get; set; }
-        public DateTime? EndDateTime { get; set; }
+        //public DateTime? StartDateTime { get; set; }
+        //public DateTime? EndDateTime { get; set; }
+        public DateTime? ACDate { get; set; }
         public long? ProductionOrderId { get; set; }
         public long? ProductId { get; set; }
         public string? BottleDateCode { get; set; }

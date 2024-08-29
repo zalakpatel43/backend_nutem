@@ -66,8 +66,9 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<WeightCheck>()
                 .ToTable("adm_WeightCheckHeader");
+
             modelBuilder.Entity<AttributeCheck>()
-               .HasKey(ac => ac.Id);
+                .HasKey(ac => ac.Id);
 
             modelBuilder.Entity<AttributeCheck>()
                 .HasOne(ac => ac.ProductionOrder)
@@ -80,8 +81,13 @@ namespace Infrastructure.Context
                 .HasForeignKey(ac => ac.ProductId);
 
             modelBuilder.Entity<AttributeCheck>()
+                .Property(ac => ac.ACDate) // Configure the new property
+                .HasColumnName("ACDate")
+                .IsRequired(false); // Or configure it as required based on your needs
+
+            modelBuilder.Entity<AttributeCheck>()
                 .ToTable("adm_AttributeCheckHeader");
-            // AttributeCheckDetails entity configuration
+
             modelBuilder.Entity<AttributeCheckDetails>()
                 .HasKey(acd => acd.Id);
 
