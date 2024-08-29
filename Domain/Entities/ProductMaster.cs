@@ -28,5 +28,6 @@ namespace Domain.Entities
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
 
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
+        public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
     }
 }

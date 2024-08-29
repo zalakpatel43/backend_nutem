@@ -84,6 +84,10 @@ builder.Services.AddScoped<IProductionOrderRepository, ProductionOrderRepository
 builder.Services.AddScoped<IProductionOrderService, ProductionOrderService>();
 builder.Services.AddScoped<IShiftMasterRepository, ShiftMasterRepository>();
 builder.Services.AddScoped<IShiftMasterService, ShiftMasterService>();
+builder.Services.AddScoped<IMastersRepository, MastersRepository>();
+builder.Services.AddScoped<IMastersService, MastersService>();
+builder.Services.AddScoped<ICauseMasterRepository, CauseMasterRepository>();
+builder.Services.AddScoped<ICauseMasterService, CauseMasterService>();
 builder.Services.AddScoped<IWeightCheckDetailsRepository, WeightCheckDeatilsRepository>();
 builder.Services.AddScoped<IWeightCheckSubDetailsRepository, WeightCheckSubDeatilsRepository>();
 builder.Services.AddScoped<IWeightCheckRepository, WeightCheckRepository>();
@@ -91,6 +95,12 @@ builder.Services.AddScoped<IWeightCheckService, WeightCheckService>();
 builder.Services.AddScoped<IAttributeCheckRepository, AttributeCheckRepository>();
 builder.Services.AddScoped<IAttributeCheckDetailsRepository, AttributeCheckDetailsRepository>();
 builder.Services.AddScoped<IAttributeCheckService, AttributeCheckService>();
+builder.Services.AddScoped<IDowntimeTrackingRepository, DowntimeTrackingRepository>();
+builder.Services.AddScoped<IDowntimeTrackingService, DowntimeTrackingService>();
+builder.Services.AddScoped<IDowntimeTrackingDetailsRepository, DowntimeTrackingDetailsRepository>();
+
+
+
 
 
 // Register generic and specific repositories

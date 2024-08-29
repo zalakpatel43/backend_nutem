@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using Domain.ViewModels;
+using Skyward.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Domain
             CreateMap<ProductionOrder, ProductionOrderList>();
             CreateMap<ProductMaster, ProdcutMasterList>();
             CreateMap<ShiftMaster, ShiftMasterList>();
+            CreateMap<CauseMaster, CauseMasterList>();
+            CreateMap<MastersEntity, MastersList>();
             CreateMap<WeightCheck, WeightCheckList>();
             CreateMap<WeightCheck, WeightCheckAddEdit>();
             CreateMap<WeightCheckAddEdit, WeightCheck>().ReverseMap();
@@ -41,6 +44,12 @@ namespace Domain
             CreateMap<AttributeCheckAddEdit, AttributeCheck>().ReverseMap();
             CreateMap<AttributeCheckDetails, AttributeCheckDetailsAddEdit>();
             CreateMap<AttributeCheckDetailsAddEdit, AttributeCheckDetails>().ReverseMap();
+            CreateMap<DowntimeTracking, DowntimeTrackingList>();
+            CreateMap<DowntimeTracking, DowntimeTrackingAddEdit>();
+            CreateMap<DowntimeTrackingAddEdit, DowntimeTracking>().ReverseMap();
+            CreateMap<DowntimeTrackingDetails, DowntimeTrackingDetailsAddEdit>();
+            CreateMap<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>().ReverseMap();
+
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
                .ConvertUsing(typeof(PaginatedListConverter<,>));
         }
