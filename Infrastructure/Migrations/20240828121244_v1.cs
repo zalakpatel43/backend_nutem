@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class V1 : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,19 +18,19 @@ namespace Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UniqueID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Pincode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PANNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GSTNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailID = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Website = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Pincode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PANNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GSTNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -38,9 +38,9 @@ namespace Infrastructure.Migrations
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CompanyLogoId = table.Column<long>(type: "bigint", nullable: true),
                     CurrencyID = table.Column<int>(type: "int", nullable: true),
-                    CompanyCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StateName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CompanyCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StateName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +53,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NozzelCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NozzelCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NozzelName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -72,8 +72,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PONumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PONumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PODate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PlannedQty = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -98,9 +98,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    productDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    productDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     ItemNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UOM = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -120,8 +120,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ShiftName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShiftCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShiftName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShiftCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
@@ -159,7 +159,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
@@ -191,8 +191,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Priority = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -201,12 +201,47 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "adm_AttributeCheckHeader",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ACDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProductionOrderId = table.Column<long>(type: "bigint", nullable: true),
+                    ProductId = table.Column<long>(type: "bigint", nullable: true),
+                    BottleDateCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PackSize = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsWeightRange = table.Column<bool>(type: "bit", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_AttributeCheckHeader", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_AttributeCheckHeader_adm_ProductMaster_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "adm_ProductMaster",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_adm_AttributeCheckHeader_adm_ProductionOrder_ProductionOrderId",
+                        column: x => x.ProductionOrderId,
+                        principalTable: "adm_ProductionOrder",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "adm_WeightCheckHeader",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     SAPProductionOrderId = table.Column<long>(type: "bigint", nullable: true),
@@ -379,6 +414,38 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "adm_AttributeCheckDetails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HeaderId = table.Column<long>(type: "bigint", nullable: true),
+                    TDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsGoodCondition = table.Column<bool>(type: "bit", nullable: false),
+                    CapTorque = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmptyBottleWeight = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LotNoOfLiquid = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsCorrect = table.Column<bool>(type: "bit", nullable: false),
+                    LeakTest = table.Column<int>(type: "int", nullable: false),
+                    DoneByUserIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DoneByUserNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_AttributeCheckDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_AttributeCheckDetails_adm_AttributeCheckHeader_HeaderId",
+                        column: x => x.HeaderId,
+                        principalTable: "adm_AttributeCheckHeader",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "adm_WeightCheckDetails",
                 columns: table => new
                 {
@@ -434,6 +501,21 @@ namespace Infrastructure.Migrations
                         principalTable: "adm_WeightCheckDetails",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_AttributeCheckDetails_HeaderId",
+                table: "adm_AttributeCheckDetails",
+                column: "HeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_AttributeCheckHeader_ProductId",
+                table: "adm_AttributeCheckHeader",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_AttributeCheckHeader_ProductionOrderId",
+                table: "adm_AttributeCheckHeader",
+                column: "ProductionOrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_adm_WeightCheckDetails_HeaderId",
@@ -519,6 +601,9 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "adm_AttributeCheckDetails");
+
+            migrationBuilder.DropTable(
                 name: "adm_Company");
 
             migrationBuilder.DropTable(
@@ -541,6 +626,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "RolePermissionMaps");
+
+            migrationBuilder.DropTable(
+                name: "adm_AttributeCheckHeader");
 
             migrationBuilder.DropTable(
                 name: "adm_NozzelMaster");
