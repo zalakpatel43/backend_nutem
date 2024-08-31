@@ -13,5 +13,5 @@ namespace Domain.ViewModels
         public string BottleDateCode { get; set; }
         public string PackSize { get; set; }
         public bool? IsWeightRange { get; set; }
-    }
+    } 
 }

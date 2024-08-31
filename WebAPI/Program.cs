@@ -98,7 +98,11 @@ builder.Services.AddScoped<IAttributeCheckService, AttributeCheckService>();
 builder.Services.AddScoped<IDowntimeTrackingRepository, DowntimeTrackingRepository>();
 builder.Services.AddScoped<IDowntimeTrackingService, DowntimeTrackingService>();
 builder.Services.AddScoped<IDowntimeTrackingDetailsRepository, DowntimeTrackingDetailsRepository>();
-
+builder.Services.AddScoped<IPrePostQuestionRepository, PrePostQuestionRepository>();
+builder.Services.AddScoped<IPrePostQuestionService, PrePostQuestionService>();
+builder.Services.AddScoped<IPreCheckListRepository, PreCheckListRepository>();
+builder.Services.AddScoped<IPreCheckListDetailRepository, PreCheckListDetailRepository>();
+builder.Services.AddScoped<IPreCheckListService, PreCheckListService>();
 
 
 
