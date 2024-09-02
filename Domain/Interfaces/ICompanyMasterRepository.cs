@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Skyward.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IMastersRepository : IGenericRepository<MastersEntity>
+    public interface ICompanyMasterRepository : IGenericRepository<CompanyMaster>
     {
-        Task<IEnumerable<MastersEntity>> GetByCategoryNameAsync(string categoryName);
+        // Add methods specific to Company if needed
     }
 }

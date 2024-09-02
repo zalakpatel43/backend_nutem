@@ -15,5 +15,6 @@ namespace Skyward.Model
 
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrack { get; set; }
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
+        public virtual ICollection<TrailerInspection> TrailerInspection { get; set; }
     }
 }

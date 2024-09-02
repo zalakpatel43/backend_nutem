@@ -1,4 +1,5 @@
 ﻿using Domain.ViewModels;
+using Skyward.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Application.Interfaces
     public interface IMastersService
     {
         IQueryable<MastersList> GetAllMastersAsync();
-        // Add additional methods related to MastersEntity if needed
+        Task<IEnumerable<MastersEntity>> GetVehicleTypeCategoriesAsync();
     }
 }

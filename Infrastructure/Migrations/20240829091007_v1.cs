@@ -12,39 +12,42 @@ namespace Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "adm_Company",
+                name: "adm_CompanyMaster",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UniqueID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pincode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PANNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GSTNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedBy = table.Column<long>(type: "bigint", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CompanyLogoId = table.Column<long>(type: "bigint", nullable: true),
-                    CurrencyID = table.Column<int>(type: "int", nullable: true),
-                    CompanyCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StateName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_adm_Company", x => x.Id);
+                    table.PrimaryKey("PK_adm_CompanyMaster", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adm_Masters",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_Masters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,6 +204,67 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "adm_TrailerInspection",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    InspectedById = table.Column<long>(type: "bigint", nullable: true),
+                    TimeIn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TimeOut = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TotalTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeOfInspection = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Mode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DriverName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VehicleTypeId = table.Column<long>(type: "bigint", nullable: true),
+                    LicensePlateNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrailerNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TruckNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VehicleStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RejectionReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VehicleCleanAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VehicleCleanNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ComingOrderFromForeignAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ComingOrderFromForeignNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DoorCloseProperlyAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DoorCloseProperlyNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OverallIntegrityAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OverallIntegrityNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FloorInGoodConditionAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FloorInGoodConditionNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PresentOnTrailerAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PresentOnTrailerNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SafeWorkingOrderAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SafeWorkingOrderNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsRustPresentAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsRustPresentNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TemperatureSettingUsedAns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TemperatureSettingUsedNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_TrailerInspection", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_TrailerInspection_adm_CompanyMaster_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "adm_CompanyMaster",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_adm_TrailerInspection_adm_Masters_VehicleTypeId",
+                        column: x => x.VehicleTypeId,
+                        principalTable: "adm_Masters",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "adm_AttributeCheckHeader",
                 columns: table => new
                 {
@@ -231,6 +295,45 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_adm_AttributeCheckHeader_adm_ProductionOrder_ProductionOrderId",
                         column: x => x.ProductionOrderId,
+                        principalTable: "adm_ProductionOrder",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adm_DowntimeTracking",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductionDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductLineId = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    SAPProductionOrderId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_DowntimeTracking", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_DowntimeTracking_adm_Masters_ProductLineId",
+                        column: x => x.ProductLineId,
+                        principalTable: "adm_Masters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_adm_DowntimeTracking_adm_ProductMaster_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "adm_ProductMaster",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_adm_DowntimeTracking_adm_ProductionOrder_SAPProductionOrderId",
+                        column: x => x.SAPProductionOrderId,
                         principalTable: "adm_ProductionOrder",
                         principalColumn: "Id");
                 });
@@ -446,6 +549,61 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "adm_CauseMaster",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CauseName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    DowntimeTrackingId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_CauseMaster", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_CauseMaster_adm_DowntimeTracking_DowntimeTrackingId",
+                        column: x => x.DowntimeTrackingId,
+                        principalTable: "adm_DowntimeTracking",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adm_DowntimeTrackingDetails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HeaderId = table.Column<long>(type: "bigint", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Durations = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CauseId = table.Column<long>(type: "bigint", nullable: false),
+                    ActionTaken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActionTakenId = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_DowntimeTrackingDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_DowntimeTrackingDetails_adm_DowntimeTracking_HeaderId",
+                        column: x => x.HeaderId,
+                        principalTable: "adm_DowntimeTracking",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "adm_WeightCheckDetails",
                 columns: table => new
                 {
@@ -516,6 +674,41 @@ namespace Infrastructure.Migrations
                 name: "IX_adm_AttributeCheckHeader_ProductionOrderId",
                 table: "adm_AttributeCheckHeader",
                 column: "ProductionOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_CauseMaster_DowntimeTrackingId",
+                table: "adm_CauseMaster",
+                column: "DowntimeTrackingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_DowntimeTracking_ProductId",
+                table: "adm_DowntimeTracking",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_DowntimeTracking_ProductLineId",
+                table: "adm_DowntimeTracking",
+                column: "ProductLineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_DowntimeTracking_SAPProductionOrderId",
+                table: "adm_DowntimeTracking",
+                column: "SAPProductionOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_DowntimeTrackingDetails_HeaderId",
+                table: "adm_DowntimeTrackingDetails",
+                column: "HeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_TrailerInspection_CompanyId",
+                table: "adm_TrailerInspection",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_TrailerInspection_VehicleTypeId",
+                table: "adm_TrailerInspection",
+                column: "VehicleTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_adm_WeightCheckDetails_HeaderId",
@@ -604,7 +797,13 @@ namespace Infrastructure.Migrations
                 name: "adm_AttributeCheckDetails");
 
             migrationBuilder.DropTable(
-                name: "adm_Company");
+                name: "adm_CauseMaster");
+
+            migrationBuilder.DropTable(
+                name: "adm_DowntimeTrackingDetails");
+
+            migrationBuilder.DropTable(
+                name: "adm_TrailerInspection");
 
             migrationBuilder.DropTable(
                 name: "adm_WeightCheckSubDetails");
@@ -631,6 +830,12 @@ namespace Infrastructure.Migrations
                 name: "adm_AttributeCheckHeader");
 
             migrationBuilder.DropTable(
+                name: "adm_DowntimeTracking");
+
+            migrationBuilder.DropTable(
+                name: "adm_CompanyMaster");
+
+            migrationBuilder.DropTable(
                 name: "adm_NozzelMaster");
 
             migrationBuilder.DropTable(
@@ -644,6 +849,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Permissions");
+
+            migrationBuilder.DropTable(
+                name: "adm_Masters");
 
             migrationBuilder.DropTable(
                 name: "adm_WeightCheckHeader");
