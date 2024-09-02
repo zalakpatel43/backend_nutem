@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,30 @@ namespace Application.Services
             _dataMapper = dataMapper;
         }
 
+        //public async Task<IEnumerable<DowntimeTrackingList>> GetAllDowntimeTrackingsAsync()
+        //{
+        //    var entities = await _downtimeTrackingRepository.GetAllAsync();
+        //    return _dataMapper.Map<IEnumerable<DowntimeTracking>, IEnumerable<DowntimeTrackingList>>(entities);
+        //}
         public async Task<IEnumerable<DowntimeTrackingList>> GetAllDowntimeTrackingsAsync()
         {
-            var entities = await _downtimeTrackingRepository.GetAllAsync();
-            return _dataMapper.Map<IEnumerable<DowntimeTracking>, IEnumerable<DowntimeTrackingList>>(entities);
+            var entities = await _downtimeTrackingRepository.GetAllDowntimeTrackingsWithDetails().ToListAsync();
+
+            var result = entities.Select(entity => new DowntimeTrackingList
+            {
+                Id = entity.Id,
+                Code = entity.Code,
+                ProductionDateTime = entity.ProductionDateTime,
+                ProductId = entity.ProductId,
+                ProductName = entity.ProductMaster?.ProductName,
+                ProductLineId = entity.ProductLineId,
+                ProductLineName = entity.Masters?.Name, // Correctly map ProductLineName
+                IsActive = entity.IsActive,
+                SAPProductionOrderId = entity.SAPProductionOrderId,
+                // Any additional mappings
+            }).ToList();
+
+            return result;
         }
 
         public async Task<DowntimeTrackingAddEdit> GetDowntimeTrackingByIdAsync(long id)

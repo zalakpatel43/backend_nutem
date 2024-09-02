@@ -23,6 +23,9 @@ namespace Infrastructure.Context
         public DbSet<WeightCheckSubDetails> WeightCheckSubDetails { get; set; }
         public DbSet<AttributeCheckDetails> AttributeCheckDetails { get; set; }
         public DbSet<NozzelMaster> NozzelMaster { get; set; }
+        public DbSet<PrePostQuestionEntity> PrePostQuestion { get; set; }
+        public DbSet<PreCheckListEntity> PreCheckListEntity { get; set; }
+        public DbSet<PreCheckListDetailEntity> PreCheckListDetailEntity { get; set; }
         public DbSet<CompanyMaster> CompanyMaster { get; set; }
         public DbSet<TrailerInspection> TrailerInspection { get; set; }
 
@@ -203,6 +206,40 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<DowntimeTrackingDetails>()
                 .ToTable("adm_DowntimeTrackingDetails");
+
+            modelBuilder.Entity<PrePostQuestionEntity>()
+        .HasKey(pp => pp.Id);
+
+            modelBuilder.Entity<PrePostQuestionEntity>()
+                .ToTable("adm_PrePostQuestion");
+
+            modelBuilder.Entity<PrePostQuestionEntity>()
+                .HasMany(pp => pp.PreCheckList)
+                .WithOne(pcl => pcl.PrePostQuestion)
+                .HasForeignKey(pcl => pcl.PrePostQuestionId);
+
+            //modelBuilder.Entity<PrePostQuestionEntity>()
+            //    .HasMany(pp => pp.PostCheckListDetails) 
+            //    .WithOne()
+            //    .HasForeignKey(pc => pc.PrePostQuestionId);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .HasKey(pcl => pcl.Id);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .ToTable("adm_PreCheckList");
+
+            modelBuilder.Entity<PreCheckListDetailEntity>()
+                .HasKey(pcld => pcld.Id);
+
+            modelBuilder.Entity<PreCheckListDetailEntity>()
+                .HasOne(pcld => pcld.PreCheckList)
+                .WithMany(pcl => pcl.PreCheckListDetails)
+                .HasForeignKey(pcld => pcld.PreCheckListId);
+
+            modelBuilder.Entity<PreCheckListDetailEntity>()
+                .ToTable("adm_PreCheckListDetails");
+
 
             modelBuilder.Entity<CompanyMaster>()
                .HasKey(pm => pm.Id);

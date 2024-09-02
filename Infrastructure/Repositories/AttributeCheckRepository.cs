@@ -18,6 +18,6 @@ namespace Infrastructure.Repositories
             return await _context.AttributeCheck
                                  .Include(ac => ac.ProductMaster) // Assuming Product is the navigation property
                                  .ToListAsync();
-        }
+        } 
     }
 }

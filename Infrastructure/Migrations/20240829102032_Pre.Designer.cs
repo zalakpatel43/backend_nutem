@@ -4,6 +4,7 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240829102032_Pre")]
+    partial class Pre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,52 +189,31 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("CauseName")
+                    b.Property<string>("Address1")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Code")
+                    b.Property<string>("Address2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("DowntimeTrackingId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DowntimeTrackingId");
-
-                    b.ToTable("adm_CauseMaster", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.CompanyMaster", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
+                    b.Property<string>("Address3")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Alias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CompanyLogoId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContactNo")
+                    b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("CreatedBy")
@@ -240,118 +222,48 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<int?>("CurrencyID")
+                        .HasColumnType("int");
 
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("adm_CompanyMaster", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.DowntimeTracking", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
+                    b.Property<string>("EmailID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("GSTNo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("ModifiedBy")
+                    b.Property<long?>("LastModifiedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("ModifiedDate")
+                    b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("PANNo")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ProductLineId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ProductionDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Pincode")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SAPProductionOrderId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StateName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UniqueID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductLineId");
-
-                    b.HasIndex("SAPProductionOrderId");
-
-                    b.ToTable("adm_DowntimeTracking", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.DowntimeTrackingDetails", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("ActionTaken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ActionTakenId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CauseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Durations")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("HeaderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HeaderId");
-
-                    b.ToTable("adm_DowntimeTrackingDetails", (string)null);
+                    b.ToTable("adm_Company", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.DowntimeTracking", b =>
@@ -872,140 +784,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_ShiftMaster", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ComingOrderFromForeignAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ComingOrderFromForeignNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("CompanyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DoorCloseProperlyAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DoorCloseProperlyNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DriverName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FloorInGoodConditionAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FloorInGoodConditionNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("InspectedById")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("IsRustPresentAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IsRustPresentNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LicensePlateNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OverallIntegrityAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OverallIntegrityNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PresentOnTrailerAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PresentOnTrailerNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RejectionReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafeWorkingOrderAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafeWorkingOrderNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TemperatureSettingUsedAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TemperatureSettingUsedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("TimeIn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("TimeOfInspection")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("TimeOut")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TotalTime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrailerNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TruckNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleCleanAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleCleanNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("VehicleTypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("VehicleTypeId");
-
-                    b.ToTable("adm_TrailerInspection", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -1521,21 +1299,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
-                {
-                    b.HasOne("Domain.Entities.CompanyMaster", "CompanyMaster")
-                        .WithMany("TrailerInspection")
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("Skyward.Model.MastersEntity", "MasterEntity")
-                        .WithMany("TrailerInspection")
-                        .HasForeignKey("VehicleTypeId");
-
-                    b.Navigation("CompanyMaster");
-
-                    b.Navigation("MasterEntity");
-                });
-
             modelBuilder.Entity("Domain.Entities.WeightCheck", b =>
                 {
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
@@ -1644,18 +1407,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("DownTimeTrackingDetails");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CompanyMaster", b =>
-                {
-                    b.Navigation("TrailerInspection");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DowntimeTracking", b =>
-                {
-                    b.Navigation("CauseMaster");
-
-                    b.Navigation("DownTimeTrackingDetails");
-                });
-
             modelBuilder.Entity("Domain.Entities.NozzelMaster", b =>
                 {
                     b.Navigation("WeightCheckSubDetails");
@@ -1719,8 +1470,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Skyward.Model.MastersEntity", b =>
                 {
                     b.Navigation("DowntimeTracking");
-
-                    b.Navigation("TrailerInspection");
                 });
 #pragma warning restore 612, 618
         }

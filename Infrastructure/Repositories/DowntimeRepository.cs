@@ -15,8 +15,10 @@ namespace Infrastructure.Repositories
         public IQueryable<DowntimeTracking> GetAllDowntimeTrackingsWithDetails()
         {
             return _context.DowntimeTracking
-                .Include(d => d.DownTimeTrackingDetails)  // Ensure this navigation property is included
-                .Where(d => d.IsActive); // Optional: Filter based on `IsActive` if needed
+               .Include(d => d.ProductMaster) // Include ProductMaster for ProductName
+               .Include(d => d.Masters) // Include SAPProductionOrder for CategoryName
+               .Include(d => d.DownTimeTrackingDetails) // Ensure this navigation property is included
+               .Where(d => d.IsActive); // Optional: Filter based on `IsActive` if needed
         }
     }
 }

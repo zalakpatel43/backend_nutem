@@ -50,6 +50,16 @@ namespace Domain
             CreateMap<DowntimeTrackingDetails, DowntimeTrackingDetailsAddEdit>();
             CreateMap<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>().ReverseMap();
 
+            CreateMap<PreCheckListEntity, PreCheckList>();
+            CreateMap<PreCheckListEntity, PreCheckListAddEdit>();
+            CreateMap<PreCheckListAddEdit, PreCheckListEntity>().ReverseMap();
+
+            CreateMap<PreCheckListDetailEntity, PreCheckListDetailAddEdit>();
+            CreateMap<PreCheckListDetailAddEdit, PreCheckListDetailEntity>().ReverseMap();
+
+            CreateMap<PrePostQuestionEntity, PrePostQuestionList>();
+
+
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
                .ConvertUsing(typeof(PaginatedListConverter<,>));
 
