@@ -660,6 +660,104 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "adm_PreCheckList",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProductionOrderId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: true),
+                    ShiftId = table.Column<long>(type: "bigint", nullable: true),
+                    FillingLine = table.Column<long>(type: "bigint", nullable: true),
+                    FillerUserIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    PrePostQuestionId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductMasterId = table.Column<long>(type: "bigint", nullable: true),
+                    ShiftMasterId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_PreCheckList", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_PreCheckList_adm_ProductMaster_ProductMasterId",
+                        column: x => x.ProductMasterId,
+                        principalTable: "adm_ProductMaster",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_adm_PreCheckList_adm_ShiftMaster_ShiftMasterId",
+                        column: x => x.ShiftMasterId,
+                        principalTable: "adm_ShiftMaster",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adm_PrePostQuestion",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    PreCheckListEntityId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_PrePostQuestion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_PrePostQuestion_adm_PreCheckList_PreCheckListEntityId",
+                        column: x => x.PreCheckListEntityId,
+                        principalTable: "adm_PreCheckList",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adm_PreCheckListDetails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HeaderId = table.Column<long>(type: "bigint", nullable: false),
+                    QuestionId = table.Column<long>(type: "bigint", nullable: false),
+                    Answer = table.Column<int>(type: "int", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    PreCheckListId = table.Column<long>(type: "bigint", nullable: false),
+                    PrePostQuestionId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_PreCheckListDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_PreCheckListDetails_adm_PreCheckList_PreCheckListId",
+                        column: x => x.PreCheckListId,
+                        principalTable: "adm_PreCheckList",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_adm_PreCheckListDetails_adm_PrePostQuestion_PrePostQuestionId",
+                        column: x => x.PrePostQuestionId,
+                        principalTable: "adm_PrePostQuestion",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_adm_AttributeCheckDetails_HeaderId",
                 table: "adm_AttributeCheckDetails",
@@ -699,6 +797,36 @@ namespace Infrastructure.Migrations
                 name: "IX_adm_DowntimeTrackingDetails_HeaderId",
                 table: "adm_DowntimeTrackingDetails",
                 column: "HeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_PreCheckList_PrePostQuestionId",
+                table: "adm_PreCheckList",
+                column: "PrePostQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_PreCheckList_ProductMasterId",
+                table: "adm_PreCheckList",
+                column: "ProductMasterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_PreCheckList_ShiftMasterId",
+                table: "adm_PreCheckList",
+                column: "ShiftMasterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_PreCheckListDetails_PreCheckListId",
+                table: "adm_PreCheckListDetails",
+                column: "PreCheckListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_PreCheckListDetails_PrePostQuestionId",
+                table: "adm_PreCheckListDetails",
+                column: "PrePostQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_PrePostQuestion_PreCheckListEntityId",
+                table: "adm_PrePostQuestion",
+                column: "PreCheckListEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_adm_TrailerInspection_CompanyId",
@@ -788,11 +916,27 @@ namespace Infrastructure.Migrations
                 name: "IX_RolePermissionMaps_RoleId",
                 table: "RolePermissionMaps",
                 column: "RoleId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_adm_PreCheckList_adm_PrePostQuestion_PrePostQuestionId",
+                table: "adm_PreCheckList",
+                column: "PrePostQuestionId",
+                principalTable: "adm_PrePostQuestion",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_adm_PreCheckList_adm_ProductMaster_ProductMasterId",
+                table: "adm_PreCheckList");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_adm_PreCheckList_adm_PrePostQuestion_PrePostQuestionId",
+                table: "adm_PreCheckList");
+
             migrationBuilder.DropTable(
                 name: "adm_AttributeCheckDetails");
 
@@ -801,6 +945,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "adm_DowntimeTrackingDetails");
+
+            migrationBuilder.DropTable(
+                name: "adm_PreCheckListDetails");
 
             migrationBuilder.DropTable(
                 name: "adm_TrailerInspection");
@@ -857,10 +1004,16 @@ namespace Infrastructure.Migrations
                 name: "adm_WeightCheckHeader");
 
             migrationBuilder.DropTable(
+                name: "adm_ProductionOrder");
+
+            migrationBuilder.DropTable(
                 name: "adm_ProductMaster");
 
             migrationBuilder.DropTable(
-                name: "adm_ProductionOrder");
+                name: "adm_PrePostQuestion");
+
+            migrationBuilder.DropTable(
+                name: "adm_PreCheckList");
 
             migrationBuilder.DropTable(
                 name: "adm_ShiftMaster");

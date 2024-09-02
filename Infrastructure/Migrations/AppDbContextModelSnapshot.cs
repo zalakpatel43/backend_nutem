@@ -178,45 +178,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_CauseMaster", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Company", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("CauseName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("DowntimeTrackingId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DowntimeTrackingId");
-
-                    b.ToTable("adm_CauseMaster", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.CompanyMaster", b =>
                 {
                     b.Property<long>("Id")
@@ -252,106 +213,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("adm_CompanyMaster", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.DowntimeTracking", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductLineId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ProductionDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("SAPProductionOrderId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductLineId");
-
-                    b.HasIndex("SAPProductionOrderId");
-
-                    b.ToTable("adm_DowntimeTracking", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.DowntimeTrackingDetails", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("ActionTaken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ActionTakenId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CauseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Durations")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("HeaderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HeaderId");
-
-                    b.ToTable("adm_DowntimeTrackingDetails", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.DowntimeTracking", b =>
@@ -1635,13 +1496,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.AttributeCheck", b =>
                 {
                     b.Navigation("AttributeCheckDetails");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DowntimeTracking", b =>
-                {
-                    b.Navigation("CauseMaster");
-
-                    b.Navigation("DownTimeTrackingDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.CompanyMaster", b =>
