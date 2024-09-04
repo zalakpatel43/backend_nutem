@@ -8,7 +8,6 @@ namespace Infrastructure.Context
 {
     public class AppDbContext : IdentityDbContext<User, Role, long>
     {
-        public DbSet<Company> Company { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermissionMap> RolePermissionMaps { get; set; }
         public DbSet<WeightCheck> WeightCheck { get; set; }
@@ -27,6 +26,9 @@ namespace Infrastructure.Context
         public DbSet<PrePostQuestionEntity> PrePostQuestion { get; set; }
         public DbSet<PreCheckListEntity> PreCheckListEntity { get; set; } 
         public DbSet<PreCheckListDetailEntity> PreCheckListDetailEntity { get; set; }
+        public DbSet<CompanyMaster> CompanyMaster { get; set; }
+        public DbSet<TrailerInspection> TrailerInspection { get; set; }
+
         public DbSet<PostCheckListEntity> PostCheckListEntity { get; set; }
         public DbSet<PostCheckListDetailEntity> PostCheckListDetailEntity { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -155,12 +157,6 @@ namespace Infrastructure.Context
             modelBuilder.Entity<WeightCheckSubDetails>()
                 .ToTable("adm_WeightCheckSubDetails");
 
-            modelBuilder.Entity<Company>()
-                .HasKey(c => c.Id);
-
-            modelBuilder.Entity<Company>()
-                .ToTable("adm_Company");
-
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
 
@@ -262,6 +258,29 @@ namespace Infrastructure.Context
             modelBuilder.Entity<PreCheckListDetailEntity>()
                 .ToTable("adm_PreCheckListDetails");
 
+
+            modelBuilder.Entity<CompanyMaster>()
+               .HasKey(pm => pm.Id);
+
+            modelBuilder.Entity<CompanyMaster>()
+                .ToTable("adm_CompanyMaster");
+
+
+            modelBuilder.Entity<TrailerInspection>()
+                .HasKey(ti => ti.Id);
+
+            modelBuilder.Entity<TrailerInspection>()
+                .HasOne(wc => wc.CompanyMaster)
+                .WithMany(po => po.TrailerInspection)
+                .HasForeignKey(wc => wc.CompanyId);
+
+            modelBuilder.Entity<TrailerInspection>()
+                .HasOne(wc => wc.MasterEntity)
+                .WithMany(po => po.TrailerInspection)
+                .HasForeignKey(wc => wc.VehicleTypeId);
+
+            modelBuilder.Entity<TrailerInspection>()
+                .ToTable("adm_TrailerInspection");
             // Configure PostCheckListEntity
             modelBuilder.Entity<PostCheckListEntity>()
                 .HasKey(pcl => pcl.Id);

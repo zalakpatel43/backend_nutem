@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using Skyward.Model;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,14 @@ namespace Infrastructure.Repositories
     {
         public MastersRepository(AppDbContext context) : base(context)
         {
+        }
+
+        public async Task<IEnumerable<MastersEntity>> GetByCategoryNameAsync(string categoryName)
+        {
+            return await _context.Master
+                                 .Where(m => m.CategoryName.Contains(categoryName))
+                                 .ToListAsync();
+
         }
 
         // Implement methods specific to MastersEntity if needed

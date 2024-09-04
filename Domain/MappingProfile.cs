@@ -70,6 +70,15 @@ namespace Domain
 
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
                .ConvertUsing(typeof(PaginatedListConverter<,>));
+
+            CreateMap<CompanyMaster, CompanyMasterList>().ReverseMap();
+
+            CreateMap<TrailerInspection, TrailerInspectionList>()
+            .ForMember(dest => dest.VehicleTypeName, opt => opt.MapFrom(src => src.MasterEntity.Name))
+            .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.CompanyMaster.CompanyName))
+            .ReverseMap();
+
+            CreateMap<TrailerInspection, TrailerInspectionAddEdit>().ReverseMap();
         }
 
         public class PaginatedListConverter<TSource, TDestination> : ITypeConverter<PaginatedList<TSource>, PaginatedList<TDestination>>

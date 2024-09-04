@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface ICompanyRepository : IGenericRepository<Company>
+    public interface ITrailerInspectionRepository : IGenericRepository<TrailerInspection>
     {
-        // Add methods specific to Company if needed
+
+        IQueryable<TrailerInspection> GetAllTrailerInspectionWithVehicleTypeName();
+
+        
     }
 }

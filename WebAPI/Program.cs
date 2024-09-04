@@ -74,8 +74,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<IAutoMapperGenericDataMapper, AutoMapperGenericDataMapper>();
-builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
-builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<INozzleMasterRepository, NozzleMasterRepository>();
 builder.Services.AddScoped<INozzleMasterService, NozzleMasterService>();
 builder.Services.AddScoped<IProductMasterRepository, ProductMasterRepository>();
@@ -103,6 +101,10 @@ builder.Services.AddScoped<IPrePostQuestionService, PrePostQuestionService>();
 builder.Services.AddScoped<IPreCheckListRepository, PreCheckListRepository>();
 builder.Services.AddScoped<IPreCheckListDetailRepository, PreCheckListDetailRepository>();
 builder.Services.AddScoped<IPreCheckListService, PreCheckListService>();
+builder.Services.AddScoped<ICompanyMasterRepository, CompanyMasterRepository>();
+builder.Services.AddScoped<ICompanyMasterService, CompanyMasterService>();
+builder.Services.AddScoped<ITrailerInspectionRepository, TrailerInspectionRepository>();
+builder.Services.AddScoped<ITrailerInspectionService, TrailerInspectionService>();
 builder.Services.AddScoped<IPostCheckListRepository, PostCheckListRepository>();
 builder.Services.AddScoped<IPostCheckListDetailRepository, PostCheckListDetailRepository>();
 builder.Services.AddScoped<IPostCheckListService, PostCheckListService>();
@@ -170,7 +172,7 @@ async Task SeedData(WebApplication app)
     using var scope = app.Services.CreateScope();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    var companyRepository = scope.ServiceProvider.GetRequiredService<ICompanyRepository>();
+    //var companyRepository = scope.ServiceProvider.GetRequiredService<ICompanyRepository>();
 
     // Seed roles
     string[] roles = { "Admin", "User", "Manager" };
@@ -244,37 +246,37 @@ async Task SeedData(WebApplication app)
     }
 
     // Seed default company data
-    var defaultCompany = new Company
-    {
-        UniqueID = Guid.NewGuid(),
-        CompanyName = "Tech Innovations Ltd.",
-        Alias = "TechInno",
-        Address1 = "1234 Silicon Valley",
-        Address2 = "Suite 567",
-        Address3 = "Building A",
-        Pincode = "94043",
-        City = "Mountain View",
-        State = "California",
-        Country = "USA",
-        PANNo = "AAACT1234F",
-        GSTNo = "27AAACT1234F1Z5",
-        EmailID = "contact@techinnovations.com",
-        Website = "https://www.techinnovations.com",
-        IsActive = true,
-        CreatedBy = 1,
-        CreatedDate = DateTime.UtcNow,
-        LastModifiedBy = 1,
-        LastModifiedDate = DateTime.UtcNow,
-        CompanyLogoId = 101,
-        CurrencyID = 1,
-        CompanyCode = "TI1234",
-        StateName = "California",
-        PhoneNo = "+1-650-123-4567"
-    };
+    //var defaultCompany = new Company
+    //{
+    //    UniqueID = Guid.NewGuid(),
+    //    CompanyName = "Tech Innovations Ltd.",
+    //    Alias = "TechInno",
+    //    Address1 = "1234 Silicon Valley",
+    //    Address2 = "Suite 567",
+    //    Address3 = "Building A",
+    //    Pincode = "94043",
+    //    City = "Mountain View",
+    //    State = "California",
+    //    Country = "USA",
+    //    PANNo = "AAACT1234F",
+    //    GSTNo = "27AAACT1234F1Z5",
+    //    EmailID = "contact@techinnovations.com",
+    //    Website = "https://www.techinnovations.com",
+    //    IsActive = true,
+    //    CreatedBy = 1,
+    //    CreatedDate = DateTime.UtcNow,
+    //    LastModifiedBy = 1,
+    //    LastModifiedDate = DateTime.UtcNow,
+    //    CompanyLogoId = 101,
+    //    CurrencyID = 1,
+    //    CompanyCode = "TI1234",
+    //    StateName = "California",
+    //    PhoneNo = "+1-650-123-4567"
+    //};
 
-    var existingCompany = await companyRepository.GetByIdAsync(defaultCompany.Id);
-    if (existingCompany == null)
-    {
-        await companyRepository.AddAsync(defaultCompany);
-    }
+    //var existingCompany = await companyRepository.GetByIdAsync(defaultCompany.Id);
+    //if (existingCompany == null)
+    //{
+    //    await companyRepository.AddAsync(defaultCompany);
+    //}
 }

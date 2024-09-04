@@ -22,5 +22,13 @@ namespace WebAPI.Controller
             var data = _mastersService.GetAllMastersAsync();
             return Ok(data);
         }
+
+        [HttpGet("vehicle-types")]
+        public async Task<IActionResult> GetVehicleTypes()
+        {
+            var result = await _mastersService.GetVehicleTypeCategoriesAsync();
+            return Ok(result); // result should be IEnumerable<MastersEntity>
+        }
+
     }
 }
