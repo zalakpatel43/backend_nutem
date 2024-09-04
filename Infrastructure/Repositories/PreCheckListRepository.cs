@@ -19,6 +19,7 @@ namespace Infrastructure.Repositories
                                  .Include(pcl => pcl.ProductMaster)
                                  .Include(pcl => pcl.ShiftMaster)
                                  .Include(pcl => pcl.PreCheckListDetails)
+                                 .Include(pcl => pcl.Masters)
                                  .ToListAsync();
         }
 

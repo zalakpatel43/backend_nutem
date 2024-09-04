@@ -2,11 +2,11 @@
 
 namespace Domain.ViewModels
 {
-    public class PreCheckList
+    public class PostCheckList
     {
         public long Id { get; set; }
         public string Code { get; set; }
-        public DateTime? StartDateTime { get; set; }
+        public DateTime? EndDateTime { get; set; } // Replaces StartDateTime with EndDateTime
         public long ProductionOrderId { get; set; }
         public long? ProductId { get; set; }
         public string ProductName { get; set; } // Assuming you want to include product name
@@ -18,11 +18,11 @@ namespace Domain.ViewModels
         public string Comments { get; set; }
         public bool IsActive { get; set; }
 
-        public string StartDateTimeFormatted
+        public string EndDateTimeFormatted
         {
             get
             {
-                return StartDateTime.HasValue ? StartDateTime.Value.ToString("dd-MMM-yyyy hh:mm tt") : "N/A";
+                return EndDateTime.HasValue ? EndDateTime.Value.ToString("dd-MMM-yyyy hh:mm tt") : "N/A";
             }
         }
     }

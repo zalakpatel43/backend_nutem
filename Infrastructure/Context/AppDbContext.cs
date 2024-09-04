@@ -25,8 +25,10 @@ namespace Infrastructure.Context
         public DbSet<AttributeCheckDetails> AttributeCheckDetails { get; set; }
         public DbSet<NozzelMaster> NozzelMaster { get; set; }
         public DbSet<PrePostQuestionEntity> PrePostQuestion { get; set; }
-        public DbSet<PreCheckListEntity> PreCheckListEntity { get; set; }
+        public DbSet<PreCheckListEntity> PreCheckListEntity { get; set; } 
         public DbSet<PreCheckListDetailEntity> PreCheckListDetailEntity { get; set; }
+        public DbSet<PostCheckListEntity> PostCheckListEntity { get; set; }
+        public DbSet<PostCheckListDetailEntity> PostCheckListDetailEntity { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -212,7 +214,7 @@ namespace Infrastructure.Context
                 .ToTable("adm_DowntimeTrackingDetails");
 
             modelBuilder.Entity<PrePostQuestionEntity>()
-        .HasKey(pp => pp.Id);
+                .HasKey(pp => pp.Id);
 
             modelBuilder.Entity<PrePostQuestionEntity>()
                 .ToTable("adm_PrePostQuestion");
@@ -222,13 +224,29 @@ namespace Infrastructure.Context
                 .WithOne(pcl => pcl.PrePostQuestion)
                 .HasForeignKey(pcl => pcl.PrePostQuestionId);
 
-            //modelBuilder.Entity<PrePostQuestionEntity>()
-            //    .HasMany(pp => pp.PostCheckListDetails) 
-            //    .WithOne()
-            //    .HasForeignKey(pc => pc.PrePostQuestionId);
+            modelBuilder.Entity<PrePostQuestionEntity>()
+                .HasMany(pp => pp.PostCheckListDetails)
+                .WithOne(pcld => pcld.PrePostQuestion)
+                .HasForeignKey(pcld => pcld.PrePostQuestionId);
+
 
             modelBuilder.Entity<PreCheckListEntity>()
                 .HasKey(pcl => pcl.Id);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .HasOne(pcl => pcl.ProductMaster)
+                .WithMany(pm => pm.PreCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ProductMaster`
+                .HasForeignKey(pcl => pcl.ProductId);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .HasOne(pcl => pcl.ShiftMaster)
+                .WithMany(sm => sm.PreCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.ShiftId);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .HasOne(pcl => pcl.Masters)
+                .WithMany(sm => sm.PreCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.FillingLine);
 
             modelBuilder.Entity<PreCheckListEntity>()
                 .ToTable("adm_PreCheckList");
@@ -243,6 +261,38 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<PreCheckListDetailEntity>()
                 .ToTable("adm_PreCheckListDetails");
+
+            // Configure PostCheckListEntity
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasKey(pcl => pcl.Id);
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasOne(pcl => pcl.ProductMaster)
+                .WithMany(pm => pm.PostCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ProductMaster`
+                .HasForeignKey(pcl => pcl.ProductId);
+
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasOne(pcl => pcl.ShiftMaster)
+                .WithMany(sm => sm.PostCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.ShiftId);
+
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasOne(pcl => pcl.Masters)
+                .WithMany(sm => sm.PostCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.FillingLine);
+
+            modelBuilder.Entity<PostCheckListEntity>()
+                .ToTable("adm_PostCheckList");
+
+            modelBuilder.Entity<PostCheckListDetailEntity>()
+                .HasKey(pcld => pcld.Id);
+
+            modelBuilder.Entity<PostCheckListDetailEntity>()
+                .HasOne(pcld => pcld.PostCheckList)
+                .WithMany(pcl => pcl.PostCheckListDetails)
+                .HasForeignKey(pcld => pcld.PostCheckListId);
+
+            modelBuilder.Entity<PostCheckListDetailEntity>()
+                .ToTable("adm_PostCheckListDetails");
 
         }
     }

@@ -14,8 +14,8 @@ namespace Domain.Entities
         {
             //this.LiquidPreparationEntities = new List<LiquidPreparationEntity>();
             //this.PalletPackingEntities = new List<PalletPackingEntity>();
-            //this.PostCheckListEntities = new List<PostCheckListEntity>();
-            //this.PreCheckListEntities = new List<PreCheckListEntity>();
+            this.PostCheckListEntity = new List<PostCheckListEntity>();
+            this.PreCheckListEntity = new List<PreCheckListEntity>();
             this.WeightCheck = new List<WeightCheck>();
             this.AttributeCheck = new List<AttributeCheck>();
             this.DowntimeTracking=new List<DowntimeTracking>();
@@ -33,8 +33,8 @@ namespace Domain.Entities
         public string? Status { get; set; }
         //public virtual ICollection<LiquidPreparationEntity> LiquidPreparationEntities { get; set; }
         //public virtual ICollection<PalletPackingEntity> PalletPackingEntities { get; set; }
-        //public virtual ICollection<PostCheckListEntity> PostCheckListEntities { get; set; }
-        //public virtual ICollection<PreCheckListEntity> PreCheckListEntities { get; set; }
+        public virtual ICollection<PostCheckListEntity> PostCheckListEntity { get; set; }
+        public virtual ICollection<PreCheckListEntity> PreCheckListEntity { get; set; }
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }

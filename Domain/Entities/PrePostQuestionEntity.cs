@@ -15,6 +15,7 @@ namespace Domain.Entities
 
         // Define relationships to the detail entities if needed
         public virtual ICollection<PreCheckListEntity> PreCheckList { get; set; }
+        public virtual ICollection<PostCheckListEntity> PostCheckListDetails { get; set; }
         //public virtual icollection<postchecklistdetail> postchecklistdetails { get; set; }
     }
 }

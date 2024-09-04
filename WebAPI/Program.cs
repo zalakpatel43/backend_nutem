@@ -103,6 +103,10 @@ builder.Services.AddScoped<IPrePostQuestionService, PrePostQuestionService>();
 builder.Services.AddScoped<IPreCheckListRepository, PreCheckListRepository>();
 builder.Services.AddScoped<IPreCheckListDetailRepository, PreCheckListDetailRepository>();
 builder.Services.AddScoped<IPreCheckListService, PreCheckListService>();
+builder.Services.AddScoped<IPostCheckListRepository, PostCheckListRepository>();
+builder.Services.AddScoped<IPostCheckListDetailRepository, PostCheckListDetailRepository>();
+builder.Services.AddScoped<IPostCheckListService, PostCheckListService>();
+
 
 
 
