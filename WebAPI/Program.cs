@@ -105,6 +105,22 @@ builder.Services.AddScoped<ICompanyMasterRepository, CompanyMasterRepository>();
 builder.Services.AddScoped<ICompanyMasterService, CompanyMasterService>();
 builder.Services.AddScoped<ITrailerInspectionRepository, TrailerInspectionRepository>();
 builder.Services.AddScoped<ITrailerInspectionService, TrailerInspectionService>();
+builder.Services.AddScoped<IStartEndBatchChecklistRepository, StartEndBatchChecklistRepository>();
+builder.Services.AddScoped<IStartEndBatchChecklistService, StartEndBatchChecklistService>();
+builder.Services.AddScoped<ITankMasterRepository, TankMasterRepository>();
+builder.Services.AddScoped<ITankMasterService, TankMasterService>();
+builder.Services.AddScoped<IMaterialMasterRepository, MaterialMasterRepository>();
+builder.Services.AddScoped<IMaterialMasterService, MaterialMasterService>();
+builder.Services.AddScoped<IProductInstructionDetailsRepository, ProductInstructionDetailsRepository>();
+builder.Services.AddScoped<IProductInstructionDetailsService, ProductInstructionDetailsService>();
+builder.Services.AddScoped<IQCTSpecificationMasterRepository, QCTSpecificationMasterRepository>();
+builder.Services.AddScoped<IQCTSpecificationMasterService, QCTSpecificationMasterService>();
+builder.Services.AddScoped<ILiquidPreparationAdjustmentDetailsRepository, LiquidPreparationAdjustmentDetailsRepository>();
+builder.Services.AddScoped<ILiquidPreparationChecklistDetailsRepository, LiquidPreparationChecklistDetailsRepository>();
+builder.Services.AddScoped<ILiquidPreparationInstructionDetailsRepository, LiquidPreparationInstructionDetailsRepository>();
+builder.Services.AddScoped<ILiquidPreparationSpecificationDetailsRepository, LiquidPreparationSpecificationDetailsRepository>();
+builder.Services.AddScoped<ILiquidPreparationRepository, LiquidPreparationRepository>();
+builder.Services.AddScoped<ILiquidPreparationService, LiquidPreparationService>();
 
 
 

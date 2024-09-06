@@ -29,6 +29,18 @@ namespace Infrastructure.Context
         public DbSet<CompanyMaster> CompanyMaster { get; set; }
         public DbSet<TrailerInspection> TrailerInspection { get; set; }
 
+        public DbSet<TankMaster> TankMaster { get; set; }
+
+        public DbSet<StartEndBatchChecklist> StartEndBatchChecklist { get; set; }
+        public DbSet<MaterialMaster> MaterialMaster { get; set; }
+        public DbSet<ProductInstructionDetails> ProductInstructionDetails { get; set; }
+        public DbSet<QCTSpecificationMaster> QCTSpecificationMaster { get; set; }
+        public DbSet<LiquidPreparation> LiquidPreparation { get; set; }
+        public DbSet<LiquidPreparationInstructionDetails> LiquidPreparationInstructionDetails { get; set; }
+        public DbSet<LiquidPreparationChecklistDetails> LiquidPreparationChecklistDetails { get; set; }
+        public DbSet<LiquidPreparationSpecificationDetails> LiquidPreparationSpecificationDetails { get; set; }
+        public DbSet<LiquidPreparationAdjustmentDetails> LiquidPreparationAdjustmentDetails { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -263,6 +275,119 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<TrailerInspection>()
                 .ToTable("adm_TrailerInspection");
+
+            modelBuilder.Entity<TankMaster>()
+              .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<TankMaster>()
+                .ToTable("adm_TankMaster");
+
+            modelBuilder.Entity<StartEndBatchChecklist>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<StartEndBatchChecklist>()
+                .ToTable("adm_StartEndBatchChecklist");
+
+            modelBuilder.Entity<MaterialMaster>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<MaterialMaster>()
+                .ToTable("adm_MaterialMaster");
+
+            modelBuilder.Entity<ProductInstructionDetails>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<ProductInstructionDetails>()
+                .ToTable("adm_ProductInstructionDetails");
+
+            modelBuilder.Entity<QCTSpecificationMaster>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<QCTSpecificationMaster>()
+                .ToTable("adm_QCTSpecificationMaster");
+
+            modelBuilder.Entity<LiquidPreparation>()
+               .HasKey(wc => wc.Id);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .HasOne(wc => wc.ShiftMaster)
+                .WithMany(po => po.LiquidPreparation)
+                .HasForeignKey(wc => wc.ShiftId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .HasOne(wc => wc.ProductMaster)
+                .WithMany(po => po.LiquidPreparation)
+                .HasForeignKey(wc => wc.ProductId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .HasOne(wc => wc.TankMaster)
+                .WithMany(po => po.LiquidPreparation)
+                .HasForeignKey(wc => wc.TankId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+               .HasOne(wc => wc.ProductionOrder)
+               .WithMany(po => po.LiquidPreparation)
+               .HasForeignKey(wc => wc.SAPProductionOrderId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .ToTable("adm_LiquidPreparation");
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+              .HasOne(wc => wc.LiquidPreparation)
+              .WithMany(po => po.LiquidPreparationInstructionDetails)
+              .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+                 .HasOne(wc => wc.ProductInstructionDetails)
+                 .WithMany(po => po.LiquidPreparationInstructionDetails)
+                 .HasForeignKey(wc => wc.InstructionId);
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+                 .HasOne(wc => wc.MaterialMaster)
+                 .WithMany(po => po.LiquidPreparationInstructionDetails)
+                 .HasForeignKey(wc => wc.MaterialId);
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+                .ToTable("adm_LiquidPreparationInstructionDetails");
+
+            modelBuilder.Entity<LiquidPreparationChecklistDetails>()
+               .HasOne(wc => wc.TankMaster)
+               .WithMany(po => po.LiquidPreparationChecklistDetails)
+               .HasForeignKey(wc => wc.TankId);
+
+            modelBuilder.Entity<LiquidPreparationChecklistDetails>()
+               .HasOne(wc => wc.LiquidPreparation)
+               .WithMany(po => po.LiquidPreparationChecklistDetails)
+                .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationChecklistDetails>()
+                .ToTable("adm_LiquidPreparationChecklistDetails");
+
+            modelBuilder.Entity<LiquidPreparationSpecificationDetails>()
+                .HasOne(wc => wc.LiquidPreparation)
+                .WithMany(po => po.LiquidPreparationSpecificationDetails)
+                 .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationSpecificationDetails>()
+               .HasOne(wc => wc.QCTSpecificationMaster)
+               .WithMany(po => po.LiquidPreparationSpecificationDetails)
+                .HasForeignKey(wc => wc.SpecificationLimitId);
+
+            modelBuilder.Entity<LiquidPreparationSpecificationDetails>()
+                .ToTable("adm_LiquidPreparationSpecificationDetails");
+
+            modelBuilder.Entity<LiquidPreparationAdjustmentDetails>()
+               .HasOne(wc => wc.LiquidPreparation)
+               .WithMany(po => po.LiquidPreparationAdjustmentDetails)
+                .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationAdjustmentDetails>()
+             .HasOne(wc => wc.MaterialMaster)
+             .WithMany(po => po.LiquidPreparationAdjustmentDetails)
+              .HasForeignKey(wc => wc.MaterialId);
+
+            modelBuilder.Entity<LiquidPreparationAdjustmentDetails>()
+                .ToTable("adm_LiquidPreparationAdjustmentDetails");
         }
     }
 }

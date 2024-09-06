@@ -71,6 +71,29 @@ namespace Domain
             .ReverseMap();
 
             CreateMap<TrailerInspection, TrailerInspectionAddEdit>().ReverseMap();
+
+            CreateMap<StartEndBatchChecklist, StartEndBatchCheckListList>().ReverseMap();
+            CreateMap<TankMaster, TankMasterList>().ReverseMap();
+            CreateMap<MaterialMaster, MaterialMasterList>().ReverseMap();
+            CreateMap<ProductInstructionDetails, ProductInstructionDetailsList>().ReverseMap();
+            CreateMap<QCTSpecificationMaster, QCTSpecificationMasterList>().ReverseMap();
+
+            CreateMap<LiquidPreparation, LiquidPreparationList>()
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.ShiftMaster.ShiftName))
+            .ReverseMap();
+
+            CreateMap<LiquidPreparation, LiquidPreparationAddEdit>()
+              .ForMember(dest => dest.liquidPreparationChecklistDetails, opt => opt.MapFrom(src => src.LiquidPreparationChecklistDetails))
+              .ForMember(dest => dest.liquidPreparationInstructionDetails, opt => opt.MapFrom(src => src.LiquidPreparationInstructionDetails))
+              .ForMember(dest => dest.liquidPreparationAdjustmentDetails, opt => opt.MapFrom(src => src.LiquidPreparationAdjustmentDetails))
+              .ForMember(dest => dest.liquidPreparationSpecificationDetails, opt => opt.MapFrom(src => src.LiquidPreparationSpecificationDetails))
+              .ReverseMap();
+
+            CreateMap<LiquidPreparationChecklistDetails, LiquidPreparationChecklistDetailsAddEdit>().ReverseMap();
+            CreateMap<LiquidPreparationAdjustmentDetails, LiquidPreparationAdjustmentDetailsAddEdit>().ReverseMap();
+            CreateMap<LiquidPreparationInstructionDetails, LiquidPreparationInstructionDetailsAddEdit>().ReverseMap();
+            CreateMap<LiquidPreparationSpecificationDetails, LiquidPreparationSpecificationDetailsAddEdit>().ReverseMap();
+
         }
 
         public class PaginatedListConverter<TSource, TDestination> : ITypeConverter<PaginatedList<TSource>, PaginatedList<TDestination>>

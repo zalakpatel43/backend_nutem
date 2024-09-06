@@ -23,8 +23,11 @@ public class CustomClaimsPrincipalFactory : UserClaimsPrincipalFactory<User>
             var principal = await base.CreateAsync(user);
             var identity = (ClaimsIdentity)principal.Identity;
 
+
+            var userIdClaim = new Claim(IdentityHelper.CustomClaimTypes.UserId, user.Id.ToString());
+            identity.AddClaim(userIdClaim);
             // Add the user ID claim
-            identity.AddClaim(new Claim(IdentityHelper.CustomClaimTypes.UserId, user.Id.ToString()));
+            //identity.AddClaim(new Claim(IdentityHelper.CustomClaimTypes.UserId, user.Id.ToString()));
 
             return principal;
         }
