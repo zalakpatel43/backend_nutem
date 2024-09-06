@@ -37,9 +37,11 @@ namespace Application.Services
                 StartDateTime = entity.StartDateTime,
                 ProductionOrderId = entity.ProductionOrderId,
                 ProductId = entity.ProductId,
-                ProductName = entity.ProductMaster?.ProductName, // Map the ProductName from the Product entity
+                ProductName = entity.ProductMaster?.ProductName, // Map the ProductName from ProductMaster entity
                 ShiftId = entity.ShiftId,
+                ShiftName = entity.ShiftMaster?.ShiftName,       // Map the ShiftName from ShiftMaster entity
                 FillingLine = entity.FillingLine,
+                FillingLineNumber= entity.Masters?.Name,
                 FillerUserIds = entity.FillerUserIds,
                 Comments = entity.Comments,
                 IsActive = entity.IsActive
@@ -47,6 +49,7 @@ namespace Application.Services
 
             return result;
         }
+
 
         public async Task<PreCheckListAddEdit> GetPreCheckListByIdAsync(long id)
         {
@@ -77,7 +80,7 @@ namespace Application.Services
         }
 
         public async Task<long> AddPreCheckListAsync(PreCheckListAddEdit model, long userId)
-        {
+            {
             try
             {
                 var mappedModel = _dataMapper.Map<PreCheckListEntity>(model);

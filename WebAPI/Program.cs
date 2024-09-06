@@ -105,6 +105,10 @@ builder.Services.AddScoped<ICompanyMasterRepository, CompanyMasterRepository>();
 builder.Services.AddScoped<ICompanyMasterService, CompanyMasterService>();
 builder.Services.AddScoped<ITrailerInspectionRepository, TrailerInspectionRepository>();
 builder.Services.AddScoped<ITrailerInspectionService, TrailerInspectionService>();
+builder.Services.AddScoped<IPostCheckListRepository, PostCheckListRepository>();
+builder.Services.AddScoped<IPostCheckListDetailRepository, PostCheckListDetailRepository>();
+builder.Services.AddScoped<IPostCheckListService, PostCheckListService>();
+
 builder.Services.AddScoped<IStartEndBatchChecklistRepository, StartEndBatchChecklistRepository>();
 builder.Services.AddScoped<IStartEndBatchChecklistService, StartEndBatchChecklistService>();
 builder.Services.AddScoped<ITankMasterRepository, TankMasterRepository>();

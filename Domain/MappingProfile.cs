@@ -59,6 +59,14 @@ namespace Domain
 
             CreateMap<PrePostQuestionEntity, PrePostQuestionList>();
 
+            CreateMap<PostCheckListEntity, PostCheckList>();
+            CreateMap<PostCheckListEntity, PostCheckListAddEdit>();
+            CreateMap<PostCheckListAddEdit, PostCheckListEntity>().ReverseMap();
+
+            CreateMap<PostCheckListDetailEntity, PostCheckListDetailAddEdit>();
+            CreateMap<PostCheckListDetailAddEdit, PostCheckListDetailEntity>().ReverseMap();
+
+
 
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
                .ConvertUsing(typeof(PaginatedListConverter<,>));
