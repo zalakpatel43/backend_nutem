@@ -1,25 +1,30 @@
-﻿using System;
+﻿using Skyward.Model;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-    public class Permission
+    [Table("adm_Permission")]
+    public class Permission : BaseAuditable
     {
         public Permission()
         {
             RolePermissions = new List<RolePermissionMap>();
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-     //   public int ModuleGroupId { get; set; }
-        public int Priority { get; set; }
+        public int Id { get; set; }               // Unique identifier for the permission
+        public string Code { get; set; }          // Permission code (similar to old entity)
+        public string Name { get; set; }          // Name of the permission
+        public bool IsDefault { get; set; }       // Whether this permission is default
+        public long PermissionTypeId { get; set; }  // Foreign key to PermissionType entity
+        public int DisplayOrder { get; set; }     // Order in which permissions are displayed
+        public string Controller { get; set; }    // Controller associated with the permission
+        public string ActionName { get; set; }    // Action within the controller
+        public bool IsActive { get; set; } = true;  // Status of the permission
 
-     //   public virtual ModuleGroup ModuleGroup { get; set; }
-        public virtual ICollection<RolePermissionMap> RolePermissions { get; set; }
+        // Relationships
+        public virtual ICollection<RolePermissionMap> RolePermissions { get; set; }  // Role-Permission mapping
+        public virtual MastersEntity PermissionTypeMasters { get; set; }      // Link to permission type master
     }
 }

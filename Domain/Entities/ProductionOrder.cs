@@ -18,7 +18,9 @@ namespace Domain.Entities
             //this.PreCheckListEntities = new List<PreCheckListEntity>();
             this.WeightCheck = new List<WeightCheck>();
             this.AttributeCheck = new List<AttributeCheck>();
+            this.TrailerLoadingDetails = new List<TrailerLoadingDetails>();
             this.DowntimeTracking=new List<DowntimeTracking>();
+            this.PalletPacking = new List<PalletPacking>();
             //this.AttributeCheckEntities = new List<AttributeCheckEntity>();
         }
         public string Code { get; set; }
@@ -38,6 +40,8 @@ namespace Domain.Entities
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
+        public virtual ICollection<PalletPacking> PalletPacking { get; set; }
+        public virtual ICollection<TrailerLoadingDetails> TrailerLoadingDetails { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheckEntities { get; set; }
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrackingEntities { get; set; }
     }

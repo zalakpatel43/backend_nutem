@@ -42,6 +42,7 @@ namespace Domain
             CreateMap<AttributeCheck, AttributeCheckList>();
             CreateMap<AttributeCheck, AttributeCheckAddEdit>();
             CreateMap<AttributeCheckAddEdit, AttributeCheck>().ReverseMap();
+
             CreateMap<AttributeCheckDetails, AttributeCheckDetailsAddEdit>();
             CreateMap<AttributeCheckDetailsAddEdit, AttributeCheckDetails>().ReverseMap();
             CreateMap<DowntimeTracking, DowntimeTrackingList>();
@@ -49,6 +50,33 @@ namespace Domain
             CreateMap<DowntimeTrackingAddEdit, DowntimeTracking>().ReverseMap();
             CreateMap<DowntimeTrackingDetails, DowntimeTrackingDetailsAddEdit>();
             CreateMap<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>().ReverseMap();
+
+            // TrailerLoading mappings
+            CreateMap<TrailerLoading, TrailerLoadingList>();
+            CreateMap<TrailerLoading, TrailerLoadingAddEdit>();
+            CreateMap<TrailerLoadingAddEdit, TrailerLoading>().ReverseMap();
+
+            CreateMap<RolePermissionMap, RolePermissionList>();
+            CreateMap<RolePermissionMap, RolePermissionAddEdit>();
+            CreateMap<RolePermissionAddEdit, RolePermissionMap>().ReverseMap();
+
+            // TrailerLoadingDetails mappings
+            CreateMap<TrailerLoadingDetails, TrailerLoadingDetailsAddEdit>();
+            CreateMap<TrailerLoadingDetailsAddEdit, TrailerLoadingDetails>().ReverseMap();
+
+
+            // PalletPacking mappings
+            CreateMap<PalletPacking, PalletPackingList>();
+            CreateMap<PalletPacking, PalletPackingAddEdit>();
+            CreateMap<PalletPackingAddEdit, PalletPacking>().ReverseMap();
+
+            // PalletPackingDetails mappings
+            CreateMap<PalletPackingDetails, PalletPackingDetailsAddEdit>();
+            CreateMap<PalletPackingDetailsAddEdit, PalletPackingDetails>().ReverseMap();
+
+
+
+
 
             CreateMap<PreCheckListEntity, PreCheckList>();
             CreateMap<PreCheckListEntity, PreCheckListAddEdit>();

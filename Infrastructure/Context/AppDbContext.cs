@@ -12,11 +12,16 @@ namespace Infrastructure.Context
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermissionMap> RolePermissionMaps { get; set; }
         public DbSet<WeightCheck> WeightCheck { get; set; }
+        public DbSet<PalletPacking> PalletPacking { get; set; }
+
+        public DbSet<PalletPackingDetails> PalletPackingDetails { get; set; }
         public DbSet<DowntimeTracking> DowntimeTracking { get; set; }
         public DbSet<DowntimeTrackingDetails> DowntimeTrackingDetails { get; set; } // Ensure this is added
         public DbSet<AttributeCheck> AttributeCheck { get; set; }
         public DbSet<ProductionOrder> ProductionOrder { get; set; }
         public DbSet<ProductMaster> ProductMaster { get; set; }
+        public DbSet<TrailerLoading> TrailerLoading { get; set; }
+        public DbSet<TrailerLoadingDetails> TrailerLoadingDetails { get; set; }
         public DbSet<ShiftMaster> ShiftMaster { get; set; }
         public DbSet<CauseMaster> CauseMaster { get; set; }
         public DbSet<MastersEntity> Master { get; set; }
@@ -179,6 +184,7 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<MastersEntity>()
                 .ToTable("adm_Masters");
+
             modelBuilder.Entity<DowntimeTracking>()
             .HasKey(dt => dt.Id); // Set primary key
 
@@ -243,6 +249,95 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<PreCheckListDetailEntity>()
                 .ToTable("adm_PreCheckListDetails");
+
+
+            // TrailerLoading Entity Configuration
+            modelBuilder.Entity<TrailerLoading>()
+                .HasKey(tl => tl.Id);
+
+            modelBuilder.Entity<TrailerLoading>()
+                .HasOne(tl => tl.HeadUser)
+                .WithMany()
+                .HasForeignKey(tl => tl.SupervisedBy)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<TrailerLoading>()
+                .ToTable("adm_TrailerLoadingHeader");
+
+            modelBuilder.Entity<TrailerLoadingDetails>()
+                .HasKey(tld => tld.Id);
+
+            modelBuilder.Entity<TrailerLoadingDetails>()
+                .HasOne(tld => tld.TrailerLoading)
+                .WithMany(tl => tl.TrailerLoadingDetails)
+                .HasForeignKey(tld => tld.HeaderId);
+
+            modelBuilder.Entity<TrailerLoadingDetails>()
+                .HasOne(dt => dt.ProductionOrderid)
+                .WithMany(po => po.TrailerLoadingDetails) // Ensure navigation property name is correct
+                .HasForeignKey(dt => dt.ProductionOrder);
+
+            modelBuilder.Entity<TrailerLoadingDetails>()
+                .ToTable("adm_TrailerLoadingDetails");
+
+            modelBuilder.Entity<PalletPacking>()
+           .HasKey(pp => pp.Id);
+
+            modelBuilder.Entity<PalletPacking>()
+                .HasOne(pp => pp.ProductMaster)
+                .WithMany(pm => pm.PalletPacking)
+                .HasForeignKey(pp => pp.ProductId);
+
+            modelBuilder.Entity<PalletPacking>()
+                .HasOne(pp => pp.ProductionOrder)
+                .WithMany(po => po.PalletPacking)
+                .HasForeignKey(pp => pp.SAPProductionOrderId);
+
+            modelBuilder.Entity<PalletPacking>()
+                    .HasOne(tl => tl.HeadUser)
+                    .WithMany()
+                    .HasForeignKey(tl => tl.SupervisedBy)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PalletPacking>()
+                .ToTable("adm_PalletPackingHeader");
+
+            modelBuilder.Entity<PalletPackingDetails>()
+                .HasKey(ppd => ppd.Id);
+
+            modelBuilder.Entity<PalletPackingDetails>()
+                .HasOne(ppd => ppd.PalletPacking)
+                .WithMany(pp => pp.PalletPackingDetails)
+                .HasForeignKey(ppd => ppd.HeaderId);
+
+            modelBuilder.Entity<PalletPackingDetails>()
+                .ToTable("adm_PalletPackingDetails");
+
+
+            // Configure RolePermissionMap
+            modelBuilder.Entity<RolePermissionMap>()
+                .HasKey(rp => rp.Id);
+
+            modelBuilder.Entity<RolePermissionMap>()
+                .HasOne(rp => rp.Role)
+                .WithMany(r => r.RolePermissions)
+                .HasForeignKey(rp => rp.RoleId);
+
+
+
+            modelBuilder.Entity<RolePermissionMap>()
+                .HasOne(rp => rp.Permission)
+                .WithMany(p => p.RolePermissions)
+                .HasForeignKey(rp => rp.PermissionId);
+        
+
+            modelBuilder.Entity<RolePermissionMap>()
+                .ToTable("adm_RolePermissionMap");
+
+
+
+
 
         }
     }

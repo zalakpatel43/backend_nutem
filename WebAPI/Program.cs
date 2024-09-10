@@ -72,6 +72,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<IAutoMapperGenericDataMapper, AutoMapperGenericDataMapper>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
@@ -85,6 +86,10 @@ builder.Services.AddScoped<IProductionOrderService, ProductionOrderService>();
 builder.Services.AddScoped<IShiftMasterRepository, ShiftMasterRepository>();
 builder.Services.AddScoped<IShiftMasterService, ShiftMasterService>();
 builder.Services.AddScoped<IMastersRepository, MastersRepository>();
+
+builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
+builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+
 builder.Services.AddScoped<IMastersService, MastersService>();
 builder.Services.AddScoped<ICauseMasterRepository, CauseMasterRepository>();
 builder.Services.AddScoped<ICauseMasterService, CauseMasterService>();
@@ -103,6 +108,17 @@ builder.Services.AddScoped<IPrePostQuestionService, PrePostQuestionService>();
 builder.Services.AddScoped<IPreCheckListRepository, PreCheckListRepository>();
 builder.Services.AddScoped<IPreCheckListDetailRepository, PreCheckListDetailRepository>();
 builder.Services.AddScoped<IPreCheckListService, PreCheckListService>();
+
+builder.Services.AddScoped<ITrailerLoadingDetailsRepository, TrailerLoadingDetailsRepository>();
+builder.Services.AddScoped<ITrailerLoadingRepository, TrailerLoadingRepository>();
+builder.Services.AddScoped<ITrailerLoadingService, TrailerLoadingService>();
+
+
+builder.Services.AddScoped<IPalletPackingDetailsRepository, PalletPackingDetailsRepository>();
+builder.Services.AddScoped<IPalletPackingRepository, PalletPackingRepository>();
+builder.Services.AddScoped<IPalletPackingService, PalletPackingService>();
+
+
 
 
 
