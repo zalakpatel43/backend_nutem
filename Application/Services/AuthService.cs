@@ -30,7 +30,7 @@ namespace Application.Services
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(username);
-                var token = await _jwtTokenService.GenerateTokenAsync(username); // Assume you have a service to generate JWT tokens
+                var token = await _jwtTokenService.GenerateTokenAsync(username,user.Id); // Assume you have a service to generate JWT tokens
                 var roles = await _userManager.GetRolesAsync(user);
 
                 // Populate the response
