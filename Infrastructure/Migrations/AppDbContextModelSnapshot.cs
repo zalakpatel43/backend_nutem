@@ -301,6 +301,9 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("SAPProductionOrderId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ShiftMasterId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
@@ -308,6 +311,8 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ProductLineId");
 
                     b.HasIndex("SAPProductionOrderId");
+
+                    b.HasIndex("ShiftMasterId");
 
                     b.ToTable("adm_DowntimeTracking", (string)null);
                 });
@@ -323,17 +328,20 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ActionTaken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ActionTakenId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CauseId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CauseId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("DoneByUserIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DoneByUserNames")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Durations")
                         .HasColumnType("nvarchar(max)");
@@ -352,6 +360,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ShiftId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -397,6 +408,109 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_NozzelMaster", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.PalletPacking", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("FinishedCasesOnIncompletePalletAtEnd")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("FinishedCasesOnIncompletePalletAtStart")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PackingDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SAPProductionOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SupervisedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("TotalCasesProduced")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SAPProductionOrderId");
+
+                    b.HasIndex("SupervisedBy");
+
+                    b.ToTable("adm_PalletPackingHeader", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.PalletPackingDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DoneByIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("HeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PalletNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeaderId");
+
+                    b.ToTable("adm_PalletPackingDetails", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Permission", b =>
                 {
                     b.Property<int>("Id")
@@ -405,18 +519,50 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ActionName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Controller")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
+                    b.Property<long>("PermissionTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PermissionTypeMastersId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.HasIndex("PermissionTypeMastersId");
+
+                    b.ToTable("adm_Permission");
                 });
 
             modelBuilder.Entity("Domain.Entities.PreCheckListDetailEntity", b =>
@@ -744,7 +890,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolePermissionMaps");
+                    b.ToTable("adm_RolePermissionMap", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ShiftMaster", b =>
@@ -779,6 +925,109 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("adm_ShiftMaster", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BOLNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DoorNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ProductionOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SupervisedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("SupervisedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TLDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TrailerNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductionOrderId");
+
+                    b.HasIndex("SupervisedBy");
+
+                    b.ToTable("adm_TrailerLoadingHeader", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoadingDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ActionTakenBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("HeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PalletQty")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductionOrder")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeaderId");
+
+                    b.HasIndex("ProductionOrder");
+
+                    b.ToTable("adm_TrailerLoadingDetails", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -1212,11 +1461,17 @@ namespace Infrastructure.Migrations
                         .WithMany("DowntimeTracking")
                         .HasForeignKey("SAPProductionOrderId");
 
+                    b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
+                        .WithMany()
+                        .HasForeignKey("ShiftMasterId");
+
                     b.Navigation("Masters");
 
                     b.Navigation("ProductMaster");
 
                     b.Navigation("ProductionOrder");
+
+                    b.Navigation("ShiftMaster");
                 });
 
             modelBuilder.Entity("Domain.Entities.DowntimeTrackingDetails", b =>
@@ -1228,6 +1483,46 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("DowntimeTracking");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PalletPacking", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
+                        .WithMany("PalletPacking")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
+                        .WithMany("PalletPacking")
+                        .HasForeignKey("SAPProductionOrderId");
+
+                    b.HasOne("Domain.Entities.User", "HeadUser")
+                        .WithMany()
+                        .HasForeignKey("SupervisedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("HeadUser");
+
+                    b.Navigation("ProductMaster");
+
+                    b.Navigation("ProductionOrder");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PalletPackingDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.PalletPacking", "PalletPacking")
+                        .WithMany("PalletPackingDetails")
+                        .HasForeignKey("HeaderId");
+
+                    b.Navigation("PalletPacking");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Permission", b =>
+                {
+                    b.HasOne("Skyward.Model.MastersEntity", "PermissionTypeMasters")
+                        .WithMany("Permissions")
+                        .HasForeignKey("PermissionTypeMastersId");
+
+                    b.Navigation("PermissionTypeMasters");
                 });
 
             modelBuilder.Entity("Domain.Entities.PreCheckListDetailEntity", b =>
@@ -1294,6 +1589,37 @@ namespace Infrastructure.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
+                        .WithMany()
+                        .HasForeignKey("ProductionOrderId");
+
+                    b.HasOne("Domain.Entities.User", "HeadUser")
+                        .WithMany()
+                        .HasForeignKey("SupervisedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("HeadUser");
+
+                    b.Navigation("ProductionOrder");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoadingDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.TrailerLoading", "TrailerLoading")
+                        .WithMany("TrailerLoadingDetails")
+                        .HasForeignKey("HeaderId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrderid")
+                        .WithMany("TrailerLoadingDetails")
+                        .HasForeignKey("ProductionOrder");
+
+                    b.Navigation("ProductionOrderid");
+
+                    b.Navigation("TrailerLoading");
                 });
 
             modelBuilder.Entity("Domain.Entities.WeightCheck", b =>
@@ -1409,6 +1735,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("WeightCheckSubDetails");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PalletPacking", b =>
+                {
+                    b.Navigation("PalletPackingDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.Permission", b =>
                 {
                     b.Navigation("RolePermissions");
@@ -1432,6 +1763,8 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DowntimeTracking");
 
+                    b.Navigation("PalletPacking");
+
                     b.Navigation("WeightCheck");
                 });
 
@@ -1440,6 +1773,10 @@ namespace Infrastructure.Migrations
                     b.Navigation("AttributeCheck");
 
                     b.Navigation("DowntimeTracking");
+
+                    b.Navigation("PalletPacking");
+
+                    b.Navigation("TrailerLoadingDetails");
 
                     b.Navigation("WeightCheck");
                 });
@@ -1452,6 +1789,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.ShiftMaster", b =>
                 {
                     b.Navigation("WeightCheck");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
+                {
+                    b.Navigation("TrailerLoadingDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.WeightCheck", b =>
@@ -1467,6 +1809,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Skyward.Model.MastersEntity", b =>
                 {
                     b.Navigation("DowntimeTracking");
+
+                    b.Navigation("Permissions");
                 });
 #pragma warning restore 612, 618
         }
