@@ -18,5 +18,6 @@ namespace Skyward.Model
         public virtual ICollection<PreCheckListEntity> PreCheckListEntity { get; set; }
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
         public virtual ICollection<TrailerInspection> TrailerInspection { get; set; }
+        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

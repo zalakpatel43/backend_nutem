@@ -18,9 +18,13 @@ namespace Domain.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Durations { get; set; }
-        public long CauseId { get; set; }
+        public string CauseId { get; set; }
         public string ActionTaken { get; set; }
-        public long ActionTakenId { get; set; }
+
+        public string? DoneByUserIds { get; set; }
+        public string? DoneByUserNames { get; set; }
+        public string ShiftId { get; set; }
+
         public bool IsActive { get; set; }
         public virtual DowntimeTracking DowntimeTracking { get; set; }
 

@@ -25,7 +25,7 @@ namespace Domain.Entities
         public virtual ProductMaster ProductMaster { get; set; }
         public virtual MastersEntity Masters { get; set; }
         // public virtual ProductionLineMaster ProductionLineMaster { get; set; } // Uncomment if needed
-
+        public virtual ShiftMaster ShiftMaster { get; set; }
         public virtual ICollection<DowntimeTrackingDetails> DownTimeTrackingDetails { get; set; }
         public virtual ICollection<CauseMaster> CauseMaster { get; set; }
         //public virtual ICollection<MastersEntity> MastersEntity { get; set; }

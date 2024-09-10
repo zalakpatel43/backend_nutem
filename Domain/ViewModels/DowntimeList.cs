@@ -15,6 +15,7 @@ namespace Domain.ViewModels
         public string ProductName { get; set; }
         public long? ProductLineId { get; set; }
         public string ProductLineName { get; set; }
+
         public bool IsActive { get; set; }
         public long? SAPProductionOrderId { get; set; }
     }

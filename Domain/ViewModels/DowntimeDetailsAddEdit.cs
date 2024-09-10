@@ -15,9 +15,13 @@ namespace Domain.ViewModels
 
         public DateTime? EndDate { get; set; }
         public string Durations { get; set; }
-        public long? Cause { get; set; }
+        public long? CauseId { get; set; }
+        public long? ShiftId { get; set; }
         public string ActionTaken { get; set; }
-        public long? ActionTakenId { get; set; }
+
+        public string DoneByUserIds { get; set; }
+    
+        public string DoneByUserNames { get; set; }
         public bool? IsActive { get; set; }
 
         // List initialization is not needed here since it's a single detail item
