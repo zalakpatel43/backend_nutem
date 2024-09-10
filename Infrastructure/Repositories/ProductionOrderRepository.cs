@@ -1,10 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Context;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
@@ -15,6 +13,24 @@ namespace Infrastructure.Repositories
         {
         }
 
-        // Implement methods specific to Company if needed
+        public async Task<ProductionOrder> GetProductionOrderWithDetailsByIdAsync(long id)
+        {
+            return await _context.ProductionOrder
+        .Include(po => po.WeightCheck)
+            .ThenInclude(wc => wc.ProductMaster)
+        .Include(po => po.WeightCheck)
+            .ThenInclude(wc => wc.ShiftMaster)   
+        .Include(po => po.AttributeCheck)
+            .ThenInclude(ac => ac.ProductMaster) 
+        .Include(po => po.PreCheckListEntity)
+            .ThenInclude(pc => pc.ProductMaster)
+        .Include(po => po.PreCheckListEntity)
+            .ThenInclude(pc => pc.ShiftMaster)
+        .Include(po => po.PostCheckListEntity)
+            .ThenInclude(pc => pc.ProductMaster)
+        .Include(po => po.PostCheckListEntity)
+            .ThenInclude(pc => pc.ShiftMaster) 
+        .FirstOrDefaultAsync(po => po.Id == id);
+        }
     }
 }

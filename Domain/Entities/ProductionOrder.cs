@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Domain.Entities
@@ -33,10 +34,15 @@ namespace Domain.Entities
         public string? Status { get; set; }
         //public virtual ICollection<LiquidPreparationEntity> LiquidPreparationEntities { get; set; }
         //public virtual ICollection<PalletPackingEntity> PalletPackingEntities { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PostCheckListEntity> PostCheckListEntity { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PreCheckListEntity> PreCheckListEntity { get; set; }
+        [JsonIgnore]
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
+        [JsonIgnore]
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
+        [JsonIgnore]
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheckEntities { get; set; }
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrackingEntities { get; set; }

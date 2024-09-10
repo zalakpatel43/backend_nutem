@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,16 @@ namespace WebAPI.Controller
         public async Task<IActionResult> GetAllProductionOrder()
         {
             var data = _prodcutionOrderService.GetAllProductionOrderAsync();
+            return Ok(data);
+        }
+
+
+        [HttpGet("GetByIdAsync/{id}")]
+        public async Task<IActionResult> GetByIdAsync(long id)
+        {
+            var data = await _prodcutionOrderService.GetProductionOrderByIdAsync(id);
+            if (data == null)
+                return NotFound();
             return Ok(data);
         }
     }
