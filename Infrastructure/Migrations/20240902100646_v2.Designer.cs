@@ -4,6 +4,7 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240902100646_v2")]
+    partial class v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -713,121 +716,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Answer")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("HeaderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("PostCheckListId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("PrePostQuestionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("QuestionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostCheckListId");
-
-                    b.HasIndex("PrePostQuestionId");
-
-                    b.ToTable("adm_PostCheckListDetails", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EndDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FillerUserIds")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("FillingLine")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("PrePostQuestionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductionOrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FillingLine");
-
-                    b.HasIndex("PrePostQuestionId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductionOrderId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.ToTable("adm_PostCheckList", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.PreCheckListDetailEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -919,10 +807,16 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ProductMasterId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("ProductionOrderId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ShiftMasterId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("StartDateTime")
@@ -930,15 +824,11 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FillingLine");
-
                     b.HasIndex("PrePostQuestionId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductMasterId");
 
-                    b.HasIndex("ProductionOrderId");
-
-                    b.HasIndex("ShiftId");
+                    b.HasIndex("ShiftMasterId");
 
                     b.ToTable("adm_PreCheckList", (string)null);
                 });
@@ -966,9 +856,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("PostCheckListEntityId")
-                        .HasColumnType("bigint");
-
                     b.Property<long?>("PreCheckListEntityId")
                         .HasColumnType("bigint");
 
@@ -982,8 +869,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostCheckListEntityId");
 
                     b.HasIndex("PreCheckListEntityId");
 
@@ -1926,58 +1811,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("DowntimeTracking");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
-                {
-                    b.HasOne("Domain.Entities.PostCheckListEntity", "PostCheckList")
-                        .WithMany("PostCheckListDetails")
-                        .HasForeignKey("PostCheckListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
-                        .WithMany()
-                        .HasForeignKey("PrePostQuestionId");
-
-                    b.Navigation("PostCheckList");
-
-                    b.Navigation("PrePostQuestion");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
-                {
-                    b.HasOne("Skyward.Model.MastersEntity", "Masters")
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("FillingLine");
-
-                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
-                        .WithMany("PostCheckListDetails")
-                        .HasForeignKey("PrePostQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("Domain.Entities.ProductionOrder", null)
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("ProductionOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("ShiftId");
-
-                    b.Navigation("Masters");
-
-                    b.Navigation("PrePostQuestion");
-
-                    b.Navigation("ProductMaster");
-
-                    b.Navigation("ShiftMaster");
-                });
-
             modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
                 {
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
@@ -2102,10 +1935,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PreCheckListEntity", b =>
                 {
-                    b.HasOne("Skyward.Model.MastersEntity", "Masters")
-                        .WithMany("PreCheckListEntity")
-                        .HasForeignKey("FillingLine");
-
                     b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
                         .WithMany("PreCheckList")
                         .HasForeignKey("PrePostQuestionId")
@@ -2113,20 +1942,12 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
-                        .WithMany("PreCheckListEntity")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("Domain.Entities.ProductionOrder", null)
-                        .WithMany("PreCheckListEntity")
-                        .HasForeignKey("ProductionOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ProductMasterId");
 
                     b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
-                        .WithMany("PreCheckListEntity")
-                        .HasForeignKey("ShiftId");
-
-                    b.Navigation("Masters");
+                        .WithMany()
+                        .HasForeignKey("ShiftMasterId");
 
                     b.Navigation("PrePostQuestion");
 
@@ -2137,10 +1958,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PrePostQuestionEntity", b =>
                 {
-                    b.HasOne("Domain.Entities.PostCheckListEntity", null)
-                        .WithMany("PrePostQuestionEntity")
-                        .HasForeignKey("PostCheckListEntityId");
-
                     b.HasOne("Domain.Entities.PreCheckListEntity", null)
                         .WithMany("PrePostQuestionEntity")
                         .HasForeignKey("PreCheckListEntityId");
@@ -2335,13 +2152,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("RolePermissions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
-                {
-                    b.Navigation("PostCheckListDetails");
-
-                    b.Navigation("PrePostQuestionEntity");
-                });
-
             modelBuilder.Entity("Domain.Entities.PreCheckListEntity", b =>
                 {
                     b.Navigation("PreCheckListDetails");
@@ -2351,8 +2161,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PrePostQuestionEntity", b =>
                 {
-                    b.Navigation("PostCheckListDetails");
-
                     b.Navigation("PreCheckList");
                 });
 
@@ -2367,10 +2175,6 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DowntimeTracking");
 
-                    b.Navigation("PostCheckListEntity");
-
-                    b.Navigation("PreCheckListEntity");
-
                     b.Navigation("LiquidPreparation");
 
                     b.Navigation("WeightCheck");
@@ -2381,10 +2185,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("AttributeCheck");
 
                     b.Navigation("DowntimeTracking");
-
-                    b.Navigation("PostCheckListEntity");
-
-                    b.Navigation("PreCheckListEntity");
 
                     b.Navigation("LiquidPreparation");
 
@@ -2403,10 +2203,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ShiftMaster", b =>
                 {
-                    b.Navigation("PostCheckListEntity");
-
-                    b.Navigation("PreCheckListEntity");
-
                     b.Navigation("LiquidPreparation");
 
                     b.Navigation("WeightCheck");
@@ -2437,10 +2233,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Skyward.Model.MastersEntity", b =>
                 {
                     b.Navigation("DowntimeTracking");
-
-                    b.Navigation("PostCheckListEntity");
-
-                    b.Navigation("PreCheckListEntity");
 
                     b.Navigation("TrailerInspection");
                 });

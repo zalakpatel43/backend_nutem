@@ -13,7 +13,7 @@ namespace Domain.Entities
     {
         public ProductionOrder()
         {
-            //this.LiquidPreparationEntities = new List<LiquidPreparationEntity>();
+            this.LiquidPreparation = new List<LiquidPreparation>();
             //this.PalletPackingEntities = new List<PalletPackingEntity>();
             this.PostCheckListEntity = new List<PostCheckListEntity>();
             this.PreCheckListEntity = new List<PreCheckListEntity>();
@@ -44,6 +44,7 @@ namespace Domain.Entities
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
         [JsonIgnore]
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
+        public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheckEntities { get; set; }
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrackingEntities { get; set; }
     }

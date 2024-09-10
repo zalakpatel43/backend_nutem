@@ -18,6 +18,6 @@ namespace Domain.Entities
         public virtual ICollection<PreCheckListEntity> PreCheckListEntity { get; set; }
         public virtual ICollection<PostCheckListEntity> PostCheckListEntity { get; set; }
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
-        //public virtual ICollection<LiquidPreparationEntity> LiquidPreparationEntities { get; set; }
+        public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
     }
 }
