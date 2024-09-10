@@ -20,13 +20,13 @@ namespace Domain.Entities
 
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrack { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheck { get; set; }
-        //public virtual ICollection<PreCheckListEntity> PreCheckList { get; set; }
-        //public virtual ICollection<PostCheckListEntity> PostCheckList { get; set; }
+        public virtual ICollection<PreCheckListEntity> PreCheckListEntity { get; set; }
+        public virtual ICollection<PostCheckListEntity> PostCheckListEntity { get; set; }
         //public virtual ICollection<ProductInstructionDetailsEntity> ProductInstructionDetailsEntities { get; set; }
         //public virtual ICollection<LiquidPreparationEntity> LiquidPreparationEntities { get; set; }
         //public virtual ICollection<PalletPackingEntity> PalletPackingEntities { get; set; }
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
-
+        public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
         public virtual ICollection<PalletPacking> PalletPacking { get; set; }

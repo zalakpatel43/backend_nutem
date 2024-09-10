@@ -1,6 +1,8 @@
-﻿using Application.Interfaces;
+﻿using Application.Helper;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebAPI.Controller
 {
@@ -18,6 +20,8 @@ namespace WebAPI.Controller
         [HttpGet("GetAllShift")]
         public async Task<IActionResult> GetAllShift()
         {
+            var userIdClaim = User.FindFirst(IdentityHelper.CustomClaimTypes.UserId);
+           // var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var data = _shiftMasterService.GetAllShiftMasterAsync();
             return Ok(data);
         }

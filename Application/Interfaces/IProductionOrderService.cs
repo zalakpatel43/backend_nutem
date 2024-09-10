@@ -1,8 +1,5 @@
 ﻿using Domain.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Interfaces
@@ -10,9 +7,6 @@ namespace Application.Interfaces
     public interface IProductionOrderService
     {
         IQueryable<ProductionOrderList> GetAllProductionOrderAsync();
-        //Task<WeightCheckAddEdit> GetWeightCheckByIdAsync(long id);
-        //Task<long> AddWeightCheckAsync(WeightCheckAddEdit model, Guid user);
-        //Task<long> UpdateWeightCheckAsync(WeightCheckAddEdit model, Guid user);
-        //Task DeleteWeightCheckAsync(long id, Guid user);
+        Task<ProductionOrderList> GetProductionOrderByIdAsync(long id);
     }
 }

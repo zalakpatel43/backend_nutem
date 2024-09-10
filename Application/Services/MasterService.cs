@@ -28,5 +28,10 @@ namespace Application.Services
             var entity = _mastersRepository.Get(m => m.IsActive == true);
             return _dataMapper.Project<MastersEntity, MastersList>(entity);
         }
+
+        public async Task<IEnumerable<MastersEntity>> GetVehicleTypeCategoriesAsync()
+        {
+            return await _mastersRepository.GetByCategoryNameAsync("VehicleType");
+        }
     }
 }

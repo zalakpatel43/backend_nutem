@@ -15,9 +15,9 @@ namespace Domain.Entities
         public string ShiftCode { get; set; }
         public bool? IsActive { get; set; } 
 
-        //public virtual ICollection<PreCheckListEntity> PreCheckList { get; set; }
-        //public virtual ICollection<PostCheckListEntity> PostCheckList { get; set; }
+        public virtual ICollection<PreCheckListEntity> PreCheckListEntity { get; set; }
+        public virtual ICollection<PostCheckListEntity> PostCheckListEntity { get; set; }
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
-        //public virtual ICollection<LiquidPreparationEntity> LiquidPreparationEntities { get; set; }
+        public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
     }
 }

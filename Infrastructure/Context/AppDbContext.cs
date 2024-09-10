@@ -8,7 +8,6 @@ namespace Infrastructure.Context
 {
     public class AppDbContext : IdentityDbContext<User, Role, long>
     {
-        public DbSet<Company> Company { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermissionMap> RolePermissionMaps { get; set; }
         public DbSet<WeightCheck> WeightCheck { get; set; }
@@ -30,8 +29,25 @@ namespace Infrastructure.Context
         public DbSet<AttributeCheckDetails> AttributeCheckDetails { get; set; }
         public DbSet<NozzelMaster> NozzelMaster { get; set; }
         public DbSet<PrePostQuestionEntity> PrePostQuestion { get; set; }
-        public DbSet<PreCheckListEntity> PreCheckListEntity { get; set; }
+        public DbSet<PreCheckListEntity> PreCheckListEntity { get; set; } 
         public DbSet<PreCheckListDetailEntity> PreCheckListDetailEntity { get; set; }
+        public DbSet<CompanyMaster> CompanyMaster { get; set; }
+        public DbSet<TrailerInspection> TrailerInspection { get; set; }
+
+        public DbSet<PostCheckListEntity> PostCheckListEntity { get; set; }
+        public DbSet<PostCheckListDetailEntity> PostCheckListDetailEntity { get; set; }
+        public DbSet<TankMaster> TankMaster { get; set; }
+
+        public DbSet<StartEndBatchChecklist> StartEndBatchChecklist { get; set; }
+        public DbSet<MaterialMaster> MaterialMaster { get; set; }
+        public DbSet<ProductInstructionDetails> ProductInstructionDetails { get; set; }
+        public DbSet<QCTSpecificationMaster> QCTSpecificationMaster { get; set; }
+        public DbSet<LiquidPreparation> LiquidPreparation { get; set; }
+        public DbSet<LiquidPreparationInstructionDetails> LiquidPreparationInstructionDetails { get; set; }
+        public DbSet<LiquidPreparationChecklistDetails> LiquidPreparationChecklistDetails { get; set; }
+        public DbSet<LiquidPreparationSpecificationDetails> LiquidPreparationSpecificationDetails { get; set; }
+        public DbSet<LiquidPreparationAdjustmentDetails> LiquidPreparationAdjustmentDetails { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -158,12 +174,6 @@ namespace Infrastructure.Context
             modelBuilder.Entity<WeightCheckSubDetails>()
                 .ToTable("adm_WeightCheckSubDetails");
 
-            modelBuilder.Entity<Company>()
-                .HasKey(c => c.Id);
-
-            modelBuilder.Entity<Company>()
-                .ToTable("adm_Company");
-
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
 
@@ -218,7 +228,7 @@ namespace Infrastructure.Context
                 .ToTable("adm_DowntimeTrackingDetails");
 
             modelBuilder.Entity<PrePostQuestionEntity>()
-        .HasKey(pp => pp.Id);
+                .HasKey(pp => pp.Id);
 
             modelBuilder.Entity<PrePostQuestionEntity>()
                 .ToTable("adm_PrePostQuestion");
@@ -228,13 +238,29 @@ namespace Infrastructure.Context
                 .WithOne(pcl => pcl.PrePostQuestion)
                 .HasForeignKey(pcl => pcl.PrePostQuestionId);
 
-            //modelBuilder.Entity<PrePostQuestionEntity>()
-            //    .HasMany(pp => pp.PostCheckListDetails) 
-            //    .WithOne()
-            //    .HasForeignKey(pc => pc.PrePostQuestionId);
+            modelBuilder.Entity<PrePostQuestionEntity>()
+                .HasMany(pp => pp.PostCheckListDetails)
+                .WithOne(pcld => pcld.PrePostQuestion)
+                .HasForeignKey(pcld => pcld.PrePostQuestionId);
+
 
             modelBuilder.Entity<PreCheckListEntity>()
                 .HasKey(pcl => pcl.Id);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .HasOne(pcl => pcl.ProductMaster)
+                .WithMany(pm => pm.PreCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ProductMaster`
+                .HasForeignKey(pcl => pcl.ProductId);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .HasOne(pcl => pcl.ShiftMaster)
+                .WithMany(sm => sm.PreCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.ShiftId);
+
+            modelBuilder.Entity<PreCheckListEntity>()
+                .HasOne(pcl => pcl.Masters)
+                .WithMany(sm => sm.PreCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.FillingLine);
 
             modelBuilder.Entity<PreCheckListEntity>()
                 .ToTable("adm_PreCheckList");
@@ -338,6 +364,174 @@ namespace Infrastructure.Context
 
 
 
+
+
+            modelBuilder.Entity<CompanyMaster>()
+               .HasKey(pm => pm.Id);
+
+            modelBuilder.Entity<CompanyMaster>()
+                .ToTable("adm_CompanyMaster");
+
+
+            modelBuilder.Entity<TrailerInspection>()
+                .HasKey(ti => ti.Id);
+
+            modelBuilder.Entity<TrailerInspection>()
+                .HasOne(wc => wc.CompanyMaster)
+                .WithMany(po => po.TrailerInspection)
+                .HasForeignKey(wc => wc.CompanyId);
+
+            modelBuilder.Entity<TrailerInspection>()
+                .HasOne(wc => wc.MasterEntity)
+                .WithMany(po => po.TrailerInspection)
+                .HasForeignKey(wc => wc.VehicleTypeId);
+
+            modelBuilder.Entity<TrailerInspection>()
+                .ToTable("adm_TrailerInspection");
+
+            modelBuilder.Entity<TankMaster>()
+              .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<TankMaster>()
+                .ToTable("adm_TankMaster");
+
+            modelBuilder.Entity<StartEndBatchChecklist>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<StartEndBatchChecklist>()
+                .ToTable("adm_StartEndBatchChecklist");
+
+            modelBuilder.Entity<MaterialMaster>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<MaterialMaster>()
+                .ToTable("adm_MaterialMaster");
+
+            modelBuilder.Entity<ProductInstructionDetails>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<ProductInstructionDetails>()
+                .ToTable("adm_ProductInstructionDetails");
+
+            modelBuilder.Entity<QCTSpecificationMaster>()
+             .HasKey(nm => nm.Id);
+
+            modelBuilder.Entity<QCTSpecificationMaster>()
+                .ToTable("adm_QCTSpecificationMaster");
+
+            modelBuilder.Entity<LiquidPreparation>()
+               .HasKey(wc => wc.Id);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .HasOne(wc => wc.ShiftMaster)
+                .WithMany(po => po.LiquidPreparation)
+                .HasForeignKey(wc => wc.ShiftId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .HasOne(wc => wc.ProductMaster)
+                .WithMany(po => po.LiquidPreparation)
+                .HasForeignKey(wc => wc.ProductId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .HasOne(wc => wc.TankMaster)
+                .WithMany(po => po.LiquidPreparation)
+                .HasForeignKey(wc => wc.TankId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+               .HasOne(wc => wc.ProductionOrder)
+               .WithMany(po => po.LiquidPreparation)
+               .HasForeignKey(wc => wc.SAPProductionOrderId);
+
+            modelBuilder.Entity<LiquidPreparation>()
+                .ToTable("adm_LiquidPreparation");
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+              .HasOne(wc => wc.LiquidPreparation)
+              .WithMany(po => po.LiquidPreparationInstructionDetails)
+              .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+                 .HasOne(wc => wc.ProductInstructionDetails)
+                 .WithMany(po => po.LiquidPreparationInstructionDetails)
+                 .HasForeignKey(wc => wc.InstructionId);
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+                 .HasOne(wc => wc.MaterialMaster)
+                 .WithMany(po => po.LiquidPreparationInstructionDetails)
+                 .HasForeignKey(wc => wc.MaterialId);
+
+            modelBuilder.Entity<LiquidPreparationInstructionDetails>()
+                .ToTable("adm_LiquidPreparationInstructionDetails");
+
+            modelBuilder.Entity<LiquidPreparationChecklistDetails>()
+               .HasOne(wc => wc.TankMaster)
+               .WithMany(po => po.LiquidPreparationChecklistDetails)
+               .HasForeignKey(wc => wc.TankId);
+
+            modelBuilder.Entity<LiquidPreparationChecklistDetails>()
+               .HasOne(wc => wc.LiquidPreparation)
+               .WithMany(po => po.LiquidPreparationChecklistDetails)
+                .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationChecklistDetails>()
+                .ToTable("adm_LiquidPreparationChecklistDetails");
+
+            modelBuilder.Entity<LiquidPreparationSpecificationDetails>()
+                .HasOne(wc => wc.LiquidPreparation)
+                .WithMany(po => po.LiquidPreparationSpecificationDetails)
+                 .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationSpecificationDetails>()
+               .HasOne(wc => wc.QCTSpecificationMaster)
+               .WithMany(po => po.LiquidPreparationSpecificationDetails)
+                .HasForeignKey(wc => wc.SpecificationLimitId);
+
+            modelBuilder.Entity<LiquidPreparationSpecificationDetails>()
+                .ToTable("adm_LiquidPreparationSpecificationDetails");
+
+            modelBuilder.Entity<LiquidPreparationAdjustmentDetails>()
+               .HasOne(wc => wc.LiquidPreparation)
+               .WithMany(po => po.LiquidPreparationAdjustmentDetails)
+                .HasForeignKey(wc => wc.LiquidPreparationId);
+
+            modelBuilder.Entity<LiquidPreparationAdjustmentDetails>()
+             .HasOne(wc => wc.MaterialMaster)
+             .WithMany(po => po.LiquidPreparationAdjustmentDetails)
+              .HasForeignKey(wc => wc.MaterialId);
+
+            modelBuilder.Entity<LiquidPreparationAdjustmentDetails>()
+                .ToTable("adm_LiquidPreparationAdjustmentDetails");
+            // Configure PostCheckListEntity
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasKey(pcl => pcl.Id);
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasOne(pcl => pcl.ProductMaster)
+                .WithMany(pm => pm.PostCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ProductMaster`
+                .HasForeignKey(pcl => pcl.ProductId);
+
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasOne(pcl => pcl.ShiftMaster)
+                .WithMany(sm => sm.PostCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.ShiftId);
+
+            modelBuilder.Entity<PostCheckListEntity>()
+                .HasOne(pcl => pcl.Masters)
+                .WithMany(sm => sm.PostCheckListEntity) // Ensure that `PreCheckLists` is a navigation property in `ShiftMaster`
+                .HasForeignKey(pcl => pcl.FillingLine);
+
+            modelBuilder.Entity<PostCheckListEntity>()
+                .ToTable("adm_PostCheckList");
+
+            modelBuilder.Entity<PostCheckListDetailEntity>()
+                .HasKey(pcld => pcld.Id);
+
+            modelBuilder.Entity<PostCheckListDetailEntity>()
+                .HasOne(pcld => pcld.PostCheckList)
+                .WithMany(pcl => pcl.PostCheckListDetails)
+                .HasForeignKey(pcld => pcld.PostCheckListId);
+
+            modelBuilder.Entity<PostCheckListDetailEntity>()
+                .ToTable("adm_PostCheckListDetails");
 
         }
     }

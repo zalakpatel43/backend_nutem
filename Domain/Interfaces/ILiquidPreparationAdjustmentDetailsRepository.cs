@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface ICompanyRepository : IGenericRepository<Company>
+    public interface ILiquidPreparationAdjustmentDetailsRepository : IGenericRepository<LiquidPreparationAdjustmentDetails>
     {
         // Add methods specific to Company if needed
     }

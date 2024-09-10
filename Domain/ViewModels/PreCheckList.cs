@@ -13,6 +13,7 @@ namespace Domain.ViewModels
         public long? ShiftId { get; set; }
         public string ShiftName { get; set; } // Assuming you want to include shift name
         public long? FillingLine { get; set; }
+        public string FillingLineNumber { get; set; }
         public string FillerUserIds { get; set; }
         public string Comments { get; set; }
         public bool IsActive { get; set; }

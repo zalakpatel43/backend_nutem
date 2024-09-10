@@ -10,6 +10,6 @@ namespace Domain.Interfaces
 {
     public interface IMastersRepository : IGenericRepository<MastersEntity>
     {
-        // Add methods specific to MastersEntity if needed
+        Task<IEnumerable<MastersEntity>> GetByCategoryNameAsync(string categoryName);
     }
 }

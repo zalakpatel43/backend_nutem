@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Domain.Entities
@@ -12,10 +13,10 @@ namespace Domain.Entities
     {
         public ProductionOrder()
         {
-            //this.LiquidPreparationEntities = new List<LiquidPreparationEntity>();
+            this.LiquidPreparation = new List<LiquidPreparation>();
             //this.PalletPackingEntities = new List<PalletPackingEntity>();
-            //this.PostCheckListEntities = new List<PostCheckListEntity>();
-            //this.PreCheckListEntities = new List<PreCheckListEntity>();
+            this.PostCheckListEntity = new List<PostCheckListEntity>();
+            this.PreCheckListEntity = new List<PreCheckListEntity>();
             this.WeightCheck = new List<WeightCheck>();
             this.AttributeCheck = new List<AttributeCheck>();
             this.TrailerLoadingDetails = new List<TrailerLoadingDetails>();
@@ -35,11 +36,17 @@ namespace Domain.Entities
         public string? Status { get; set; }
         //public virtual ICollection<LiquidPreparationEntity> LiquidPreparationEntities { get; set; }
         //public virtual ICollection<PalletPackingEntity> PalletPackingEntities { get; set; }
-        //public virtual ICollection<PostCheckListEntity> PostCheckListEntities { get; set; }
-        //public virtual ICollection<PreCheckListEntity> PreCheckListEntities { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<PostCheckListEntity> PostCheckListEntity { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<PreCheckListEntity> PreCheckListEntity { get; set; }
+        [JsonIgnore]
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
+        [JsonIgnore]
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
+        [JsonIgnore]
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
+        public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
         public virtual ICollection<PalletPacking> PalletPacking { get; set; }
         public virtual ICollection<TrailerLoadingDetails> TrailerLoadingDetails { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheckEntities { get; set; }

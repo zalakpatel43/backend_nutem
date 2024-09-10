@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skyward.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,6 +29,7 @@ namespace Domain.Entities
         public PrePostQuestionEntity PrePostQuestion { get; set; }
         public virtual ProductMaster ProductMaster { get; set; }
         public virtual ShiftMaster ShiftMaster { get; set; }
+        public virtual MastersEntity Masters { get; set; }
         public virtual ICollection<PreCheckListDetailEntity> PreCheckListDetails { get; set; }
         public virtual ICollection<PrePostQuestionEntity> PrePostQuestionEntity { get; set; }
     }
