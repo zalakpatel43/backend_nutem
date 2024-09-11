@@ -29,8 +29,18 @@ namespace Infrastructure.Repositories
         .Include(po => po.PostCheckListEntity)
             .ThenInclude(pc => pc.ProductMaster)
         .Include(po => po.PostCheckListEntity)
-            .ThenInclude(pc => pc.ShiftMaster) 
+            .ThenInclude(pc => pc.ShiftMaster)
+        .Include(po => po.PalletPacking)
+            .ThenInclude(pc => pc.ProductMaster)
+
         .FirstOrDefaultAsync(po => po.Id == id);
         }
+
+        public async Task UpdateAsync(ProductionOrder entity)
+        {
+            _context.ProductionOrder.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

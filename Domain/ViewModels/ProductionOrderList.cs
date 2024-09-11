@@ -12,6 +12,7 @@ namespace Domain.ViewModels
         public DateTime? PODate { get; set; }
         public decimal? PlannedQty { get; set; }
         public string ItemName { get; set; }
+        public string Status { get; set; }
 
         public string PODateTimeFormatted
         {
@@ -25,5 +26,6 @@ namespace Domain.ViewModels
         public List<AttributeCheckList> AttributeChecks { get; set; }
         public List<PreCheckList> PreCheckListEntities { get; set; }
         public List<PostCheckList> PostCheckListEntities { get; set; }
+        public List<PalletPackingList> PalletPackingList { get; set; }
     }
 }

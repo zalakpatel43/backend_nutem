@@ -32,5 +32,16 @@ namespace WebAPI.Controller
                 return NotFound();
             return Ok(data);
         }
+
+        [HttpPatch("ToggleStatus/{id}")]
+        public async Task<IActionResult> ToggleStatus(long id)
+        {
+            var result = await _prodcutionOrderService.ToggleProductionOrderStatusAsync(id);
+
+            if (!result)
+                return NotFound();
+
+            return Ok(new { Message = "Status updated successfully" });
+        }
     }
 }

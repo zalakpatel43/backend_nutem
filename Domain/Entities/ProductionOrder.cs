@@ -45,9 +45,11 @@ namespace Domain.Entities
         [JsonIgnore]
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
         [JsonIgnore]
+        public virtual ICollection<PalletPacking> PalletPacking { get; set; }
+        [JsonIgnore]
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
         public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
-        public virtual ICollection<PalletPacking> PalletPacking { get; set; }
+        
         public virtual ICollection<TrailerLoadingDetails> TrailerLoadingDetails { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheckEntities { get; set; }
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrackingEntities { get; set; }

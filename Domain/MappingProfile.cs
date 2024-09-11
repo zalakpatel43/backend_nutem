@@ -19,6 +19,9 @@ namespace Domain
             CreateMap<ProductionOrder, ProductionOrderList>();
             CreateMap<ProductMaster, ProdcutMasterList>();
             CreateMap<ShiftMaster, ShiftMasterList>();
+            CreateMap<Permission, PermissionList>();
+            CreateMap<Permission, PermissionAddEdit>();
+
             CreateMap<CauseMaster, CauseMasterList>();
             CreateMap<MastersEntity, MastersList>();
             CreateMap<WeightCheck, WeightCheckList>();

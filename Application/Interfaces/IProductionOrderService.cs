@@ -8,5 +8,6 @@ namespace Application.Interfaces
     {
         IQueryable<ProductionOrderList> GetAllProductionOrderAsync();
         Task<ProductionOrderList> GetProductionOrderByIdAsync(long id);
+        Task<bool> ToggleProductionOrderStatusAsync(long id);
     }
 }

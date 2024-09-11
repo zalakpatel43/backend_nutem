@@ -40,6 +40,7 @@ namespace Application.Services
                 PODate = entity.PODate,
                 PlannedQty = entity.PlannedQty,
                 ItemName = entity.ItemName,
+                Status=entity.Status,
 
                 // Map WeightChecks 
                 WeightChecks = entity.WeightCheck.Select(wc => new WeightCheckList
@@ -87,9 +88,34 @@ namespace Application.Services
                     ProductName = post.ProductMaster?.ProductName,
                     ShiftName = post.ShiftMaster?.ShiftName, 
                                                              
+                }).ToList(),
+
+                PalletPackingList = entity.PalletPacking.Select(pp => new PalletPackingList
+                {
+                    Id = pp.Id,
+                    Code = pp.Code,
+                    PackingDateTime = pp.PackingDateTime,
+                    ProductId = pp.ProductId,
+                    ProductName = pp.ProductMaster?.ProductName,
+                    //ShiftName = post.ShiftMaster?.ShiftName,
+
                 }).ToList()
             };
         }
+        public async Task<bool> ToggleProductionOrderStatusAsync(long id)
+        {
+            var entity = await _productionOrderRepository.GetProductionOrderWithDetailsByIdAsync(id);
+            if (entity == null)
+                return false;
+
+            // Toggle status between "Open" and "Closed"
+            entity.Status = entity.Status == "Open" ? "Closed" : "Open";
+
+            // Save changes
+            await _productionOrderRepository.UpdateAsync(entity);
+            return true;
+        }
+
 
     }
 }
