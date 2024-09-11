@@ -1421,11 +1421,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_ShiftMaster", (string)null);
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
-=======
             modelBuilder.Entity("Domain.Entities.StartEndBatchChecklist", b =>
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1433,14 +1429,6 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-<<<<<<< HEAD
-                    b.Property<string>("BOLNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-=======
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
@@ -1521,21 +1509,12 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("CompanyId")
                         .HasColumnType("bigint");
 
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
-                    b.Property<string>("DoorNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-=======
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
@@ -1572,14 +1551,110 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Mode")
                         .HasColumnType("nvarchar(max)");
 
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
+                    b.Property<string>("OverallIntegrityAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OverallIntegrityNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PresentOnTrailerAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PresentOnTrailerNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SafeWorkingOrderAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SafeWorkingOrderNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemperatureSettingUsedAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemperatureSettingUsedNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TimeIn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TimeOfInspection")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TimeOut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TotalTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrailerNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TruckNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleCleanAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleCleanNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("VehicleTypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("VehicleTypeId");
+
+                    b.ToTable("adm_TrailerInspection", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BOLNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DoorNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<long?>("ProductionOrderId")
                         .HasColumnType("bigint");
 
@@ -1640,80 +1715,15 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("ProductionOrder")
-=======
-                    b.Property<string>("OverallIntegrityAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OverallIntegrityNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PresentOnTrailerAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PresentOnTrailerNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RejectionReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafeWorkingOrderAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafeWorkingOrderNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TemperatureSettingUsedAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TemperatureSettingUsedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("TimeIn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("TimeOfInspection")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("TimeOut")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TotalTime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrailerNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TruckNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleCleanAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleCleanNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("VehicleTypeId")
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-<<<<<<< HEAD
                     b.HasIndex("HeaderId");
 
                     b.HasIndex("ProductionOrder");
 
                     b.ToTable("adm_TrailerLoadingDetails", (string)null);
-=======
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("VehicleTypeId");
-
-                    b.ToTable("adm_TrailerInspection", (string)null);
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -2171,76 +2181,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("DowntimeTracking");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Domain.Entities.PalletPacking", b =>
-                {
-                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
-                        .WithMany("PalletPacking")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
-                        .WithMany("PalletPacking")
-                        .HasForeignKey("SAPProductionOrderId");
-
-                    b.HasOne("Domain.Entities.User", "HeadUser")
-                        .WithMany()
-                        .HasForeignKey("SupervisedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("HeadUser");
-=======
-            modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
-                {
-                    b.HasOne("Domain.Entities.PostCheckListEntity", "PostCheckList")
-                        .WithMany("PostCheckListDetails")
-                        .HasForeignKey("PostCheckListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
-                        .WithMany()
-                        .HasForeignKey("PrePostQuestionId");
-
-                    b.Navigation("PostCheckList");
-
-                    b.Navigation("PrePostQuestion");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
-                {
-                    b.HasOne("Skyward.Model.MastersEntity", "Masters")
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("FillingLine");
-
-                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
-                        .WithMany("PostCheckListDetails")
-                        .HasForeignKey("PrePostQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("Domain.Entities.ProductionOrder", null)
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("ProductionOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
-                        .WithMany("PostCheckListEntity")
-                        .HasForeignKey("ShiftId");
-
-                    b.Navigation("Masters");
-
-                    b.Navigation("PrePostQuestion");
-
-                    b.Navigation("ProductMaster");
-
-                    b.Navigation("ShiftMaster");
-                });
-
             modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
                 {
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
@@ -2258,31 +2198,10 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.TankMaster", "TankMaster")
                         .WithMany("LiquidPreparation")
                         .HasForeignKey("TankId");
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
 
                     b.Navigation("ProductMaster");
 
                     b.Navigation("ProductionOrder");
-<<<<<<< HEAD
-                });
-
-            modelBuilder.Entity("Domain.Entities.PalletPackingDetails", b =>
-                {
-                    b.HasOne("Domain.Entities.PalletPacking", "PalletPacking")
-                        .WithMany("PalletPackingDetails")
-                        .HasForeignKey("HeaderId");
-
-                    b.Navigation("PalletPacking");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Permission", b =>
-                {
-                    b.HasOne("Skyward.Model.MastersEntity", "PermissionTypeMasters")
-                        .WithMany("Permissions")
-                        .HasForeignKey("PermissionTypeMastersId");
-
-                    b.Navigation("PermissionTypeMasters");
-=======
 
                     b.Navigation("ShiftMaster");
 
@@ -2365,7 +2284,98 @@ namespace Infrastructure.Migrations
                     b.Navigation("LiquidPreparation");
 
                     b.Navigation("QCTSpecificationMaster");
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
+                });
+
+            modelBuilder.Entity("Domain.Entities.PalletPacking", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
+                        .WithMany("PalletPacking")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
+                        .WithMany("PalletPacking")
+                        .HasForeignKey("SAPProductionOrderId");
+
+                    b.HasOne("Domain.Entities.User", "HeadUser")
+                        .WithMany()
+                        .HasForeignKey("SupervisedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("HeadUser");
+
+                    b.Navigation("ProductMaster");
+
+                    b.Navigation("ProductionOrder");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PalletPackingDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.PalletPacking", "PalletPacking")
+                        .WithMany("PalletPackingDetails")
+                        .HasForeignKey("HeaderId");
+
+                    b.Navigation("PalletPacking");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Permission", b =>
+                {
+                    b.HasOne("Skyward.Model.MastersEntity", "PermissionTypeMasters")
+                        .WithMany("Permissions")
+                        .HasForeignKey("PermissionTypeMastersId");
+
+                    b.Navigation("PermissionTypeMasters");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.PostCheckListEntity", "PostCheckList")
+                        .WithMany("PostCheckListDetails")
+                        .HasForeignKey("PostCheckListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
+                        .WithMany()
+                        .HasForeignKey("PrePostQuestionId");
+
+                    b.Navigation("PostCheckList");
+
+                    b.Navigation("PrePostQuestion");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
+                {
+                    b.HasOne("Skyward.Model.MastersEntity", "Masters")
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("FillingLine");
+
+                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
+                        .WithMany("PostCheckListDetails")
+                        .HasForeignKey("PrePostQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", null)
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("ProductionOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("ShiftId");
+
+                    b.Navigation("Masters");
+
+                    b.Navigation("PrePostQuestion");
+
+                    b.Navigation("ProductMaster");
+
+                    b.Navigation("ShiftMaster");
                 });
 
             modelBuilder.Entity("Domain.Entities.PreCheckListDetailEntity", b =>
@@ -2459,7 +2469,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-<<<<<<< HEAD
+            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
+                {
+                    b.HasOne("Domain.Entities.CompanyMaster", "CompanyMaster")
+                        .WithMany("TrailerInspection")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("Skyward.Model.MastersEntity", "MasterEntity")
+                        .WithMany("TrailerInspection")
+                        .HasForeignKey("VehicleTypeId");
+
+                    b.Navigation("CompanyMaster");
+
+                    b.Navigation("MasterEntity");
+                });
+
             modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
                 {
                     b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
@@ -2489,21 +2513,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProductionOrderid");
 
                     b.Navigation("TrailerLoading");
-=======
-            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
-                {
-                    b.HasOne("Domain.Entities.CompanyMaster", "CompanyMaster")
-                        .WithMany("TrailerInspection")
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("Skyward.Model.MastersEntity", "MasterEntity")
-                        .WithMany("TrailerInspection")
-                        .HasForeignKey("VehicleTypeId");
-
-                    b.Navigation("CompanyMaster");
-
-                    b.Navigation("MasterEntity");
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
                 });
 
             modelBuilder.Entity("Domain.Entities.WeightCheck", b =>
@@ -2689,15 +2698,13 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DowntimeTracking");
 
-<<<<<<< HEAD
+                    b.Navigation("LiquidPreparation");
+
                     b.Navigation("PalletPacking");
-=======
+
                     b.Navigation("PostCheckListEntity");
 
                     b.Navigation("PreCheckListEntity");
-
-                    b.Navigation("LiquidPreparation");
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
 
                     b.Navigation("WeightCheck");
                 });
@@ -2708,17 +2715,15 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DowntimeTracking");
 
-<<<<<<< HEAD
+                    b.Navigation("LiquidPreparation");
+
                     b.Navigation("PalletPacking");
 
-                    b.Navigation("TrailerLoadingDetails");
-=======
                     b.Navigation("PostCheckListEntity");
 
                     b.Navigation("PreCheckListEntity");
 
-                    b.Navigation("LiquidPreparation");
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
+                    b.Navigation("TrailerLoadingDetails");
 
                     b.Navigation("WeightCheck");
                 });
@@ -2735,20 +2740,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ShiftMaster", b =>
                 {
+                    b.Navigation("LiquidPreparation");
+
                     b.Navigation("PostCheckListEntity");
 
                     b.Navigation("PreCheckListEntity");
 
-                    b.Navigation("LiquidPreparation");
-
                     b.Navigation("WeightCheck");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
-                {
-                    b.Navigation("TrailerLoadingDetails");
-=======
             modelBuilder.Entity("Domain.Entities.StartEndBatchChecklist", b =>
                 {
                     b.Navigation("LiquidPreparationChecklistDetails");
@@ -2759,7 +2759,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("LiquidPreparation");
 
                     b.Navigation("LiquidPreparationChecklistDetails");
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
+                {
+                    b.Navigation("TrailerLoadingDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.WeightCheck", b =>
@@ -2776,15 +2780,13 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("DowntimeTracking");
 
-<<<<<<< HEAD
                     b.Navigation("Permissions");
-=======
+
                     b.Navigation("PostCheckListEntity");
 
                     b.Navigation("PreCheckListEntity");
 
                     b.Navigation("TrailerInspection");
->>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04
                 });
 #pragma warning restore 612, 618
         }

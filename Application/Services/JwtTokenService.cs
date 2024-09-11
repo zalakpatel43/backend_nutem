@@ -4,10 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static Application.Helper.IdentityHelper;
 
 public interface IJwtTokenService
 {
-    Task<string> GenerateTokenAsync(string username);
+    Task<string> GenerateTokenAsync(string username, long userId);
 }
 
 public class JwtTokenService : IJwtTokenService
@@ -23,7 +24,7 @@ public class JwtTokenService : IJwtTokenService
         _audience = configuration["Jwt:Audience"];
     }
 
-    public Task<string> GenerateTokenAsync(string username)
+    public Task<string> GenerateTokenAsync(string username, long userId)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_secretKey);
@@ -31,7 +32,8 @@ public class JwtTokenService : IJwtTokenService
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.Name, username)
+                new Claim(CustomClaimTypes.UserName, username),
+                new Claim(CustomClaimTypes.UserId, userId.ToString())
             }),
             Expires = DateTime.UtcNow.AddHours(1),
             Issuer = _issuer,

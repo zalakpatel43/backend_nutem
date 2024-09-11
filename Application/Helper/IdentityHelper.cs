@@ -22,7 +22,8 @@ namespace Application.Helper
         }
         public static class CustomClaimTypes
         {
-            public const string UserId = "Sid";
+            public const string UserId = "UserId";
+            public const string UserName = "UserName";
             //public const string UserTypeId = "Role";
             //public const string NGO = "NGOId";
             //public const string UserImageFilePath = "UserImageFilePath";
