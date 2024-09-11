@@ -17,7 +17,7 @@ namespace Domain.Entities
         public string Code { get; set; }          // Permission code (similar to old entity)
         public string Name { get; set; }          // Name of the permission
         public bool IsDefault { get; set; }       // Whether this permission is default
-        public long PermissionTypeId { get; set; }  // Foreign key to PermissionType entity
+        public int PermissionTypeId { get; set; } 
         public int DisplayOrder { get; set; }     // Order in which permissions are displayed
         public string Controller { get; set; }    // Controller associated with the permission
         public string ActionName { get; set; }    // Action within the controller
@@ -25,6 +25,6 @@ namespace Domain.Entities
 
         // Relationships
         public virtual ICollection<RolePermissionMap> RolePermissions { get; set; }  // Role-Permission mapping
-        public virtual MastersEntity PermissionTypeMasters { get; set; }      // Link to permission type master
+        /*public virtual MastersEntity PermissionTypeMasters { get; set; }*/      // Link to permission type master
     }
 }

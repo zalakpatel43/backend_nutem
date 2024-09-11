@@ -57,6 +57,12 @@ namespace Infrastructure.Context
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Permission>()
+               .HasKey(sm => sm.Id);
+
+            modelBuilder.Entity<Permission>()
+                .ToTable("adm_Permission");
+
             modelBuilder.Entity<RolePermissionMap>()
                 .HasOne(mg => mg.Role)
                 .WithMany(r => r.RolePermissions)
