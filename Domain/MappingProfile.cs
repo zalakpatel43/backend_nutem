@@ -63,7 +63,7 @@ namespace Domain
             CreateMap<RolePermissionMap, RolePermissionAddEdit>();
             CreateMap<RolePermissionAddEdit, RolePermissionMap>().ReverseMap();
             CreateMap<RoleAddEdit, Role>().ReverseMap();
-
+            CreateMap <Role, RoleList>().ReverseMap();
 
             // TrailerLoadingDetails mappings
             CreateMap<TrailerLoadingDetails, TrailerLoadingDetailsAddEdit>();

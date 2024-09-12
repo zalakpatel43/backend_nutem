@@ -221,19 +221,19 @@ async Task SeedData(WebApplication app)
     //var companyRepository = scope.ServiceProvider.GetRequiredService<ICompanyRepository>();
 
     // Seed roles
-    //string[] roles = { "Admin", "User", "Manager" };
-    //foreach (var role in roles)
-    //{
-    //    if (!await roleManager.RoleExistsAsync(role))
-    //    {
-    //        var newRole = new Role
-    //        {
-    //            Name = role,
-    //            IsActive = true
-    //        };
-    //        await roleManager.CreateAsync(newRole);
-    //    }
-    //}
+    string[] roles = { "Admin", "User", "Manager" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            var newRole = new Role
+            {
+                Name = role,
+                IsActive = true
+            };
+            await roleManager.CreateAsync(newRole);
+        }
+    }
 
     // Seed users
     var adminEmail = "admin@nutem.com";

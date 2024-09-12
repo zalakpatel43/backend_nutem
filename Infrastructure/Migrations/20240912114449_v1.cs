@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class V1 : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -87,6 +87,30 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_adm_NozzelMaster", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adm_Permission",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    PermissionTypeId = table.Column<long>(type: "bigint", nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    Controller = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_Permission", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,36 +289,6 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "adm_Permission",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
-                    PermissionTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
-                    Controller = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ActionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    PermissionTypeMastersId = table.Column<long>(type: "bigint", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_adm_Permission", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_adm_Permission_adm_Masters_PermissionTypeMastersId",
-                        column: x => x.PermissionTypeMastersId,
-                        principalTable: "adm_Masters",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -561,6 +555,33 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "adm_RolePermissionMap",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<long>(type: "bigint", nullable: false),
+                    PermissionId = table.Column<long>(type: "bigint", nullable: false),
+                    HasMasterAccess = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_RolePermissionMap", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_RolePermissionMap_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_adm_RolePermissionMap_adm_Permission_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "adm_Permission",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -740,33 +761,6 @@ namespace Infrastructure.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "adm_RolePermissionMap",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false),
-                    PermissionId = table.Column<int>(type: "int", nullable: false),
-                    HasMasterAccess = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_adm_RolePermissionMap", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_adm_RolePermissionMap_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_adm_RolePermissionMap_adm_Permission_PermissionId",
-                        column: x => x.PermissionId,
-                        principalTable: "adm_Permission",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1457,11 +1451,6 @@ namespace Infrastructure.Migrations
                 name: "IX_adm_PalletPackingHeader_SupervisedBy",
                 table: "adm_PalletPackingHeader",
                 column: "SupervisedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_adm_Permission_PermissionTypeMastersId",
-                table: "adm_Permission",
-                column: "PermissionTypeMastersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_adm_PostCheckList_FillingLine",

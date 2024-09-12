@@ -10,11 +10,11 @@ namespace Domain.ViewModels
     {
         public struct PermissionTypeConstant
         {
-            public const int List = 74;
-            public const int Add = 72;
-            public const int Edit = 73;
-            public const int Delete = 75;
-            public const int Export = 76;
+            public const long List = 74;
+            public const long Add = 72;
+            public const long Edit = 73;
+            public const long Delete = 75;
+            public const long Export = 76;
         }
     }
 }

@@ -13,11 +13,11 @@ namespace Domain.Entities
             RolePermissions = new List<RolePermissionMap>();
         }
 
-        public int Id { get; set; }               // Unique identifier for the permission
+        //public int Id { get; set; }               // Unique identifier for the permission
         public string Code { get; set; }          // Permission code (similar to old entity)
         public string Name { get; set; }          // Name of the permission
         public bool IsDefault { get; set; }       // Whether this permission is default
-        public int PermissionTypeId { get; set; } 
+        public long PermissionTypeId { get; set; } 
         public int DisplayOrder { get; set; }     // Order in which permissions are displayed
         public string Controller { get; set; }    // Controller associated with the permission
         public string ActionName { get; set; }    // Action within the controller

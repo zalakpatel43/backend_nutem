@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240910062457_V1")]
-    partial class V1
+    [Migration("20240912114449_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -810,11 +810,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Permission", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ActionName")
                         .HasColumnType("nvarchar(max)");
@@ -852,14 +852,9 @@ namespace Infrastructure.Migrations
                     b.Property<long>("PermissionTypeId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("PermissionTypeMastersId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PermissionTypeMastersId");
-
-                    b.ToTable("adm_Permission");
+                    b.ToTable("adm_Permission", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
@@ -1366,17 +1361,17 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.RolePermissionMap", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("HasMasterAccess")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
+                    b.Property<long>("PermissionId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint");
@@ -2320,15 +2315,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("PalletPacking");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Permission", b =>
-                {
-                    b.HasOne("Skyward.Model.MastersEntity", "PermissionTypeMasters")
-                        .WithMany("Permissions")
-                        .HasForeignKey("PermissionTypeMastersId");
-
-                    b.Navigation("PermissionTypeMasters");
-                });
-
             modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
                 {
                     b.HasOne("Domain.Entities.PostCheckListEntity", "PostCheckList")
@@ -2782,8 +2768,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Skyward.Model.MastersEntity", b =>
                 {
                     b.Navigation("DowntimeTracking");
-
-                    b.Navigation("Permissions");
 
                     b.Navigation("PostCheckListEntity");
 

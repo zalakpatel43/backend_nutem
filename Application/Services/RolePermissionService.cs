@@ -29,22 +29,26 @@ namespace Application.Services
             _dataMapper = dataMapper;
         }
 
-        public async Task<List<RolePermissionList>> GetAllRolePermissionsAsync()
+        public  IQueryable<RoleList> GetAllRolePermissionsAsync()
         {
-            var entity = _rolePermissionRepository.GetAllRolePermissionsWithRelatedInfo();
-            var list = await Task.FromResult(_dataMapper.Project<RolePermissionMap, RolePermissionList>(entity).ToList());
-            return list;
+            var entity = _roleRepository.GetAllRole();
+            return _dataMapper.Project<Role, RoleList>(entity);
+
+            //var list = await Task.FromResult(_dataMapper.Project<RolePermissionMap, RolePermissionList>(entity).ToList());
+            //return list;
         }
 
-        public async Task<RolePermissionAddEdit> GetRolePermissionByIdAsync(int id)
+        public async Task<RoleAddEdit> GetRolePermissionByIdAsync(long id)
         {
-            var entity = await _rolePermissionRepository.GetByIdAsync(id);
+            var entity = await _roleRepository.GetByIdAsync(id);
             if (entity == null)
                 return null;
-            return _dataMapper.Map<RolePermissionMap, RolePermissionAddEdit>(entity);
+            var mappedData = _dataMapper.Map<Role, RoleAddEdit>(entity);
+            //mappedData.Permissions = entity.RolePermissions.ToList();
+            return mappedData;
         }
 
-        public async Task<int> AddRolePermissionAsync(RoleAddEdit model, long userId)
+        public async Task<long> AddRolePermissionAsync(RoleAddEdit model, long userId)
         {
             try
             {
@@ -67,7 +71,7 @@ namespace Application.Services
                         {
                             mappedModel.RolePermissions.Add(new RolePermissionMap
                             {
-                                PermissionId = Convert.ToInt32(listPermission.Id)
+                                PermissionId = listPermission.Id
                             });
                         }
                     }
@@ -80,7 +84,7 @@ namespace Application.Services
                         {
                             mappedModel.RolePermissions.Add(new RolePermissionMap
                             {
-                              //  PermissionId = addPermission.Id
+                                PermissionId = addPermission.Id
                             });
                         }
                     }
@@ -93,7 +97,7 @@ namespace Application.Services
                         {
                             mappedModel.RolePermissions.Add(new RolePermissionMap
                             {
-                              //  PermissionId = editPermission.Id
+                                PermissionId = editPermission.Id
                             });
                         }
                     }
@@ -128,7 +132,7 @@ namespace Application.Services
 
 
                 await _roleRepository.AddAsync(mappedModel);
-                return Convert.ToInt32(mappedModel.Id);
+                return mappedModel.Id;
             }
             catch (Exception ex)
             {
@@ -137,20 +141,102 @@ namespace Application.Services
             }
         }
 
-        public async Task<int> UpdateRolePermissionAsync(RolePermissionAddEdit model, long userId)
+        public async Task<long> UpdateRolePermissionAsync(RoleAddEdit model, long userId)
         {
             try
             {
-                var entity = await _rolePermissionRepository.GetByIdAsync(model.Id);
-                if (entity == null)
-                    return 0;
+                var entity = _dataMapper.Map<RoleAddEdit, Role>(model);
 
-                //entity.ModifiedBy = userId;
-                //entity.ModifiedDate = DateTime.Now;
-                var mappedModel = _dataMapper.Map<RolePermissionAddEdit, RolePermissionMap>(model, entity);
+                if (model.Id != 0)
+                {
+                    var mapEntity = await _roleRepository.GetByIdAsync(model.Id);
+                    if (mapEntity != null)
+                    {
+                        entity = _dataMapper.Map(model, mapEntity);
 
-                await _rolePermissionRepository.UpdateAsync(mappedModel);
+                        var permissionsToRemove = entity.RolePermissions.ToList();
+                        foreach (var permission in permissionsToRemove)
+                        {
+                            _rolePermissionRepository.DeleteEntity(permission);
+                            entity.RolePermissions.Remove(permission);
+                        }
+                    }
+                }
+
+                foreach (var permission in model.Permissions)
+                {
+                    // List permission
+                    if (permission.IsList)
+                    {
+                        Permission listPermission = _permissionRepository.Get(m => m.Code == permission.Code && m.PermissionTypeId == PermissionTypeStruct.PermissionTypeConstant.List).FirstOrDefault();
+                        if (listPermission != null)
+                        {
+                            entity.RolePermissions.Add(new RolePermissionMap
+                            {
+                                PermissionId = listPermission.Id
+                            });
+                        }
+                    }
+
+                    // Add Permission
+                    if (permission.IsAdd)
+                    {
+                        Permission addPermission = _permissionRepository.Get(m => m.Code == permission.Code && m.PermissionTypeId == PermissionTypeStruct.PermissionTypeConstant.Add).FirstOrDefault();
+                        if (addPermission != null)
+                        {
+                            entity.RolePermissions.Add(new RolePermissionMap
+                            {
+                                PermissionId = addPermission.Id
+                            });
+                        }
+                    }
+
+                    // Edit Permission
+                    if (permission.IsEdit)
+                    {
+                        Permission editPermission = _permissionRepository.Get(m => m.Code == permission.Code && m.PermissionTypeId == PermissionTypeStruct.PermissionTypeConstant.Edit).FirstOrDefault();
+                        if (editPermission != null)
+                        {
+                            entity.RolePermissions.Add(new RolePermissionMap
+                            {
+                                PermissionId = editPermission.Id
+                            });
+                        }
+                    }
+
+                    if (permission.IsDelete)
+                    {
+                        Permission editPermission = _permissionRepository.Get(m => m.Code == permission.Code && m.PermissionTypeId == PermissionTypeStruct.PermissionTypeConstant.Delete).FirstOrDefault();
+                        if (editPermission != null)
+                        {
+                            entity.RolePermissions.Add(new RolePermissionMap
+                            {
+                                PermissionId = editPermission.Id
+                            });
+                        }
+                    }
+
+                    // Export Permission
+                    //if (permission.IsExport)
+                    //{
+                    //    PermissionEntity exportPermission = _permissionRepository.Get(m => m.Code == permission.Code && m.PermissionTypeId == Constants.PermissionTypeConstant.Export).FirstOrDefault();
+                    //    if (exportPermission != null)
+                    //    {
+                    //        entity.RolePermissions.Add(new RolePermissionEntity
+                    //        {
+                    //            PermissionId = exportPermission.Id
+                    //        });
+                    //    }
+                    //}
+                }
+
+                entity.IsActive = true;
+
+                entity.ModifiedBy = userId;
+                // entity.ModifiedDate = DateTime.Now;
+                await _roleRepository.UpdateAsync(entity);
                 return entity.Id;
+
             }
             catch (Exception ex)
             {
@@ -159,15 +245,16 @@ namespace Application.Services
             }
         }
 
-        public async Task DeleteRolePermissionAsync(int id, long userId)
-        {
-            var entity = await _rolePermissionRepository.GetByIdAsync(id);
-            if (entity == null)
-                return;
 
-            //entity.ModifiedBy = userId;
+        public async Task DeleteRolePermissionAsync(long Id, long userId)
+        {
+            var entity = await _roleRepository.GetByIdAsync(Id);
+            entity.ModifiedBy = userId;
             //entity.ModifiedDate = DateTime.Now;
-            await _rolePermissionRepository.DeleteAsync(entity.Id);
+            entity.IsActive = false;
+            await _roleRepository.UpdateAsync(entity);
+
+            //  return new ResponseModel { IsSuccess = true, Message = "Deleted Successfully." };
         }
     }
 }

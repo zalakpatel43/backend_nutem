@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Domain.ViewModels
@@ -22,6 +24,7 @@ namespace Domain.ViewModels
         public string PermissionData { get; set; }
 
         public List<PermissionAssign> Permissions { get; set; }
-        //public List<PermissionAddEdit> Permissions { get; set; }
+
+        public virtual ICollection<RolePermissionMap> RolePermissions { get; set; }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class RolePermissionMap
+    public class RolePermissionMap 
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public long RoleId { get; set; }
-        public int PermissionId { get; set; }
+        public long PermissionId { get; set; }
         public bool HasMasterAccess { get; set; }
 
         public virtual Role Role { get; set; }
