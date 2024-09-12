@@ -35,7 +35,7 @@ namespace Application.Services
             {
                 Id = role.Id,
                 Name = role.Name,
-                Permissions = new List<PermissionAddEdit>()
+                Permissions = new List<PermissionAssign>()
             };
         }
 

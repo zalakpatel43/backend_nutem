@@ -8,7 +8,7 @@ namespace Application.Interfaces
     {
         Task<List<RolePermissionList>> GetAllRolePermissionsAsync();
         Task<RolePermissionAddEdit> GetRolePermissionByIdAsync(int id);
-        Task<int> AddRolePermissionAsync(RolePermissionAddEdit model, long userId);
+        Task<int> AddRolePermissionAsync(RoleAddEdit model, long userId);
         Task<int> UpdateRolePermissionAsync(RolePermissionAddEdit model, long userId);
         Task DeleteRolePermissionAsync(int id, long userId);
     }

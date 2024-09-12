@@ -32,6 +32,10 @@ namespace Infrastructure.Repositories
             .ThenInclude(pc => pc.ShiftMaster)
         .Include(po => po.PalletPacking)
             .ThenInclude(pc => pc.ProductMaster)
+         .Include(po => po.LiquidPreparation)
+            .ThenInclude(pc => pc.ProductMaster)
+         .Include(po => po.LiquidPreparation)
+            .ThenInclude(wc => wc.ShiftMaster)
 
         .FirstOrDefaultAsync(po => po.Id == id);
         }

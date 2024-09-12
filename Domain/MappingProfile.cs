@@ -19,6 +19,9 @@ namespace Domain
             CreateMap<ProductionOrder, ProductionOrderList>();
             CreateMap<ProductMaster, ProdcutMasterList>();
             CreateMap<ShiftMaster, ShiftMasterList>();
+            CreateMap<Permission, PermissionList>();
+            CreateMap<Permission, PermissionAddEdit>();
+
             CreateMap<CauseMaster, CauseMasterList>();
             CreateMap<MastersEntity, MastersList>();
             CreateMap<WeightCheck, WeightCheckList>();
@@ -59,6 +62,8 @@ namespace Domain
             CreateMap<RolePermissionMap, RolePermissionList>();
             CreateMap<RolePermissionMap, RolePermissionAddEdit>();
             CreateMap<RolePermissionAddEdit, RolePermissionMap>().ReverseMap();
+            CreateMap<RoleAddEdit, Role>().ReverseMap();
+
 
             // TrailerLoadingDetails mappings
             CreateMap<TrailerLoadingDetails, TrailerLoadingDetailsAddEdit>();

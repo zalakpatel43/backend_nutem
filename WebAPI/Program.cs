@@ -95,6 +95,8 @@ builder.Services.AddScoped<IMastersRepository, MastersRepository>();
 
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 
 builder.Services.AddScoped<IMastersService, MastersService>();
 builder.Services.AddScoped<ICauseMasterRepository, CauseMasterRepository>();
@@ -161,9 +163,13 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:4200") // Adjust according to your client's URL
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins("*") // Adjust according to your client's URL
+             .AllowAnyHeader()
+             .AllowAnyMethod();
+
+        //policy.WithOrigins("http://localhost:4200") // Adjust according to your client's URL
+        //      .AllowAnyHeader()
+        //      .AllowAnyMethod();
     });
 });
 
@@ -192,11 +198,11 @@ app.UseAuthentication(); // Ensure this is before UseAuthorization
 app.UseAuthorization();
 
 // Configure HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 app.MapControllers();
@@ -215,19 +221,19 @@ async Task SeedData(WebApplication app)
     //var companyRepository = scope.ServiceProvider.GetRequiredService<ICompanyRepository>();
 
     // Seed roles
-    string[] roles = { "Admin", "User", "Manager" };
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-        {
-            var newRole = new Role
-            {
-                Name = role,
-                IsActive = true
-            };
-            await roleManager.CreateAsync(newRole);
-        }
-    }
+    //string[] roles = { "Admin", "User", "Manager" };
+    //foreach (var role in roles)
+    //{
+    //    if (!await roleManager.RoleExistsAsync(role))
+    //    {
+    //        var newRole = new Role
+    //        {
+    //            Name = role,
+    //            IsActive = true
+    //        };
+    //        await roleManager.CreateAsync(newRole);
+    //    }
+    //}
 
     // Seed users
     var adminEmail = "admin@nutem.com";

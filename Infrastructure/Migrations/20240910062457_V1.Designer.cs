@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
-    [Migration("20240909070756_Rolepermission")]
-    partial class Rolepermission
-========
-    [Migration("20240902061909_v1")]
-    partial class v1
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
+    [Migration("20240910062457_V1")]
+    partial class V1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -334,6 +329,348 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_DowntimeTrackingDetails", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AnalysisDoneByIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BatchLotNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CompounderUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EndDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SAPProductionOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("SampleReceivedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SampleTestedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StandardBatchWeight")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("TankId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("TestingDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SAPProductionOrderId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("TankId");
+
+                    b.ToTable("adm_LiquidPreparation", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationAdjustmentDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal?>("Adjustment")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("LiquidPreparationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LiquidPreparationInstructionDetailsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LiquidPreparationInstructionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MaterialId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LiquidPreparationId");
+
+                    b.HasIndex("LiquidPreparationInstructionDetailsId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("adm_LiquidPreparationAdjustmentDetails", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationChecklistDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Answer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("LiquidPreparationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("QuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("StartEndBatchChecklistId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("TankId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TankNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LiquidPreparationId");
+
+                    b.HasIndex("StartEndBatchChecklistId");
+
+                    b.HasIndex("TankId");
+
+                    b.ToTable("adm_LiquidPreparationChecklistDetails", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationInstructionDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime?>("AddedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DoneByIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InstructionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("LiquidPreparationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LotNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("MaterialId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("WeightAdded")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstructionId");
+
+                    b.HasIndex("LiquidPreparationId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("adm_LiquidPreparationInstructionDetails", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationSpecificationDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AnalysisDoneByIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("LiquidPreparationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SampleReceivedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SampleTestedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("SpecificationLimitId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Test1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Test2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TestingDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LiquidPreparationId");
+
+                    b.HasIndex("SpecificationLimitId");
+
+                    b.ToTable("adm_LiquidPreparationSpecificationDetails", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.MaterialMaster", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaterialName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PartCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("adm_MaterialMaster", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.NozzelMaster", b =>
                 {
                     b.Property<long>("Id")
@@ -525,6 +862,121 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_Permission");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("HeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("PostCheckListId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PrePostQuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostCheckListId");
+
+                    b.HasIndex("PrePostQuestionId");
+
+                    b.ToTable("adm_PostCheckListDetails", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EndDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FillerUserIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("FillingLine")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("PrePostQuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductionOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FillingLine");
+
+                    b.HasIndex("PrePostQuestionId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductionOrderId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.ToTable("adm_PostCheckList", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.PreCheckListDetailEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -616,16 +1068,10 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("ProductMasterId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ProductionOrderId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ShiftMasterId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("StartDateTime")
@@ -633,11 +1079,15 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FillingLine");
+
                     b.HasIndex("PrePostQuestionId");
 
-                    b.HasIndex("ProductMasterId");
+                    b.HasIndex("ProductId");
 
-                    b.HasIndex("ShiftMasterId");
+                    b.HasIndex("ProductionOrderId");
+
+                    b.HasIndex("ShiftId");
 
                     b.ToTable("adm_PreCheckList", (string)null);
                 });
@@ -665,6 +1115,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<long?>("PostCheckListEntityId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("PreCheckListEntityId")
                         .HasColumnType("bigint");
 
@@ -679,9 +1132,53 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PostCheckListEntityId");
+
                     b.HasIndex("PreCheckListEntityId");
 
                     b.ToTable("adm_PrePostQuestion", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProductInstructionDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Instruction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductMasterId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductMasterId");
+
+                    b.ToTable("adm_ProductInstructionDetails", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ProductMaster", b =>
@@ -780,6 +1277,46 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("adm_ProductionOrder", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.QCTSpecificationMaster", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HighValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LowValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SpecificationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecificationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("adm_QCTSpecificationMaster", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Role", b =>
@@ -887,11 +1424,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_ShiftMaster", (string)null);
                 });
 
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
-            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
-========
-            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
+            modelBuilder.Entity("Domain.Entities.StartEndBatchChecklist", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -899,14 +1432,74 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
-                    b.Property<string>("BOLNo")
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Question")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Code")
+                    b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-========
+                    b.HasKey("Id");
+
+                    b.ToTable("adm_StartEndBatchChecklist", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.TankMaster", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TankCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TankName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("adm_TankMaster", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
@@ -919,21 +1512,12 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("CompanyId")
                         .HasColumnType("bigint");
 
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
-                    b.Property<string>("DoorNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-========
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
@@ -970,14 +1554,110 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Mode")
                         .HasColumnType("nvarchar(max)");
 
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
+                    b.Property<string>("OverallIntegrityAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OverallIntegrityNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PresentOnTrailerAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PresentOnTrailerNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SafeWorkingOrderAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SafeWorkingOrderNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemperatureSettingUsedAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemperatureSettingUsedNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TimeIn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TimeOfInspection")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TimeOut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TotalTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrailerNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TruckNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleCleanAns")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleCleanNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("VehicleTypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("VehicleTypeId");
+
+                    b.ToTable("adm_TrailerInspection", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BOLNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DoorNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<long?>("ProductionOrderId")
                         .HasColumnType("bigint");
 
@@ -1038,80 +1718,15 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("ProductionOrder")
-========
-                    b.Property<string>("OverallIntegrityAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OverallIntegrityNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PresentOnTrailerAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PresentOnTrailerNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RejectionReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafeWorkingOrderAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafeWorkingOrderNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TemperatureSettingUsedAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TemperatureSettingUsedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("TimeIn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("TimeOfInspection")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("TimeOut")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TotalTime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrailerNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TruckNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleCleanAns")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleCleanNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("VehicleTypeId")
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
                     b.HasIndex("HeaderId");
 
                     b.HasIndex("ProductionOrder");
 
                     b.ToTable("adm_TrailerLoadingDetails", (string)null);
-========
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("VehicleTypeId");
-
-                    b.ToTable("adm_TrailerInspection", (string)null);
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -1569,6 +2184,111 @@ namespace Infrastructure.Migrations
                     b.Navigation("DowntimeTracking");
                 });
 
+            modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
+                        .WithMany("LiquidPreparation")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
+                        .WithMany("LiquidPreparation")
+                        .HasForeignKey("SAPProductionOrderId");
+
+                    b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
+                        .WithMany("LiquidPreparation")
+                        .HasForeignKey("ShiftId");
+
+                    b.HasOne("Domain.Entities.TankMaster", "TankMaster")
+                        .WithMany("LiquidPreparation")
+                        .HasForeignKey("TankId");
+
+                    b.Navigation("ProductMaster");
+
+                    b.Navigation("ProductionOrder");
+
+                    b.Navigation("ShiftMaster");
+
+                    b.Navigation("TankMaster");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationAdjustmentDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.LiquidPreparation", "LiquidPreparation")
+                        .WithMany("LiquidPreparationAdjustmentDetails")
+                        .HasForeignKey("LiquidPreparationId");
+
+                    b.HasOne("Domain.Entities.LiquidPreparationInstructionDetails", "LiquidPreparationInstructionDetails")
+                        .WithMany("LiquidPreparationAdjustmentDetails")
+                        .HasForeignKey("LiquidPreparationInstructionDetailsId");
+
+                    b.HasOne("Domain.Entities.MaterialMaster", "MaterialMaster")
+                        .WithMany("LiquidPreparationAdjustmentDetails")
+                        .HasForeignKey("MaterialId");
+
+                    b.Navigation("LiquidPreparation");
+
+                    b.Navigation("LiquidPreparationInstructionDetails");
+
+                    b.Navigation("MaterialMaster");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationChecklistDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.LiquidPreparation", "LiquidPreparation")
+                        .WithMany("LiquidPreparationChecklistDetails")
+                        .HasForeignKey("LiquidPreparationId");
+
+                    b.HasOne("Domain.Entities.StartEndBatchChecklist", "StartEndBatchChecklist")
+                        .WithMany("LiquidPreparationChecklistDetails")
+                        .HasForeignKey("StartEndBatchChecklistId");
+
+                    b.HasOne("Domain.Entities.TankMaster", "TankMaster")
+                        .WithMany("LiquidPreparationChecklistDetails")
+                        .HasForeignKey("TankId");
+
+                    b.Navigation("LiquidPreparation");
+
+                    b.Navigation("StartEndBatchChecklist");
+
+                    b.Navigation("TankMaster");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationInstructionDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductInstructionDetails", "ProductInstructionDetails")
+                        .WithMany("LiquidPreparationInstructionDetails")
+                        .HasForeignKey("InstructionId");
+
+                    b.HasOne("Domain.Entities.LiquidPreparation", "LiquidPreparation")
+                        .WithMany("LiquidPreparationInstructionDetails")
+                        .HasForeignKey("LiquidPreparationId");
+
+                    b.HasOne("Domain.Entities.MaterialMaster", "MaterialMaster")
+                        .WithMany("LiquidPreparationInstructionDetails")
+                        .HasForeignKey("MaterialId");
+
+                    b.Navigation("LiquidPreparation");
+
+                    b.Navigation("MaterialMaster");
+
+                    b.Navigation("ProductInstructionDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationSpecificationDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.LiquidPreparation", "LiquidPreparation")
+                        .WithMany("LiquidPreparationSpecificationDetails")
+                        .HasForeignKey("LiquidPreparationId");
+
+                    b.HasOne("Domain.Entities.QCTSpecificationMaster", "QCTSpecificationMaster")
+                        .WithMany("LiquidPreparationSpecificationDetails")
+                        .HasForeignKey("SpecificationLimitId");
+
+                    b.Navigation("LiquidPreparation");
+
+                    b.Navigation("QCTSpecificationMaster");
+                });
+
             modelBuilder.Entity("Domain.Entities.PalletPacking", b =>
                 {
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
@@ -1609,6 +2329,58 @@ namespace Infrastructure.Migrations
                     b.Navigation("PermissionTypeMasters");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PostCheckListDetailEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.PostCheckListEntity", "PostCheckList")
+                        .WithMany("PostCheckListDetails")
+                        .HasForeignKey("PostCheckListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
+                        .WithMany()
+                        .HasForeignKey("PrePostQuestionId");
+
+                    b.Navigation("PostCheckList");
+
+                    b.Navigation("PrePostQuestion");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
+                {
+                    b.HasOne("Skyward.Model.MastersEntity", "Masters")
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("FillingLine");
+
+                    b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
+                        .WithMany("PostCheckListDetails")
+                        .HasForeignKey("PrePostQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", null)
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("ProductionOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
+                        .WithMany("PostCheckListEntity")
+                        .HasForeignKey("ShiftId");
+
+                    b.Navigation("Masters");
+
+                    b.Navigation("PrePostQuestion");
+
+                    b.Navigation("ProductMaster");
+
+                    b.Navigation("ShiftMaster");
+                });
+
             modelBuilder.Entity("Domain.Entities.PreCheckListDetailEntity", b =>
                 {
                     b.HasOne("Domain.Entities.PreCheckListEntity", "PreCheckList")
@@ -1628,6 +2400,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PreCheckListEntity", b =>
                 {
+                    b.HasOne("Skyward.Model.MastersEntity", "Masters")
+                        .WithMany("PreCheckListEntity")
+                        .HasForeignKey("FillingLine");
+
                     b.HasOne("Domain.Entities.PrePostQuestionEntity", "PrePostQuestion")
                         .WithMany("PreCheckList")
                         .HasForeignKey("PrePostQuestionId")
@@ -1635,12 +2411,20 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
-                        .WithMany()
-                        .HasForeignKey("ProductMasterId");
+                        .WithMany("PreCheckListEntity")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", null)
+                        .WithMany("PreCheckListEntity")
+                        .HasForeignKey("ProductionOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
-                        .WithMany()
-                        .HasForeignKey("ShiftMasterId");
+                        .WithMany("PreCheckListEntity")
+                        .HasForeignKey("ShiftId");
+
+                    b.Navigation("Masters");
 
                     b.Navigation("PrePostQuestion");
 
@@ -1651,9 +2435,22 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PrePostQuestionEntity", b =>
                 {
+                    b.HasOne("Domain.Entities.PostCheckListEntity", null)
+                        .WithMany("PrePostQuestionEntity")
+                        .HasForeignKey("PostCheckListEntityId");
+
                     b.HasOne("Domain.Entities.PreCheckListEntity", null)
                         .WithMany("PrePostQuestionEntity")
                         .HasForeignKey("PreCheckListEntityId");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProductInstructionDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
+                        .WithMany()
+                        .HasForeignKey("ProductMasterId");
+
+                    b.Navigation("ProductMaster");
                 });
 
             modelBuilder.Entity("Domain.Entities.RolePermissionMap", b =>
@@ -1675,7 +2472,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
+            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
+                {
+                    b.HasOne("Domain.Entities.CompanyMaster", "CompanyMaster")
+                        .WithMany("TrailerInspection")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("Skyward.Model.MastersEntity", "MasterEntity")
+                        .WithMany("TrailerInspection")
+                        .HasForeignKey("VehicleTypeId");
+
+                    b.Navigation("CompanyMaster");
+
+                    b.Navigation("MasterEntity");
+                });
+
             modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
                 {
                     b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
@@ -1705,21 +2516,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProductionOrderid");
 
                     b.Navigation("TrailerLoading");
-========
-            modelBuilder.Entity("Domain.Entities.TrailerInspection", b =>
-                {
-                    b.HasOne("Domain.Entities.CompanyMaster", "CompanyMaster")
-                        .WithMany("TrailerInspection")
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("Skyward.Model.MastersEntity", "MasterEntity")
-                        .WithMany("TrailerInspection")
-                        .HasForeignKey("VehicleTypeId");
-
-                    b.Navigation("CompanyMaster");
-
-                    b.Navigation("MasterEntity");
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
                 });
 
             modelBuilder.Entity("Domain.Entities.WeightCheck", b =>
@@ -1835,6 +2631,29 @@ namespace Infrastructure.Migrations
                     b.Navigation("DownTimeTrackingDetails");
                 });
 
+            modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
+                {
+                    b.Navigation("LiquidPreparationAdjustmentDetails");
+
+                    b.Navigation("LiquidPreparationChecklistDetails");
+
+                    b.Navigation("LiquidPreparationInstructionDetails");
+
+                    b.Navigation("LiquidPreparationSpecificationDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LiquidPreparationInstructionDetails", b =>
+                {
+                    b.Navigation("LiquidPreparationAdjustmentDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.MaterialMaster", b =>
+                {
+                    b.Navigation("LiquidPreparationAdjustmentDetails");
+
+                    b.Navigation("LiquidPreparationInstructionDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.NozzelMaster", b =>
                 {
                     b.Navigation("WeightCheckSubDetails");
@@ -1850,6 +2669,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("RolePermissions");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PostCheckListEntity", b =>
+                {
+                    b.Navigation("PostCheckListDetails");
+
+                    b.Navigation("PrePostQuestionEntity");
+                });
+
             modelBuilder.Entity("Domain.Entities.PreCheckListEntity", b =>
                 {
                     b.Navigation("PreCheckListDetails");
@@ -1859,7 +2685,14 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PrePostQuestionEntity", b =>
                 {
+                    b.Navigation("PostCheckListDetails");
+
                     b.Navigation("PreCheckList");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProductInstructionDetails", b =>
+                {
+                    b.Navigation("LiquidPreparationInstructionDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.ProductMaster", b =>
@@ -1868,7 +2701,13 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DowntimeTracking");
 
+                    b.Navigation("LiquidPreparation");
+
                     b.Navigation("PalletPacking");
+
+                    b.Navigation("PostCheckListEntity");
+
+                    b.Navigation("PreCheckListEntity");
 
                     b.Navigation("WeightCheck");
                 });
@@ -1879,11 +2718,22 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DowntimeTracking");
 
+                    b.Navigation("LiquidPreparation");
+
                     b.Navigation("PalletPacking");
+
+                    b.Navigation("PostCheckListEntity");
+
+                    b.Navigation("PreCheckListEntity");
 
                     b.Navigation("TrailerLoadingDetails");
 
                     b.Navigation("WeightCheck");
+                });
+
+            modelBuilder.Entity("Domain.Entities.QCTSpecificationMaster", b =>
+                {
+                    b.Navigation("LiquidPreparationSpecificationDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.Role", b =>
@@ -1893,7 +2743,25 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ShiftMaster", b =>
                 {
+                    b.Navigation("LiquidPreparation");
+
+                    b.Navigation("PostCheckListEntity");
+
+                    b.Navigation("PreCheckListEntity");
+
                     b.Navigation("WeightCheck");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StartEndBatchChecklist", b =>
+                {
+                    b.Navigation("LiquidPreparationChecklistDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TankMaster", b =>
+                {
+                    b.Navigation("LiquidPreparation");
+
+                    b.Navigation("LiquidPreparationChecklistDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.TrailerLoading", b =>
@@ -1915,11 +2783,13 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("DowntimeTracking");
 
-<<<<<<<< HEAD:Infrastructure/Migrations/20240909070756_Rolepermission.Designer.cs
                     b.Navigation("Permissions");
-========
+
+                    b.Navigation("PostCheckListEntity");
+
+                    b.Navigation("PreCheckListEntity");
+
                     b.Navigation("TrailerInspection");
->>>>>>>> aa8984376b031d9f53d36e095e61a538ffb06d04:Infrastructure/Migrations/20240902061909_v1.Designer.cs
                 });
 #pragma warning restore 612, 618
         }
