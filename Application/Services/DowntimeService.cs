@@ -113,44 +113,71 @@ namespace Application.Services
                 var entity = await _downtimeTrackingRepository.GetByIdAsync(model.Id);
                 if (entity == null) return 0;
 
+                // Preserve existing code and active status
                 string code = entity.Code;
                 bool isActive = entity.IsActive;
 
-                if (entity.DownTimeTrackingDetails != null)
+                // Fetch existing details from the database
+                var existingDetails = entity.DownTimeTrackingDetails.ToList();
+
+                // Handle existing details
+                foreach (var detailEntity in existingDetails)
                 {
-                    foreach (var detailEntity in entity.DownTimeTrackingDetails)
+                    var matchingDetail = model.DowntimeTrackingDetails.SingleOrDefault(d => d.Id == detailEntity.Id);
+                    if (matchingDetail != null)
                     {
-                        _downtimeTrackingDetailsRepository.DeleteEntity(detailEntity);
+                        // Update existing detail
+                        _dataMapper.Map(matchingDetail, detailEntity);
+                        detailEntity.ModifiedBy = userId;
+                        detailEntity.ModifiedDate = DateTime.Now;
+                        detailEntity.IsActive = true;
+                        await _downtimeTrackingDetailsRepository.UpdateAsync(detailEntity);
+                    }
+                    else
+                    {
+                        // Mark details for deletion or inactivation
+                        detailEntity.IsActive = false;
+                        await _downtimeTrackingDetailsRepository.UpdateAsync(detailEntity);
                     }
                 }
 
+                // Handle new details
+                foreach (var detail in model.DowntimeTrackingDetails)
+                {
+                    if (detail.Id == 0) // New detail
+                    {
+                        var newDetail = _dataMapper.Map<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>(detail);
+                        newDetail.HeaderId = entity.Id;
+                        newDetail.CreatedBy = userId;
+                        newDetail.CreatedDate = DateTime.Now;
+                        newDetail.ModifiedBy = userId;
+                        newDetail.ModifiedDate = DateTime.Now;
+                        newDetail.IsActive = true;
+                        entity.DownTimeTrackingDetails.Add(newDetail);
+                        await _downtimeTrackingDetailsRepository.AddAsync(newDetail);
+                    }
+                }
+
+                // Update main entity properties
                 entity.ModifiedBy = userId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<DowntimeTrackingAddEdit, DowntimeTracking>(model, entity);
                 mappedModel.Code = code;
                 mappedModel.IsActive = isActive;
 
-                mappedModel.DownTimeTrackingDetails.Clear();
-                foreach (var detail in model.DowntimeTrackingDetails)
-                {
-                    var det = _dataMapper.Map<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>(detail);
-                    det.HeaderId = mappedModel.Id;
-                    det.CreatedBy = userId;
-                    det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
-                    det.ModifiedDate = DateTime.Now;
-                    det.IsActive = true;
-                    mappedModel.DownTimeTrackingDetails.Add(det);
-                }
-
+                // Save changes
                 await _downtimeTrackingRepository.UpdateAsync(mappedModel);
                 return entity.Id;
             }
             catch (Exception)
             {
+                // Handle exceptions
                 return 0;
             }
         }
+
+
+
 
         public async Task DeleteDowntimeTrackingAsync(long id, long userId)
         {

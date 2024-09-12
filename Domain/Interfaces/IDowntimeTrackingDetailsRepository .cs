@@ -9,6 +9,6 @@ namespace Domain.Interfaces
     public interface IDowntimeTrackingDetailsRepository : IGenericRepository<DowntimeTrackingDetails>
     {
         // Add methods specific to DowntimeTrackingDetails if needed
-      
+        Task UpdateAsync(DowntimeTrackingDetails entity);
     }
 }
