@@ -97,9 +97,20 @@ namespace Application.Services
                     PackingDateTime = pp.PackingDateTime,
                     ProductId = pp.ProductId,
                     ProductName = pp.ProductMaster?.ProductName,
+                    TotalCasesProduced = pp.TotalCasesProduced
                     //ShiftName = post.ShiftMaster?.ShiftName,
 
-                }).ToList()
+                }).ToList(),
+
+                 LiquidPreparationList = entity.LiquidPreparation.Select(lp => new LiquidPreparationList
+                 {
+                     Id = lp.Id,
+                     Code = lp.Code,
+                     StartDateTime = lp.StartDateTime,
+                     EndDateTime = lp.EndDateTime,
+                     ProductName = lp.ProductMaster?.ProductName,
+                     ShiftName = lp.ShiftMaster?.ShiftName,
+                 }).ToList()
             };
         }
         public async Task<bool> ToggleProductionOrderStatusAsync(long id)

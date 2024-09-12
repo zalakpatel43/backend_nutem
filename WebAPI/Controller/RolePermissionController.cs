@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("AddRolePermission")]
-        public async Task<IActionResult> AddRolePermission([FromBody] RolePermissionAddEdit model)
+        public async Task<IActionResult> AddRolePermission(RoleAddEdit model)
         {
             var response = await _rolePermissionService.AddRolePermissionAsync(model, User.Identity.GetUserId());
             return Ok(response);

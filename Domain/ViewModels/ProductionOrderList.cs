@@ -27,5 +27,6 @@ namespace Domain.ViewModels
         public List<PreCheckList> PreCheckListEntities { get; set; }
         public List<PostCheckList> PostCheckListEntities { get; set; }
         public List<PalletPackingList> PalletPackingList { get; set; }
+        public List<LiquidPreparationList> LiquidPreparationList { get; set; }
     }
 }

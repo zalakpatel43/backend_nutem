@@ -11,13 +11,17 @@ namespace Domain.ViewModels
     {
         public RoleAddEdit()
         {
-            Permissions = new List<PermissionAddEdit>();
+            Permissions = new List<PermissionAssign>();
         }
 
         public long Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
-        public List<PermissionAddEdit> Permissions { get; set; }
+
+        public string PermissionData { get; set; }
+
+        public List<PermissionAssign> Permissions { get; set; }
+        //public List<PermissionAddEdit> Permissions { get; set; }
     }
 }

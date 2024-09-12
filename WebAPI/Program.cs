@@ -95,6 +95,8 @@ builder.Services.AddScoped<IMastersRepository, MastersRepository>();
 
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 
 builder.Services.AddScoped<IMastersService, MastersService>();
 builder.Services.AddScoped<ICauseMasterRepository, CauseMasterRepository>();
