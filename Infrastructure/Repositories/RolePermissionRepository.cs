@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories
                 .Where(rp => rp.HasMasterAccess); // You can adjust the filter based on your needs
         }
 
-        public async Task<RolePermissionMap> GetByIdAsync(int id)
+        public async Task<RolePermissionMap> GetByIdAsync(long id)
         {
             return await _context.RolePermissionMaps
                 .Include(rp => rp.Role) // Include related Role

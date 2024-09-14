@@ -25,6 +25,6 @@ namespace Domain.ViewModels
 
         public List<PermissionAssign> Permissions { get; set; }
 
-        public virtual ICollection<RolePermissionMap> RolePermissions { get; set; }
+        public virtual ICollection<RolePermissionAddEdit> RolePermissions { get; set; }
     }
 }
