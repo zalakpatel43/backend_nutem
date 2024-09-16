@@ -8,7 +8,8 @@ namespace Application.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetUserByIdAsync(string id);  // Updated to User
+        Task<User> GetUserByIdAsync(string id);
+        Task<User> GetUserById(long id);// Updated to User
         Task<IEnumerable<User>> GetAllUsersAsync();
 
         Task CreateUserAsync(User user);  // Updated to User
