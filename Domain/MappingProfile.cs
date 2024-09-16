@@ -59,11 +59,38 @@ namespace Domain
             CreateMap<TrailerLoading, TrailerLoadingAddEdit>();
             CreateMap<TrailerLoadingAddEdit, TrailerLoading>().ReverseMap();
 
-            CreateMap<RolePermissionMap, RolePermissionList>();
-            CreateMap<RolePermissionMap, RolePermissionAddEdit>();
-            CreateMap<RolePermissionAddEdit, RolePermissionMap>().ReverseMap();
-            CreateMap<RoleAddEdit, Role>().ReverseMap();
-            CreateMap <Role, RoleList>().ReverseMap();
+            CreateMap<RolePermissionMap, RolePermissionList>()
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+                    .ForMember(dest => dest.PermissionCode, opt => opt.MapFrom(src => src.Permission.Code));
+                    //.ForMember(dest => dest.PermissionName, opt => opt.MapFrom(src => src.Permission.Name));
+
+            CreateMap<RolePermissionMap, RolePermissionAddEdit>()
+                .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.Role.Name))
+                .ForMember(dest => dest.PermissionId, opt => opt.MapFrom(src => src.Permission.Code));
+                
+            CreateMap<RolePermissionAddEdit, RolePermissionMap>()
+                .ForMember(dest => dest.Role, opt => opt.Ignore()) // Adjust if you need to map Role or Permission explicitly
+                .ForMember(dest => dest.Permission, opt => opt.Ignore());
+
+            // Ensure there is only one correct mapping for RoleAddEdit to Role and vice versa
+            CreateMap<RoleAddEdit, Role>()
+                .ForMember(dest => dest.RolePermissions, opt => opt.Ignore()); // Ignore if RolePermissions should not be mapped
+
+            CreateMap<Role, RoleAddEdit>()
+                .ForMember(dest => dest.RolePermissions, opt => opt.MapFrom(src => src.RolePermissions.Select(rp => new RolePermissionAddEdit
+                {
+                    Id = rp.Id,
+                    RoleId = rp.RoleId,
+                    PermissionId = rp.PermissionId,
+                    HasMasterAccess = rp.HasMasterAccess,
+                    
+                })));
+
+            CreateMap<Role, RoleList>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
+
 
             // TrailerLoadingDetails mappings
             CreateMap<TrailerLoadingDetails, TrailerLoadingDetailsAddEdit>();

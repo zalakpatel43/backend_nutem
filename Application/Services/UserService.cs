@@ -30,6 +30,11 @@ namespace Application.Services
             return await _userManager.FindByIdAsync(id);
         }
 
+        public async Task<User> GetUserById(long id)
+        {
+            return await _userManager.FindByIdAsync(id.ToString());
+        }
+
         public async Task CreateUserAsync(User user)
         {
             await _userManager.CreateAsync(user);

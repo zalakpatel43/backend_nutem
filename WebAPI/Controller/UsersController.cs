@@ -75,9 +75,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("{id}/assign-role")]
-        public async Task<IActionResult> AssignRoleToUser(string id, string role)
+        public async Task<IActionResult> AssignRoleToUser(long id, string role)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound();
@@ -91,9 +91,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("{id}/remove-role")]
-        public async Task<IActionResult> RemoveRoleFromUser(string id, string role)
+        public async Task<IActionResult> RemoveRoleFromUser(long id, string role)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound();
