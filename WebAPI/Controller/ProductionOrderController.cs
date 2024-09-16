@@ -23,6 +23,13 @@ namespace WebAPI.Controller
             return Ok(data);
         }
 
+        [HttpGet("GetPOByStatus")]
+        public async Task<IActionResult> GetPOByStatus(String status)
+        {
+            var data = _prodcutionOrderService.GetPOByStatus(status);
+            return Ok(data);
+        }
+
 
         [HttpGet("GetByIdAsync/{id}")]
         public async Task<IActionResult> GetByIdAsync(long id)
