@@ -85,11 +85,14 @@ namespace Application.Services
 
         public async Task DeleteUserAsync(string id)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
                 // Set IsActive to false (soft delete)
                 user.IsActive = false;
+                user.ModifiedBy = loggedinuserId;
+                user.ModifiedDate = DateTime.Now;
 
                 // Update the user in the database
                 await _userManager.UpdateAsync(user);
