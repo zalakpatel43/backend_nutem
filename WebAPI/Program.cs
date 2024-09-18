@@ -81,6 +81,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IClaimAccessorService, ClaimAccessorService>();
+
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<IAutoMapperGenericDataMapper, AutoMapperGenericDataMapper>();
 builder.Services.AddScoped<INozzleMasterRepository, NozzleMasterRepository>();

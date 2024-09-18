@@ -16,14 +16,17 @@ namespace Application.Services
         private readonly IDowntimeTrackingRepository _downtimeTrackingRepository;
         private readonly IDowntimeTrackingDetailsRepository _downtimeTrackingDetailsRepository;
         private readonly IMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public DowntimeTrackingService(IDowntimeTrackingRepository downtimeTrackingRepository,
                                        IDowntimeTrackingDetailsRepository downtimeTrackingDetailsRepository,
-                                       IMapper dataMapper)
+                                       IMapper dataMapper,
+                                       IClaimAccessorService claimAccessorService)
         {
             _downtimeTrackingRepository = downtimeTrackingRepository;
             _downtimeTrackingDetailsRepository = downtimeTrackingDetailsRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         //public async Task<IEnumerable<DowntimeTrackingList>> GetAllDowntimeTrackingsAsync()
@@ -76,11 +79,12 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<DowntimeTracking>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                 mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
-                mappedModel.ModifiedDate = DateTime.Now;
+               // mappedModel.ModifiedBy = userId;
+               // mappedModel.ModifiedDate = DateTime.Now;
                 mappedModel.IsActive = true;
                 mappedModel.Code = await GenerateCode();
 
@@ -89,10 +93,10 @@ namespace Application.Services
                 {
                     var det = _dataMapper.Map<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>(detail);
                     det.HeaderId = mappedModel.Id;
-                    det.CreatedBy = userId;
+                    det.CreatedBy = loggedinuserId;
                     det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
-                    det.ModifiedDate = DateTime.Now;
+                   // det.ModifiedBy = userId;
+                  //  det.ModifiedDate = DateTime.Now;
                     det.IsActive = true;
                     mappedModel.DownTimeTrackingDetails.Add(det);
                 }
@@ -110,6 +114,7 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = await _downtimeTrackingRepository.GetByIdAsync(model.Id);
                 if (entity == null) return 0;
 
@@ -128,7 +133,7 @@ namespace Application.Services
                     {
                         // Update existing detail
                         _dataMapper.Map(matchingDetail, detailEntity);
-                        detailEntity.ModifiedBy = userId;
+                        detailEntity.ModifiedBy = loggedinuserId;
                         detailEntity.ModifiedDate = DateTime.Now;
                         detailEntity.IsActive = true;
                         await _downtimeTrackingDetailsRepository.UpdateAsync(detailEntity);
@@ -148,9 +153,9 @@ namespace Application.Services
                     {
                         var newDetail = _dataMapper.Map<DowntimeTrackingDetailsAddEdit, DowntimeTrackingDetails>(detail);
                         newDetail.HeaderId = entity.Id;
-                        newDetail.CreatedBy = userId;
+                        newDetail.CreatedBy = loggedinuserId;
                         newDetail.CreatedDate = DateTime.Now;
-                        newDetail.ModifiedBy = userId;
+                        newDetail.ModifiedBy = loggedinuserId;
                         newDetail.ModifiedDate = DateTime.Now;
                         newDetail.IsActive = true;
                         entity.DownTimeTrackingDetails.Add(newDetail);
@@ -159,7 +164,7 @@ namespace Application.Services
                 }
 
                 // Update main entity properties
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<DowntimeTrackingAddEdit, DowntimeTracking>(model, entity);
                 mappedModel.Code = code;
@@ -181,10 +186,11 @@ namespace Application.Services
 
         public async Task DeleteDowntimeTrackingAsync(long id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _downtimeTrackingRepository.GetByIdAsync(id);
             if (entity == null) return;
 
-            entity.ModifiedBy = userId;
+            entity.ModifiedBy = loggedinuserId;
             entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
 

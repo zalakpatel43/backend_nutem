@@ -15,15 +15,18 @@ namespace Application.Services
         private readonly IPalletPackingRepository _palletPackingRepository;
         private readonly IPalletPackingDetailsRepository _palletPackingDetailsRepository;
         private readonly IAutoMapperGenericDataMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public PalletPackingService(
             IPalletPackingRepository palletPackingRepository,
             IPalletPackingDetailsRepository palletPackingDetailsRepository,
-            IAutoMapperGenericDataMapper dataMapper)
+            IAutoMapperGenericDataMapper dataMapper,
+            IClaimAccessorService claimAccessorService)
         {
             _palletPackingRepository = palletPackingRepository;
             _palletPackingDetailsRepository = palletPackingDetailsRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         //public IQueryable<PalletPackingList> GetAllPalletPackingAsync()
@@ -72,11 +75,12 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<PalletPackingAddEdit, PalletPacking>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                 mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
-                mappedModel.ModifiedDate = DateTime.Now;
+               // mappedModel.ModifiedBy = userId;
+              //  mappedModel.ModifiedDate = DateTime.Now;
                 mappedModel.IsActive = true;
                 mappedModel.Code = await GenerateCode();
 
@@ -88,10 +92,10 @@ namespace Application.Services
                     {
                         var detail = _dataMapper.Map<PalletPackingDetailsAddEdit, PalletPackingDetails>(list);
                         detail.HeaderId = mappedModel.Id;
-                        detail.CreatedBy = userId;
+                        detail.CreatedBy = loggedinuserId;
                         detail.CreatedDate = DateTime.Now;
-                        detail.ModifiedBy = userId;
-                        detail.ModifiedDate = DateTime.Now;
+                       // detail.ModifiedBy = userId;
+                       // detail.ModifiedDate = DateTime.Now;
                         detail.IsActive = true;
 
                         mappedModel.PalletPackingDetails.Add(detail);
@@ -117,6 +121,7 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = await _palletPackingRepository.GetByIdAsync(model.Id);
                 string code = entity.Code;
                 bool isActive = entity.IsActive;
@@ -131,7 +136,7 @@ namespace Application.Services
                 }
 
                 // Map and update the entity
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<PalletPackingAddEdit, PalletPacking>(model, entity);
                 mappedModel.Code = code;
@@ -143,9 +148,9 @@ namespace Application.Services
                 {
                     var detail = _dataMapper.Map<PalletPackingDetailsAddEdit, PalletPackingDetails>(list);
                     detail.HeaderId = mappedModel.Id;
-                    detail.CreatedBy = userId;
+                    detail.CreatedBy = loggedinuserId;
                     detail.CreatedDate = DateTime.Now;
-                    detail.ModifiedBy = userId;
+                    detail.ModifiedBy = loggedinuserId;
                     detail.ModifiedDate = DateTime.Now;
                     detail.IsActive = true;
 
@@ -164,10 +169,11 @@ namespace Application.Services
 
         public async Task DeletePalletPackingAsync(long id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _palletPackingRepository.GetByIdAsync(id);
             if (entity != null)
             {
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 entity.IsActive = false;
                 await _palletPackingRepository.UpdateAsync(entity);

@@ -20,7 +20,7 @@ namespace WebAPI.Controller
         [HttpGet("GetAllShift")]
         public async Task<IActionResult> GetAllShift()
         {
-            //var userIdClaim = User.FindFirst(IdentityHelper.CustomClaimTypes.UserId).Value;
+          //  var userIdClaim = User.FindFirst(IdentityHelper.CustomClaimTypes.UserId).Value;
            // var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var data = _shiftMasterService.GetAllShiftMasterAsync();
             return Ok(data);

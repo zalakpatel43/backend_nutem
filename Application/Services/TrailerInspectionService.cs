@@ -16,12 +16,14 @@ namespace Application.Services
     {
         private readonly ITrailerInspectionRepository _TrailerInspectionRepository;
         private readonly IAutoMapperGenericDataMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
         public TrailerInspectionService(ITrailerInspectionRepository trailerInspectionRepository,
-           IAutoMapperGenericDataMapper dataMapper
+           IAutoMapperGenericDataMapper dataMapper, IClaimAccessorService claimAccessorService  
             )
         {
             _TrailerInspectionRepository = trailerInspectionRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         public IQueryable<TrailerInspectionList> GetAllTrailerInspectionAsync()
@@ -53,11 +55,12 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<TrailerInspectionAddEdit, TrailerInspection>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                 mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
-                mappedModel.ModifiedDate = DateTime.Now;
+              //  mappedModel.ModifiedBy = userId;
+              //  mappedModel.ModifiedDate = DateTime.Now;
                 mappedModel.IsActive = true;
                 mappedModel.Code = await GenerateCode();
 
@@ -77,11 +80,12 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = await _TrailerInspectionRepository.GetByIdAsync(model.Id);
                 string code = entity.Code;
                 bool isActive = entity.IsActive;
 
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<TrailerInspectionAddEdit, TrailerInspection>(model, entity);
                 mappedModel.Code = code;
@@ -100,8 +104,9 @@ namespace Application.Services
 
         public async Task DeleteTrailerInspectionAsync(long Id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _TrailerInspectionRepository.GetByIdAsync(Id);
-            entity.ModifiedBy = userId;
+            entity.ModifiedBy = loggedinuserId;
             entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
             await _TrailerInspectionRepository.UpdateAsync(entity);

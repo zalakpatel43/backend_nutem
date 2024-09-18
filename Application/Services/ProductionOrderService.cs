@@ -11,12 +11,15 @@ namespace Application.Services
     {
         private readonly IProductionOrderRepository _productionOrderRepository;
         private readonly IAutoMapperGenericDataMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public ProductionOrderService(IProductionOrderRepository productionOrderRepository,
-            IAutoMapperGenericDataMapper dataMapper)
+            IAutoMapperGenericDataMapper dataMapper,
+            IClaimAccessorService claimAccessorService)
         {
             _productionOrderRepository = productionOrderRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         public IQueryable<ProductionOrderList> GetAllProductionOrderAsync()
