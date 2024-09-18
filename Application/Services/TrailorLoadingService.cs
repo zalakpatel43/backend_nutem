@@ -16,16 +16,19 @@ namespace Application.Services
         private readonly ITrailerLoadingRepository _trailerLoadingRepository;
         private readonly ITrailerLoadingDetailsRepository _trailerLoadingDetailsRepository;
         private readonly IAutoMapperGenericDataMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public TrailerLoadingService(
             ITrailerLoadingRepository trailerLoadingRepository,
             ITrailerLoadingDetailsRepository trailerLoadingDetailsRepository,
-            IAutoMapperGenericDataMapper dataMapper
+            IAutoMapperGenericDataMapper dataMapper,
+            IClaimAccessorService claimAccessorService
             )
         {
             _trailerLoadingRepository = trailerLoadingRepository;
             _trailerLoadingDetailsRepository = trailerLoadingDetailsRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         //public IQueryable<TrailerLoadingList> GetAllTrailerLoadingsAsync()
@@ -78,11 +81,12 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<TrailerLoadingAddEdit, TrailerLoading>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                 mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
-                mappedModel.ModifiedDate = DateTime.Now;
+               // mappedModel.ModifiedBy = userId;
+               // mappedModel.ModifiedDate = DateTime.Now;
                 mappedModel.IsActive = true;
                 mappedModel.Code = await GenerateCode();
 
@@ -92,10 +96,10 @@ namespace Application.Services
                 {
                     var mappedDetail = _dataMapper.Map<TrailerLoadingDetailsAddEdit, TrailerLoadingDetails>(detail);
                     mappedDetail.HeaderId = mappedModel.Id;
-                    mappedDetail.CreatedBy = userId;
+                    mappedDetail.CreatedBy = loggedinuserId;
                     mappedDetail.CreatedDate = DateTime.Now;
-                    mappedDetail.ModifiedBy = userId;
-                    mappedDetail.ModifiedDate = DateTime.Now;
+                  //  mappedDetail.ModifiedBy = userId;
+                   // mappedDetail.ModifiedDate = DateTime.Now;
                     mappedDetail.IsActive = true;
                     mappedModel.TrailerLoadingDetails.Add(mappedDetail);
                 }
@@ -115,6 +119,7 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = await _trailerLoadingRepository.GetByIdAsync(model.Id);
                 string code = entity.Code;
                 bool isActive = entity.IsActive;
@@ -127,7 +132,7 @@ namespace Application.Services
                     }
                 }
 
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<TrailerLoadingAddEdit, TrailerLoading>(model, entity);
                 mappedModel.Code = code;
@@ -139,9 +144,9 @@ namespace Application.Services
                 {
                     var mappedDetail = _dataMapper.Map<TrailerLoadingDetailsAddEdit, TrailerLoadingDetails>(detail);
                     mappedDetail.HeaderId = mappedModel.Id;
-                    mappedDetail.CreatedBy = userId;
+                    mappedDetail.CreatedBy = loggedinuserId;
                     mappedDetail.CreatedDate = DateTime.Now;
-                    mappedDetail.ModifiedBy = userId;
+                    mappedDetail.ModifiedBy = loggedinuserId;
                     mappedDetail.ModifiedDate = DateTime.Now;
                     mappedDetail.IsActive = true;
                     mappedModel.TrailerLoadingDetails.Add(mappedDetail);
@@ -160,8 +165,9 @@ namespace Application.Services
 
         public async Task DeleteTrailerLoadingAsync(long id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _trailerLoadingRepository.GetByIdAsync(id);
-            entity.ModifiedBy = userId;
+            entity.ModifiedBy = loggedinuserId;
             entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
             await _trailerLoadingRepository.UpdateAsync(entity);

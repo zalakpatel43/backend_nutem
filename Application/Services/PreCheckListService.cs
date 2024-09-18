@@ -15,14 +15,17 @@ namespace Application.Services
         private readonly IPreCheckListRepository _preCheckListRepository;
         private readonly IPreCheckListDetailRepository _preCheckListDetailRepository;
         private readonly IMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public PreCheckListService(IPreCheckListRepository preCheckListRepository,
                                   IPreCheckListDetailRepository preCheckListDetailRepository,
-                                  IMapper dataMapper)
+                                  IMapper dataMapper,
+                                  IClaimAccessorService claimAccessorService)
         {
             _preCheckListRepository = preCheckListRepository;
             _preCheckListDetailRepository = preCheckListDetailRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         public async Task<IEnumerable<PreCheckList>> GetAllPreCheckListAsync()
@@ -83,11 +86,12 @@ namespace Application.Services
             {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<PreCheckListEntity>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                 mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
-                mappedModel.ModifiedDate = DateTime.Now;
+              //  mappedModel.ModifiedBy = userId;
+              //  mappedModel.ModifiedDate = DateTime.Now;
                 mappedModel.IsActive = true;
                 mappedModel.Code = await GenerateCode();
 
@@ -102,10 +106,10 @@ namespace Application.Services
                     _dataMapper.Map<PreCheckListDetailAddEdit, PreCheckListDetailEntity>(list, det);
 
                     det.HeaderId = mappedModel.Id;  // Assign the generated Id
-                    det.CreatedBy = userId;
+                    det.CreatedBy = loggedinuserId;
                     det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
-                    det.ModifiedDate = DateTime.Now;
+                  //  det.ModifiedBy = userId;
+                   // det.ModifiedDate = DateTime.Now;
                     det.IsActive = true;
                     await _preCheckListDetailRepository.AddAsync(det);
                 }
@@ -125,6 +129,7 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = await _preCheckListRepository.GetByIdAsync(model.Id);
                 string code = entity.Code;
                 bool isActive = entity.IsActive;
@@ -137,7 +142,7 @@ namespace Application.Services
                     }
                 }
 
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<PreCheckListAddEdit, PreCheckListEntity>(model, entity);
                 mappedModel.Code = code;
@@ -151,9 +156,9 @@ namespace Application.Services
                     _dataMapper.Map<PreCheckListDetailAddEdit, PreCheckListDetailEntity>(list, det);
 
                     det.HeaderId = mappedModel.Id;
-                    det.CreatedBy = userId;
+                    det.CreatedBy = loggedinuserId;
                     det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
+                    det.ModifiedBy = loggedinuserId;
                     det.ModifiedDate = DateTime.Now;
                     det.IsActive = true;
                     mappedModel.PreCheckListDetails.Add(det);
@@ -172,8 +177,9 @@ namespace Application.Services
 
         public async Task DeletePreCheckListAsync(long id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _preCheckListRepository.GetByIdAsync(id);
-            entity.ModifiedBy = userId;
+            entity.ModifiedBy = loggedinuserId;
             entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
             await _preCheckListRepository.UpdateAsync(entity);

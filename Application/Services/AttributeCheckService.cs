@@ -14,14 +14,17 @@ namespace Application.Services
         private readonly IAttributeCheckRepository _attributeCheckRepository;
         private readonly IAttributeCheckDetailsRepository _attributeCheckDetailRepository;
         private readonly IMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public AttributeCheckService(IAttributeCheckRepository attributeCheckRepository,
                                      IAttributeCheckDetailsRepository attributeCheckDetailRepository,
-                                     IMapper dataMapper)
+                                     IMapper dataMapper,
+                                     IClaimAccessorService claimAccessorService)
         {
             _attributeCheckRepository = attributeCheckRepository;
             _attributeCheckDetailRepository = attributeCheckDetailRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         //public async Task<IEnumerable<AttributeCheckList>> GetAllAttributeCheckAsync()
@@ -84,11 +87,12 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<AttributeCheck>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                 mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
-                mappedModel.ModifiedDate = DateTime.Now;
+              //  mappedModel.ModifiedBy = userId;
+              //  mappedModel.ModifiedDate = DateTime.Now;
                 mappedModel.IsActive = true;
                 mappedModel.Code = await GenerateCode();
 
@@ -105,10 +109,10 @@ namespace Application.Services
                     }
 
                     det.HeaderId = mappedModel.Id;
-                    det.CreatedBy = userId;
+                    det.CreatedBy = loggedinuserId;
                     det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
-                    det.ModifiedDate = DateTime.Now;
+                  //  det.ModifiedBy = userId;
+                   // det.ModifiedDate = DateTime.Now;
                     det.IsActive = true;
                     mappedModel.AttributeCheckDetails.Add(det);
                 }
@@ -127,6 +131,7 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = await _attributeCheckRepository.GetByIdAsync(model.Id);
                 string code = entity.Code;
                 bool isActive = entity.IsActive;
@@ -139,7 +144,7 @@ namespace Application.Services
                     }
                 }
 
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<AttributeCheckAddEdit, AttributeCheck>(model, entity);
                 mappedModel.Code = code;
@@ -158,9 +163,9 @@ namespace Application.Services
                     }
 
                     det.HeaderId = mappedModel.Id;
-                    det.CreatedBy = userId;
-                    det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
+                  //  det.CreatedBy = userId;
+                  //  det.CreatedDate = DateTime.Now;
+                    det.ModifiedBy = loggedinuserId;
                     det.ModifiedDate = DateTime.Now;
                     det.IsActive = true;
                     mappedModel.AttributeCheckDetails.Add(det);
@@ -178,8 +183,9 @@ namespace Application.Services
 
         public async Task DeleteAttributeCheckAsync(long id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _attributeCheckRepository.GetByIdAsync(id);
-            entity.ModifiedBy = userId;
+            entity.ModifiedBy = loggedinuserId;
             entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
             await _attributeCheckRepository.UpdateAsync(entity);

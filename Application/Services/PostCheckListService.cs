@@ -15,14 +15,17 @@ namespace Application.Services
         private readonly IPostCheckListRepository _postCheckListRepository;
         private readonly IPostCheckListDetailRepository _postCheckListDetailRepository;
         private readonly IMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public PostCheckListService(IPostCheckListRepository postCheckListRepository,
                                     IPostCheckListDetailRepository postCheckListDetailRepository,
-                                    IMapper dataMapper)
+                                    IMapper dataMapper,
+                                    IClaimAccessorService claimAccessorService)
         {
             _postCheckListRepository = postCheckListRepository;
             _postCheckListDetailRepository = postCheckListDetailRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         public async Task<IEnumerable<PostCheckList>> GetAllPostCheckListAsync()
@@ -82,11 +85,12 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<PostCheckListEntity>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                 mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
-                mappedModel.ModifiedDate = DateTime.Now;
+              //  mappedModel.ModifiedBy = userId;
+              //  mappedModel.ModifiedDate = DateTime.Now;
                 mappedModel.IsActive = true;
                 mappedModel.Code = await GenerateCode();
 
@@ -101,10 +105,10 @@ namespace Application.Services
                     _dataMapper.Map<PostCheckListDetailAddEdit, PostCheckListDetailEntity>(list, det);
 
                     det.HeaderId = mappedModel.Id;  // Assign the generated Id
-                    det.CreatedBy = userId;
+                    det.CreatedBy = loggedinuserId;
                     det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
-                    det.ModifiedDate = DateTime.Now;
+                   // det.ModifiedBy = userId;
+                   // det.ModifiedDate = DateTime.Now;
                     det.IsActive = true;
                     await _postCheckListDetailRepository.AddAsync(det);
                 }
@@ -123,6 +127,7 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = await _postCheckListRepository.GetByIdAsync(model.Id);
                 string code = entity.Code;
                 bool isActive = entity.IsActive;
@@ -135,7 +140,7 @@ namespace Application.Services
                     }
                 }
 
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<PostCheckListAddEdit, PostCheckListEntity>(model, entity);
                 mappedModel.Code = code;
@@ -149,9 +154,9 @@ namespace Application.Services
                     _dataMapper.Map<PostCheckListDetailAddEdit, PostCheckListDetailEntity>(list, det);
 
                     det.HeaderId = mappedModel.Id;
-                    det.CreatedBy = userId;
+                    det.CreatedBy = loggedinuserId;
                     det.CreatedDate = DateTime.Now;
-                    det.ModifiedBy = userId;
+                    det.ModifiedBy = loggedinuserId;
                     det.ModifiedDate = DateTime.Now;
                     det.IsActive = true;
                     mappedModel.PostCheckListDetails.Add(det);
@@ -170,8 +175,9 @@ namespace Application.Services
 
         public async Task DeletePostCheckListAsync(long id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _postCheckListRepository.GetByIdAsync(id);
-            entity.ModifiedBy = userId;
+            entity.ModifiedBy = loggedinuserId;
             entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
             await _postCheckListRepository.UpdateAsync(entity);

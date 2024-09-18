@@ -16,17 +16,20 @@ namespace Application.Services
         private readonly IPermissionRepository _permissionRepository;
         private readonly IRolePermissionRepository _rolePermissionRepository;
         private readonly IAutoMapperGenericDataMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
 
         public RolePermissionService(IRolePermissionRepository rolePermissionRepository,
             IRoleRepository roleRepository,
             IPermissionRepository permissionRepository,
-            IAutoMapperGenericDataMapper dataMapper
+            IAutoMapperGenericDataMapper dataMapper,
+            IClaimAccessorService claimAccessorService
             )
         {
             _roleRepository = roleRepository;
             _permissionRepository = permissionRepository;
             _rolePermissionRepository = rolePermissionRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
 
         public  IQueryable<RoleList> GetAllRolePermissionsAsync()
@@ -52,10 +55,11 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var mappedModel = _dataMapper.Map<RoleAddEdit, Role>(model);
-                mappedModel.CreatedBy = userId;
+                mappedModel.CreatedBy = loggedinuserId;
                // mappedModel.CreatedDate = DateTime.Now;
-                mappedModel.ModifiedBy = userId;
+               // mappedModel.ModifiedBy = userId;
                 // mappedModel.ModifiedDate = DateTime.Now;
 
               //  var listPermission1 = _permissionRepository.GetSingle(m => m.Code == "PER_DASHBOARD" && (long)m.PermissionTypeId == PermissionTypeStruct.PermissionTypeConstant.List);
@@ -145,6 +149,7 @@ namespace Application.Services
         {
             try
             {
+                long loggedinuserId = _claimAccessorService.GetUserId();
                 var entity = _dataMapper.Map<RoleAddEdit, Role>(model);
 
                 if (model.Id != 0)
@@ -232,7 +237,7 @@ namespace Application.Services
 
                 entity.IsActive = true;
 
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = loggedinuserId;
                 // entity.ModifiedDate = DateTime.Now;
                 await _roleRepository.UpdateAsync(entity);
                 return entity.Id;
@@ -248,8 +253,9 @@ namespace Application.Services
 
         public async Task DeleteRolePermissionAsync(long Id, long userId)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var entity = await _roleRepository.GetByIdAsync(Id);
-            entity.ModifiedBy = userId;
+            entity.ModifiedBy = loggedinuserId;
             //entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
             await _roleRepository.UpdateAsync(entity);

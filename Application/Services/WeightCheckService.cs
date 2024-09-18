@@ -17,18 +17,22 @@ namespace Application.Services
         private readonly IWeightCheckDetailsRepository _WeightCheckDetailRepository;
         private readonly IWeightCheckSubDetailsRepository _WeightCheckSubDetailRepository;
        // private readonly IMapper _dataMapper;
-        private readonly IAutoMapperGenericDataMapper _dataMapper; 
+        private readonly IAutoMapperGenericDataMapper _dataMapper;
+        private readonly IClaimAccessorService _claimAccessorService;
+
         public WeightCheckService(IWeightCheckRepository weightCheckRepository, 
             IWeightCheckDetailsRepository weightCheckDetailRepository,
             IWeightCheckSubDetailsRepository weightCheckSubDetailRepository,
            // IMapper dataMapper,
-           IAutoMapperGenericDataMapper dataMapper
+           IAutoMapperGenericDataMapper dataMapper,
+           IClaimAccessorService claimAccessorService
             )
         {
             _WeightCheckRepository = weightCheckRepository;
             _WeightCheckDetailRepository = weightCheckDetailRepository;
             _WeightCheckSubDetailRepository = weightCheckSubDetailRepository;
             _dataMapper = dataMapper;
+            _claimAccessorService = claimAccessorService;
         }
         public IQueryable<WeightCheckList> GetAllWeightCheckAsync()
         {
@@ -63,11 +67,12 @@ namespace Application.Services
         {
             try
             {
-                    var mappedModel = _dataMapper.Map<WeightCheckAddEdit, WeightCheck >(model);
-                    mappedModel.CreatedBy = userId;
+                long loggedinuserId = _claimAccessorService.GetUserId();
+                var mappedModel = _dataMapper.Map<WeightCheckAddEdit, WeightCheck >(model);
+                    mappedModel.CreatedBy = loggedinuserId;
                     mappedModel.CreatedDate = DateTime.Now;
-                    mappedModel.ModifiedBy = userId;
-                    mappedModel.ModifiedDate = DateTime.Now;
+                   // mappedModel.ModifiedBy = loggedinuserId;
+                   // mappedModel.ModifiedDate = DateTime.Now;
                     mappedModel.IsActive = true;
                     mappedModel.Code = await GenerateCode();
 
@@ -84,11 +89,12 @@ namespace Application.Services
                         {
                             det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
                         }
+
                         det.HeaderId = mappedModel.Id;
-                        det.CreatedBy = userId;
+                        det.CreatedBy = loggedinuserId;
                         det.CreatedDate = DateTime.Now;
-                        det.ModifiedBy = userId;
-                        det.ModifiedDate = DateTime.Now;
+                       // det.ModifiedBy = loggedinuserId;
+                      //  det.ModifiedDate = DateTime.Now;
                         det.IsActive = true;
 
                         foreach (var item in list.WeightCheckSubDetails)
@@ -98,10 +104,10 @@ namespace Application.Services
                             det1.Id = 0;
                             det1.NozzleId = item.NozzleId;
                             det1.Weight = item.Weight;
-                            det1.CreatedBy = userId;
+                            det1.CreatedBy = loggedinuserId;
                             det1.CreatedDate = DateTime.Now;
-                            det1.ModifiedBy = userId;
-                            det1.ModifiedDate = DateTime.Now;
+                          //  det1.ModifiedBy = loggedinuserId;
+                           // det1.ModifiedDate = DateTime.Now;
                             det1.IsActive = true;
 
                             det.WeightCheckSubDetails.Add(det1);
@@ -150,8 +156,8 @@ namespace Application.Services
                     }
                 }
 
-
-                entity.ModifiedBy = userId;
+                long loggedinuserId = _claimAccessorService.GetUserId();
+                entity.ModifiedBy = loggedinuserId;
                 entity.ModifiedDate = DateTime.Now;
                 var mappedModel = _dataMapper.Map<WeightCheckAddEdit, WeightCheck>(model, entity);
                 mappedModel.Code = code;
@@ -173,9 +179,9 @@ namespace Application.Services
                             det.DoneByUserIds = string.Join(",", list.DoneByUserIdList);
                         }
                         det.HeaderId = mappedModel.Id;
-                        det.CreatedBy = userId;
+                        det.CreatedBy = loggedinuserId;
                         det.CreatedDate = DateTime.Now;
-                        det.ModifiedBy = userId;
+                        det.ModifiedBy = loggedinuserId;
                         det.ModifiedDate = DateTime.Now;
                         det.IsActive = true;
 
@@ -186,9 +192,9 @@ namespace Application.Services
                             det1.Id = 0;
                             det1.NozzleId = item.NozzleId;
                             det1.Weight = item.Weight;
-                            det1.CreatedBy = userId;
+                            det1.CreatedBy = loggedinuserId;
                             det1.CreatedDate = DateTime.Now;
-                            det1.ModifiedBy = userId;
+                            det1.ModifiedBy = loggedinuserId;
                             det1.ModifiedDate = DateTime.Now;
                             det1.IsActive = true;
 
@@ -222,7 +228,8 @@ namespace Application.Services
         public async Task DeleteWeightCheckAsync(long Id, long userId)
         {
             var entity = await _WeightCheckRepository.GetByIdAsync(Id);
-            entity.ModifiedBy = userId;
+            long loggedinuserId = _claimAccessorService.GetUserId();
+            entity.ModifiedBy = loggedinuserId;
             entity.ModifiedDate = DateTime.Now;
             entity.IsActive = false;
             await _WeightCheckRepository.UpdateAsync(entity);

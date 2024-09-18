@@ -12,10 +12,12 @@ namespace Application.Services
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager; // Change to User
+        private readonly IClaimAccessorService _claimAccessorService;
 
-        public UserService(UserManager<User> userManager)
+        public UserService(UserManager<User> userManager, IClaimAccessorService claimAccessorService)
         {
             _userManager = userManager;
+            _claimAccessorService = claimAccessorService;
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -42,6 +44,7 @@ namespace Application.Services
 
         public async Task<IdentityResult> CreateUserAsync(UserAddEdit userAddEdit)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             // Create a User instance from UserAddEdit
             var user = new User
             {
@@ -50,10 +53,10 @@ namespace Application.Services
                 Name = userAddEdit.Name,
                 PhoneNumber = userAddEdit.PhoneNumber,
                 IsActive = userAddEdit.IsActive,
-                CreatedDate = userAddEdit.CreatedDate,
-                CreatedBy = userAddEdit.CreatedBy,
-                ModifiedDate = userAddEdit.ModifiedDate,
-                ModifiedBy = userAddEdit.ModifiedBy
+                CreatedDate = DateTime.Now,
+                CreatedBy = loggedinuserId,
+              //  ModifiedDate = userAddEdit.ModifiedDate,
+              //  ModifiedBy = userAddEdit.ModifiedBy
             };
 
             // Use UserManager to create the user with password
@@ -65,6 +68,7 @@ namespace Application.Services
 
         public async Task UpdateUserAsync(User user)
         {
+            long loggedinuserId = _claimAccessorService.GetUserId();
             var existingUser = await _userManager.FindByIdAsync(user.Id.ToString());
             if (existingUser != null)
             {
@@ -72,7 +76,9 @@ namespace Application.Services
                 existingUser.Email = user.Email;
                 existingUser.PhoneNumber = user.PhoneNumber;
                 existingUser.IsActive = user.IsActive; // Update IsActive
-                // Update other properties as needed
+                existingUser.ModifiedDate = DateTime.Now;
+                existingUser.ModifiedBy = loggedinuserId;
+                                                       // Update other properties as needed
                 await _userManager.UpdateAsync(existingUser);
             }
         }
