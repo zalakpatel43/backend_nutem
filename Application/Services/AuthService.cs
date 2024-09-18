@@ -51,8 +51,9 @@ namespace Application.Services
                 // Populate the response
                 response.Id = user.Id;
                 response.Token = token;
-                response.DisplayName = user.UserName; // Adjust as needed
-                response.ExpireAt = DateTime.UtcNow.AddHours(1); // Example expiry time
+                response.DisplayName = user.UserName; 
+             
+                response.ExpireAt = DateTime.UtcNow.AddHours(1);
                 response.IsAdmin = roles.Contains("Admin");
                 response.IsSuccess = true;
                 response.Message = "Login successful";
@@ -64,6 +65,7 @@ namespace Application.Services
                 response.User = new User
                 {
                     Id = user.Id,
+                    Name=user.Name,
                     UserName = user.UserName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,

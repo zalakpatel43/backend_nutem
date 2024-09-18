@@ -88,7 +88,11 @@ namespace Application.Services
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                await _userManager.DeleteAsync(user);
+                // Set IsActive to false (soft delete)
+                user.IsActive = false;
+
+                // Update the user in the database
+                await _userManager.UpdateAsync(user);
             }
         }
 

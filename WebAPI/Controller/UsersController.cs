@@ -74,8 +74,16 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
+            var user = await _userService.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            // Perform soft delete by updating the IsActive flag
             await _userService.DeleteUserAsync(id);
-            return NoContent();
+            return Ok(new { message = "User deleted (soft delete)." });
         }
 
 
