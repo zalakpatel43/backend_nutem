@@ -12,7 +12,7 @@ namespace Application.Interfaces
         Task<User> GetUserById(long id);// Updated to User
         Task<IEnumerable<User>> GetAllUsersAsync();
 
-        Task CreateUserAsync(User user);  // Updated to User
+        Task<IdentityResult> CreateUserAsync(UserAddEdit userAddEdit);// Updated to User
         Task UpdateUserAsync(User user);  // Updated to User
         Task DeleteUserAsync(string id);
 

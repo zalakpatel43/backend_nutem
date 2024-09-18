@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Application.Services;
 using Domain.Entities;
 using Domain.Interfaces;
+using Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -38,14 +39,29 @@ namespace WebAPI.Controllers
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
         }
-       
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> Create([FromBody] User user)
+        //{
+        //    await _userService.CreateUserAsync(user);
+        //    return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+        //}
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] UserAddEdit userAddEdit)
         {
-            await _userService.CreateUserAsync(user);
+            var result = await _userService.CreateUserAsync(userAddEdit);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            // Optionally, retrieve the created user and return it
+            var user = await _userService.GetUserByEmailAsync(userAddEdit.Email);
             return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
         }
+
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, [FromBody] User user)

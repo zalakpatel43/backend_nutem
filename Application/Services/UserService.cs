@@ -35,12 +35,33 @@ namespace Application.Services
             return await _userManager.FindByIdAsync(id.ToString());
         }
 
-        public async Task CreateUserAsync(User user)
+        //public async Task CreateUserAsync(User user)
+        //{
+        //    await _userManager.CreateAsync(user);
+        //}
+
+        public async Task<IdentityResult> CreateUserAsync(UserAddEdit userAddEdit)
         {
-            await _userManager.CreateAsync(user);
+            // Create a User instance from UserAddEdit
+            var user = new User
+            {
+                UserName = userAddEdit.UserName, // Or use other fields as necessary
+                Email = userAddEdit.Email, // Assuming username and email are the same
+                Name = userAddEdit.Name,
+                PhoneNumber = userAddEdit.PhoneNumber,
+                IsActive = userAddEdit.IsActive,
+                CreatedDate = userAddEdit.CreatedDate,
+                CreatedBy = userAddEdit.CreatedBy,
+                ModifiedDate = userAddEdit.ModifiedDate,
+                ModifiedBy = userAddEdit.ModifiedBy
+            };
+
+            // Use UserManager to create the user with password
+            return await _userManager.CreateAsync(user, userAddEdit.Password);
         }
 
-       
+
+
 
         public async Task UpdateUserAsync(User user)
         {
