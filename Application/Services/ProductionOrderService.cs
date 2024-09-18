@@ -21,12 +21,19 @@ namespace Application.Services
 
         public IQueryable<ProductionOrderList> GetAllProductionOrderAsync()
         {
-            var entities = _productionOrderRepository.Get(m => m.IsActive == true);
+            var entities = _productionOrderRepository.Get(m => m.IsActive == true );
             var productionOrderLists = _dataMapper.Project<ProductionOrder, ProductionOrderList>(entities);
             return productionOrderLists.AsQueryable(); // Ensure you return IQueryable
         }
 
-        public async Task<ProductionOrderList> GetProductionOrderByIdAsync(long id)
+        public IQueryable<ProductionOrderList> GetPOByStatus(String status)
+        {
+            var entities = _productionOrderRepository.Get(m => m.IsActive == true && m.Status == status);
+        var productionOrderLists = _dataMapper.Project<ProductionOrder, ProductionOrderList>(entities);
+            return productionOrderLists.AsQueryable(); // Ensure you return IQueryable
+        }
+
+    public async Task<ProductionOrderList> GetProductionOrderByIdAsync(long id)
         {
             var entity = await _productionOrderRepository.GetProductionOrderWithDetailsByIdAsync(id);
             if (entity == null)
