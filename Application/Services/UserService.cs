@@ -74,6 +74,7 @@ namespace Application.Services
             {
                 existingUser.UserName = user.UserName;
                 existingUser.Email = user.Email;
+                existingUser.Name = user.Name;
                 existingUser.PhoneNumber = user.PhoneNumber;
                 existingUser.IsActive = user.IsActive; // Update IsActive
                 existingUser.ModifiedDate = DateTime.Now;
