@@ -12,8 +12,9 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     //[Route("api/account")]
-   // [Authorize]
+    // [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
