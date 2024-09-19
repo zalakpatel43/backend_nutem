@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Services;
 using Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+  //  [Authorize]
     public class RolePermissionController : ControllerBase
     {
         private readonly IRolePermissionService _rolePermissionService;

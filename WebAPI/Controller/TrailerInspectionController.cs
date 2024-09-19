@@ -1,6 +1,7 @@
 ﻿using Application.Helper;
 using Application.Interfaces;
 using Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace WebAPI.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TrailerInspectionController : ControllerBase
     {
         private readonly ITrailerInspectionService _trailerInspectionService;

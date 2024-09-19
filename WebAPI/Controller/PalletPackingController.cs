@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Services;
 using Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace WebAPI.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PalletPackingController : ControllerBase
     {
         private readonly IPalletPackingService _palletPackingService;

@@ -1,6 +1,7 @@
 ﻿using Application.Helper;
 using Application.Interfaces;
 using Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PostCheckListController : ControllerBase
     {
         private readonly IPostCheckListService _postCheckListService;

@@ -1,6 +1,7 @@
 ﻿using Application.Helper;
 using Application.Interfaces;
 using Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace WebAPI.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DowntimeTrackingController : ControllerBase
     {
         private readonly IDowntimeTrackingService _downtimeTrackingService;
