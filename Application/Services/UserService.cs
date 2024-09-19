@@ -107,8 +107,15 @@ namespace Application.Services
 
         public async Task<IdentityResult> AssignRoleToUserAsync(User user, string role)
         {
+            if (await _userManager.IsInRoleAsync(user, role))
+            {
+                // User is already in the role
+                return IdentityResult.Success; // Or return a custom result indicating success
+            }
+
             return await _userManager.AddToRoleAsync(user, role);
         }
+
 
         public async Task<IdentityResult> RemoveRoleFromUserAsync(User user, string role)
         {
