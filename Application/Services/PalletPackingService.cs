@@ -46,7 +46,8 @@ namespace Application.Services
                 Code = pp.Code,
                 PackingDateTime = pp.PackingDateTime,
                 ProductId = pp.ProductId,
-                ProductName =  pp.ProductMaster.ProductName  // Ensure ProductName is mapped
+                ProductName =  pp.ProductMaster.ProductName,  // Ensure ProductName is mapped
+                TotalCasesProduced = pp.TotalCasesProduced
             });
 
             return result;

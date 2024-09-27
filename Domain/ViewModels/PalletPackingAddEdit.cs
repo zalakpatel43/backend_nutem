@@ -13,7 +13,7 @@ namespace Domain.ViewModels
         public decimal? FinishedCasesOnIncompletePalletAtStart { get; set; }
         public decimal? FinishedCasesOnIncompletePalletAtEnd { get; set; }
         public decimal? TotalCasesProduced { get; set; }
-        public long? SupervisedId { get; set; }
+        public long? SupervisedBy { get; set; }
         public string Notes { get; set; }
         public bool? IsActive { get; set; }
 
