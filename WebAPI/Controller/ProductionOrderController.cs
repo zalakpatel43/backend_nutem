@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Helper;
+using Application.Interfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -51,6 +52,16 @@ namespace WebAPI.Controller
                 return NotFound();
 
             return Ok(new { Message = "Status updated successfully" });
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetProductionOrdersByHangfire")]
+        public async Task<IActionResult> GetProductionOrdersByHangfire()
+        {
+            long UserId = User.Identity.GetUserId();
+
+            var response = await _prodcutionOrderService.GetAllProductionOrdersFromSAP();
+            return Ok(response);
         }
     }
 }

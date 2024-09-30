@@ -10,5 +10,7 @@ namespace Application.Interfaces
         IQueryable<ProductionOrderList> GetPOByStatus(String status);
         Task<ProductionOrderList> GetProductionOrderByIdAsync(long id);
         Task<bool> ToggleProductionOrderStatusAsync(long id);
+
+        Task<ResponseModel> GetAllProductionOrdersFromSAP();
     }
 }
