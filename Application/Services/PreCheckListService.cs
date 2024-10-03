@@ -77,7 +77,7 @@ namespace Application.Services
             string code = "";
             var ct = _preCheckListRepository.Get().Select(a => a.Code).Distinct().ToList().Count;
 
-            code = $"PCL" + (ct + 1).ToString("0000000");
+            code = $"Pre" + (ct + 1).ToString("0000000");
 
             return code.ToUpper();
         }

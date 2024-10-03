@@ -76,7 +76,7 @@ namespace Application.Services
             string code = "";
             var ct = _postCheckListRepository.Get().Select(a => a.Code).Distinct().ToList().Count;
 
-            code = $"PSTCL" + (ct + 1).ToString("0000000");
+            code = $"Post" + (ct + 1).ToString("0000000");
 
             return code.ToUpper();
         }

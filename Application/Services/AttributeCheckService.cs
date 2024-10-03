@@ -78,7 +78,7 @@ namespace Application.Services
             string code = "";
             var ct = _attributeCheckRepository.Get().Select(a => a.Code).Distinct().ToList().Count;
 
-            code = $"ATC" + (ct + 1).ToString("0000000");
+            code = $"AC" + (ct + 1).ToString("0000000");
 
             return code.ToUpper();
         }

@@ -68,7 +68,7 @@ namespace Application.Services
         {
             string code = "";
             var ct = _palletPackingRepository.Get().Select(a => a.Code).Distinct().ToList().Count;
-            code = $"PPC" + (ct + 1).ToString("0000000");
+            code = $"PP" + (ct + 1).ToString("0000000");
             return code.ToUpper();
         }
 
