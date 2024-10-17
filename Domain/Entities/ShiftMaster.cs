@@ -19,5 +19,6 @@ namespace Domain.Entities
         public virtual ICollection<PostCheckListEntity> PostCheckListEntity { get; set; }
         public virtual ICollection<WeightCheck> WeightCheck { get; set; }
         public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
+        public virtual ICollection<LaborVariance> LaborVariance { get; set; }
     }
 }

@@ -47,6 +47,8 @@ namespace Infrastructure.Context
         public DbSet<LiquidPreparationChecklistDetails> LiquidPreparationChecklistDetails { get; set; }
         public DbSet<LiquidPreparationSpecificationDetails> LiquidPreparationSpecificationDetails { get; set; }
         public DbSet<LiquidPreparationAdjustmentDetails> LiquidPreparationAdjustmentDetails { get; set; }
+        public DbSet<LaborVariance> LaborVariance { get; set; }
+        public DbSet<LaborVarianceDetails> LaborVarianceDetails { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -538,6 +540,43 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<PostCheckListDetailEntity>()
                 .ToTable("adm_PostCheckListDetails");
+
+            modelBuilder.Entity<LaborVariance>()
+              .HasKey(wc => wc.Id);
+
+            modelBuilder.Entity<LaborVariance>()
+                .HasOne(wc => wc.ShiftMaster)
+                .WithMany(po => po.LaborVariance)
+                .HasForeignKey(wc => wc.ShiftId);
+
+            modelBuilder.Entity<LaborVariance>()
+                .HasOne(wc => wc.Masters)
+                .WithMany(po => po.LaborVariance)
+                .HasForeignKey(wc => wc.ProductLineId);
+
+            modelBuilder.Entity<LaborVariance>()
+                .ToTable("adm_LaborVarianceHeader");
+
+            modelBuilder.Entity<LaborVarianceDetails>()
+              .HasKey(wcd => wcd.Id);
+
+            modelBuilder.Entity<LaborVarianceDetails>()
+                .HasOne(wcd => wcd.ProductionOrder)
+                .WithMany(wc => wc.LaborVarianceDetails)
+                .HasForeignKey(wcd => wcd.SAPProductionOrderId);
+
+            modelBuilder.Entity<LaborVarianceDetails>()
+             .HasOne(wcd => wcd.LaborVariance)
+             .WithMany(wc => wc.LaborVarianceDetails)
+             .HasForeignKey(wcd => wcd.HeaderId);
+
+            modelBuilder.Entity<LaborVarianceDetails>()
+             .HasOne(wcd => wcd.ProductMaster)
+             .WithMany(wc => wc.LaborVarianceDetails)
+             .HasForeignKey(wcd => wcd.ProductId);
+
+            modelBuilder.Entity<LaborVarianceDetails>()
+                .ToTable("adm_LaborVarianceDetails");
 
         }
     }

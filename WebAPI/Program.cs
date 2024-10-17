@@ -154,7 +154,9 @@ builder.Services.AddScoped<IPalletPackingDetailsRepository, PalletPackingDetails
 builder.Services.AddScoped<IPalletPackingRepository, PalletPackingRepository>();
 builder.Services.AddScoped<IPalletPackingService, PalletPackingService>();
 
-
+builder.Services.AddScoped<ILaborVarinceRepository, LaborVarinceRepository>();
+builder.Services.AddScoped<ILaborVarinceDetailsRepository, LaborVarinceDetailsRepository>();
+builder.Services.AddScoped<ILaborVarianceService, LaborVarianceService>();
 
 
 

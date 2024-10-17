@@ -49,7 +49,7 @@ namespace Domain.Entities
         [JsonIgnore]
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
         public virtual ICollection<LiquidPreparation> LiquidPreparation { get; set; }
-        
+        public virtual ICollection<LaborVarianceDetails> LaborVarianceDetails { get; set; }
         public virtual ICollection<TrailerLoadingDetails> TrailerLoadingDetails { get; set; }
         //public virtual ICollection<AttributeCheckEntity> AttributeCheckEntities { get; set; }
         //public virtual ICollection<DowntimeTrackingEntity> DowntimeTrackingEntities { get; set; }

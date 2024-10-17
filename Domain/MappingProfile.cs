@@ -162,6 +162,19 @@ namespace Domain
             CreateMap<LiquidPreparationInstructionDetails, LiquidPreparationInstructionDetailsAddEdit>().ReverseMap();
             CreateMap<LiquidPreparationSpecificationDetails, LiquidPreparationSpecificationDetailsAddEdit>().ReverseMap();
 
+
+            CreateMap<LaborVariance, LaborVarianceList>();
+            CreateMap<LaborVariance, LaborVarianceAddEdit>();
+            CreateMap<LaborVarianceAddEdit, LaborVariance>().ReverseMap();
+            CreateMap<LaborVarianceDetailsAddEdit, LaborVarianceDetails>().ReverseMap();
+            CreateMap<LaborVariance, LaborVarianceList>()
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.ShiftMaster.ShiftName))
+            .ForMember(dest => dest.ProductLineName, opt => opt.MapFrom(src => src.Masters.Name));
+
+            CreateMap<LaborVariance, LaborVarianceAddEdit>()
+            .ForMember(dest => dest.LaborVarianceDetails, opt => opt.MapFrom(src => src.LaborVarianceDetails))
+            .ReverseMap();
+
         }
 
         public class PaginatedListConverter<TSource, TDestination> : ITypeConverter<PaginatedList<TSource>, PaginatedList<TDestination>>

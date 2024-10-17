@@ -459,6 +459,41 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "adm_LaborVarianceHeader",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ShiftId = table.Column<long>(type: "bigint", nullable: true),
+                    ProductLineId = table.Column<long>(type: "bigint", nullable: true),
+                    Employees = table.Column<long>(type: "bigint", nullable: true),
+                    TempEmployee = table.Column<long>(type: "bigint", nullable: true),
+                    TotalEmployee = table.Column<long>(type: "bigint", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_LaborVarianceHeader", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_LaborVarianceHeader_adm_Masters_ProductLineId",
+                        column: x => x.ProductLineId,
+                        principalTable: "adm_Masters",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_adm_LaborVarianceHeader_adm_ShiftMaster_ShiftId",
+                        column: x => x.ShiftId,
+                        principalTable: "adm_ShiftMaster",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "adm_WeightCheckHeader",
                 columns: table => new
                 {
@@ -852,6 +887,63 @@ namespace Infrastructure.Migrations
                         principalTable: "adm_DowntimeTracking",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "adm_LaborVarianceDetails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HeaderId = table.Column<long>(type: "bigint", nullable: true),
+                    SAPProductionOrderId = table.Column<long>(type: "bigint", nullable: true),
+                    ProductId = table.Column<long>(type: "bigint", nullable: true),
+                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LateStartReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChangeOverTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ActualBottleProduced = table.Column<long>(type: "bigint", nullable: true),
+                    TotalRunTImeMins = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ShiftComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DownTimeMins = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DownTImeComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HC = table.Column<long>(type: "bigint", nullable: true),
+                    CaseAttainment = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    CaseTarget = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Percentage = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    BottleTarget = table.Column<long>(type: "bigint", nullable: true),
+                    ShiftIndex = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Criteria = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MissingFGItems = table.Column<long>(type: "bigint", nullable: true),
+                    NonProductionTime = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    AdditionalComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimePerPerson = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalMins = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_adm_LaborVarianceDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_LaborVarianceDetails_adm_LaborVarianceHeader_HeaderId",
+                        column: x => x.HeaderId,
+                        principalTable: "adm_LaborVarianceHeader",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_adm_LaborVarianceDetails_adm_ProductMaster_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "adm_ProductMaster",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_adm_LaborVarianceDetails_adm_ProductionOrder_SAPProductionOrderId",
+                        column: x => x.SAPProductionOrderId,
+                        principalTable: "adm_ProductionOrder",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1358,6 +1450,31 @@ namespace Infrastructure.Migrations
                 column: "HeaderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_adm_LaborVarianceDetails_HeaderId",
+                table: "adm_LaborVarianceDetails",
+                column: "HeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_LaborVarianceDetails_ProductId",
+                table: "adm_LaborVarianceDetails",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_LaborVarianceDetails_SAPProductionOrderId",
+                table: "adm_LaborVarianceDetails",
+                column: "SAPProductionOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_LaborVarianceHeader_ProductLineId",
+                table: "adm_LaborVarianceHeader",
+                column: "ProductLineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_adm_LaborVarianceHeader_ShiftId",
+                table: "adm_LaborVarianceHeader",
+                column: "ShiftId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_adm_LiquidPreparation_ProductId",
                 table: "adm_LiquidPreparation",
                 column: "ProductId");
@@ -1723,6 +1840,9 @@ namespace Infrastructure.Migrations
                 name: "adm_DowntimeTrackingDetails");
 
             migrationBuilder.DropTable(
+                name: "adm_LaborVarianceDetails");
+
+            migrationBuilder.DropTable(
                 name: "adm_LiquidPreparationAdjustmentDetails");
 
             migrationBuilder.DropTable(
@@ -1772,6 +1892,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "adm_DowntimeTracking");
+
+            migrationBuilder.DropTable(
+                name: "adm_LaborVarianceHeader");
 
             migrationBuilder.DropTable(
                 name: "adm_LiquidPreparationInstructionDetails");

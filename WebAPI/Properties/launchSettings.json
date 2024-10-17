@@ -25,8 +25,8 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       // "applicationUrl": "http://192.168.1.147:8989",
-      "applicationUrl": "https://localhost:7032;http://localhost:5214;",
-
+     // "applicationUrl": "https://localhost:7032;https://nutemapi.skywardcloud.com;http://localhost:5214;",
+      "applicationUrl": "https://localhost:7032",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -37,6 +37,23 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "IIS Express production": {
+        "commandName": "production",
+        "launchBrowser": true,
+        "launchUrl": "swagger",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Production"
+        }
+      },
+      "Skyward.Service.API": {
+        "commandName": "Project",
+        "launchBrowser": true,
+        "launchUrl": "swagger",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "applicationUrl": "https://nutemapi.skywardcloud.com;http://localhost:5000"
       }
     }
   }

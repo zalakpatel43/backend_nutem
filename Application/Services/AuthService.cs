@@ -146,6 +146,9 @@ namespace Application.Services
           //  var response = await httpClient.GetAsync($"http://192.168.1.147:8989/api/RolePermission/GetById/{roleId}");
 
             var response = await httpClient.GetAsync($"https://localhost:7032/api/RolePermission/GetById/{roleId}");
+
+         //   var response = await httpClient.GetAsync($"http://nutemapi.skywardcloud.com/api/RolePermission/GetById/{roleId}");
+
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
 
@@ -157,9 +160,12 @@ namespace Application.Services
         private async Task<List<Permission>> GetAllPermissionsAsync()
         {
             using var httpClient = new HttpClient();
-          //  var response = await httpClient.GetAsync("http://192.168.1.147:8989/api/Permission/GetAllPermissions");
+            //  var response = await httpClient.GetAsync("http://192.168.1.147:8989/api/Permission/GetAllPermissions");
 
-            var response = await httpClient.GetAsync("https://localhost:7032/api/Permission/GetAllPermissions");
+              var response = await httpClient.GetAsync("https://localhost:7032/api/Permission/GetAllPermissions");
+
+           // var response = await httpClient.GetAsync("http://nutemapi.skywardcloud.com/api/Permission/GetAllPermissions");
+
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Permission>>(content);

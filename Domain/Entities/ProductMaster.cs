@@ -30,5 +30,6 @@ namespace Domain.Entities
         public virtual ICollection<AttributeCheck> AttributeCheck { get; set; }
         public virtual ICollection<DowntimeTracking> DowntimeTracking { get; set; }
         public virtual ICollection<PalletPacking> PalletPacking { get; set; }
+        public virtual ICollection<LaborVarianceDetails> LaborVarianceDetails { get; set; }
     }
 }

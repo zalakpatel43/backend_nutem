@@ -326,6 +326,171 @@ namespace Infrastructure.Migrations
                     b.ToTable("adm_DowntimeTrackingDetails", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.LaborVariance", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("Employees")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ProductLineId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("TempEmployee")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("TotalEmployee")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductLineId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.ToTable("adm_LaborVarianceHeader", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.LaborVarianceDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ActualBottleProduced")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("AdditionalComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("BottleTarget")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("CaseAttainment")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("CaseTarget")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("ChangeOverTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Criteria")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DownTImeComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("DownTimeMins")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("EndDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("HC")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("HeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LateStartReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("MissingFGItems")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("NonProductionTime")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Percentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SAPProductionOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ShiftComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShiftIndex")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("TimePerPerson")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("TotalMins")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("TotalRunTImeMins")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeaderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SAPProductionOrderId");
+
+                    b.ToTable("adm_LaborVarianceDetails", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
                 {
                     b.Property<long>("Id")
@@ -2176,6 +2341,42 @@ namespace Infrastructure.Migrations
                     b.Navigation("DowntimeTracking");
                 });
 
+            modelBuilder.Entity("Domain.Entities.LaborVariance", b =>
+                {
+                    b.HasOne("Skyward.Model.MastersEntity", "Masters")
+                        .WithMany("LaborVariance")
+                        .HasForeignKey("ProductLineId");
+
+                    b.HasOne("Domain.Entities.ShiftMaster", "ShiftMaster")
+                        .WithMany("LaborVariance")
+                        .HasForeignKey("ShiftId");
+
+                    b.Navigation("Masters");
+
+                    b.Navigation("ShiftMaster");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LaborVarianceDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.LaborVariance", "LaborVariance")
+                        .WithMany("LaborVarianceDetails")
+                        .HasForeignKey("HeaderId");
+
+                    b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
+                        .WithMany("LaborVarianceDetails")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Entities.ProductionOrder", "ProductionOrder")
+                        .WithMany("LaborVarianceDetails")
+                        .HasForeignKey("SAPProductionOrderId");
+
+                    b.Navigation("LaborVariance");
+
+                    b.Navigation("ProductMaster");
+
+                    b.Navigation("ProductionOrder");
+                });
+
             modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
                 {
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
@@ -2614,6 +2815,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("DownTimeTrackingDetails");
                 });
 
+            modelBuilder.Entity("Domain.Entities.LaborVariance", b =>
+                {
+                    b.Navigation("LaborVarianceDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.LiquidPreparation", b =>
                 {
                     b.Navigation("LiquidPreparationAdjustmentDetails");
@@ -2684,6 +2890,8 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DowntimeTracking");
 
+                    b.Navigation("LaborVarianceDetails");
+
                     b.Navigation("LiquidPreparation");
 
                     b.Navigation("PalletPacking");
@@ -2700,6 +2908,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("AttributeCheck");
 
                     b.Navigation("DowntimeTracking");
+
+                    b.Navigation("LaborVarianceDetails");
 
                     b.Navigation("LiquidPreparation");
 
@@ -2726,6 +2936,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ShiftMaster", b =>
                 {
+                    b.Navigation("LaborVariance");
+
                     b.Navigation("LiquidPreparation");
 
                     b.Navigation("PostCheckListEntity");
@@ -2765,6 +2977,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Skyward.Model.MastersEntity", b =>
                 {
                     b.Navigation("DowntimeTracking");
+
+                    b.Navigation("LaborVariance");
 
                     b.Navigation("PostCheckListEntity");
 
