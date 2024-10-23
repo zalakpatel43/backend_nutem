@@ -16,8 +16,10 @@ namespace Domain.Entities
         public string Instruction { get; set; }
         public decimal? Weight { get; set; }
         public bool IsActive { get; set; }
+        public long? MaterialId { get; set; }
 
         public virtual ProductMaster ProductMaster { get; set; }
+        public virtual MaterialMaster MaterialMaster { get; set; }
         public virtual ICollection<LiquidPreparationInstructionDetails> LiquidPreparationInstructionDetails { get; set; }
     }
 }

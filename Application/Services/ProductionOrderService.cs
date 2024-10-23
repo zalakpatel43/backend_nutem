@@ -72,8 +72,8 @@ namespace Application.Services
         public IQueryable<ProductionOrderList> GetPOByStatus(String status)
         {
             var entities = _productionOrderRepository.Get(m => m.IsActive == true && m.Status == status);
-        var productionOrderLists = _dataMapper.Project<ProductionOrder, ProductionOrderList>(entities);
-            return productionOrderLists.AsQueryable(); // Ensure you return IQueryable
+            var productionOrderLists = _dataMapper.Project<ProductionOrder, ProductionOrderList>(entities);
+            return productionOrderLists.OrderByDescending(p => p.Id).AsQueryable(); // Ensure you return IQueryable
         }
 
         public async Task<ProductionOrderList> GetProductionOrderByIdAsync(long id)
@@ -140,17 +140,17 @@ namespace Application.Services
                                                              
                 }).ToList(),
 
-                PalletPackingList = entity.PalletPacking.Select(pp => new PalletPackingList
-                {
-                    Id = pp.Id,
-                    Code = pp.Code,
-                    PackingDateTime = pp.PackingDateTime,
-                    ProductId = pp.ProductId,
-                    ProductName = pp.ProductMaster?.ProductName,
-                    TotalCasesProduced = pp.TotalCasesProduced
-                    //ShiftName = post.ShiftMaster?.ShiftName,
+                //PalletPackingList = entity.PalletPacking.Select(pp => new PalletPackingList
+                //{
+                //    Id = pp.Id,
+                //    Code = pp.Code,
+                //    PackingDateTime = pp.PackingDateTime,
+                //    ProductId = pp.ProductId,
+                //    ProductName = pp.ProductMaster?.ProductName,
+                //    TotalCasesProduced = pp.TotalCasesProduced
+                //    //ShiftName = post.ShiftMaster?.ShiftName,
 
-                }).ToList(),
+                //}).ToList(),
 
                  LiquidPreparationList = entity.LiquidPreparation.Select(lp => new LiquidPreparationList
                  {
@@ -160,6 +160,16 @@ namespace Application.Services
                      EndDateTime = lp.EndDateTime,
                      ProductName = lp.ProductMaster?.ProductName,
                      ShiftName = lp.ShiftMaster?.ShiftName,
+                 }).ToList(),
+
+                 DowntimeTrackingList = entity.DowntimeTracking.Select(lp => new DowntimeTrackingList
+                 {
+                     Id = lp.Id,
+                     Code = lp.Code,
+                     ProductionDateTime = lp.ProductionDateTime,
+                    // EndDateTime = lp.EndDateTime,
+                     ProductName = lp.ProductMaster?.ProductName,
+                    // ShiftName = lp.ShiftMaster?.ShiftName,
                  }).ToList()
             };
         }

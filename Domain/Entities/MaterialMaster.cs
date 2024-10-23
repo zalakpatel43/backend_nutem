@@ -14,5 +14,6 @@ namespace Domain.Entities
         public bool? IsActive { get; set; }
         public virtual ICollection<LiquidPreparationInstructionDetails> LiquidPreparationInstructionDetails { get; set; }
         public virtual ICollection<LiquidPreparationAdjustmentDetails> LiquidPreparationAdjustmentDetails { get; set; }
+        public virtual ICollection<ProductInstructionDetails> ProductInstructionDetails { get; set; }
     }
 }

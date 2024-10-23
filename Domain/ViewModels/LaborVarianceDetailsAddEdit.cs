@@ -15,7 +15,7 @@ namespace Domain.ViewModels
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
         public string? LateStartReason { get; set; }
-        public DateTime? ChangeOverTime { get; set; }
+        public decimal? ChangeOverTime { get; set; }
         public long? ActualBottleProduced { get; set; }
         public decimal? TotalRunTImeMins { get; set; }
         public string? ShiftComments { get; set; }

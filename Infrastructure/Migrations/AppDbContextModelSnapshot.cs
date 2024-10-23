@@ -405,8 +405,8 @@ namespace Infrastructure.Migrations
                     b.Property<decimal?>("CaseTarget")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("ChangeOverTime")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal?>("ChangeOverTime")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
@@ -1316,6 +1316,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<long?>("MaterialId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
@@ -1332,6 +1335,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MaterialId");
 
                     b.HasIndex("ProductMasterId");
 
@@ -1464,6 +1469,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("SpecificationCode")
                         .HasColumnType("nvarchar(max)");
@@ -2630,9 +2638,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ProductInstructionDetails", b =>
                 {
+                    b.HasOne("Domain.Entities.MaterialMaster", "MaterialMaster")
+                        .WithMany("ProductInstructionDetails")
+                        .HasForeignKey("MaterialId");
+
                     b.HasOne("Domain.Entities.ProductMaster", "ProductMaster")
                         .WithMany()
                         .HasForeignKey("ProductMasterId");
+
+                    b.Navigation("MaterialMaster");
 
                     b.Navigation("ProductMaster");
                 });
@@ -2841,6 +2855,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("LiquidPreparationAdjustmentDetails");
 
                     b.Navigation("LiquidPreparationInstructionDetails");
+
+                    b.Navigation("ProductInstructionDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.NozzelMaster", b =>

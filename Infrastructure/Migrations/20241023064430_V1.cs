@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class V1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -171,6 +171,7 @@ namespace Infrastructure.Migrations
                     SpecificationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HighValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LowValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductId = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
@@ -397,6 +398,7 @@ namespace Infrastructure.Migrations
                     Instruction = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Weight = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    MaterialId = table.Column<long>(type: "bigint", nullable: true),
                     ProductMasterId = table.Column<long>(type: "bigint", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
@@ -406,6 +408,11 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_adm_ProductInstructionDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_adm_ProductInstructionDetails_adm_MaterialMaster_MaterialId",
+                        column: x => x.MaterialId,
+                        principalTable: "adm_MaterialMaster",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_adm_ProductInstructionDetails_adm_ProductMaster_ProductMasterId",
                         column: x => x.ProductMasterId,
@@ -901,7 +908,7 @@ namespace Infrastructure.Migrations
                     StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LateStartReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ChangeOverTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ChangeOverTime = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ActualBottleProduced = table.Column<long>(type: "bigint", nullable: true),
                     TotalRunTImeMins = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ShiftComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -1650,6 +1657,11 @@ namespace Infrastructure.Migrations
                 column: "PreCheckListEntityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_adm_ProductInstructionDetails_MaterialId",
+                table: "adm_ProductInstructionDetails",
+                column: "MaterialId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_adm_ProductInstructionDetails_ProductMasterId",
                 table: "adm_ProductInstructionDetails",
                 column: "ProductMasterId");
@@ -1930,9 +1942,6 @@ namespace Infrastructure.Migrations
                 name: "adm_LiquidPreparation");
 
             migrationBuilder.DropTable(
-                name: "adm_MaterialMaster");
-
-            migrationBuilder.DropTable(
                 name: "adm_ProductInstructionDetails");
 
             migrationBuilder.DropTable(
@@ -1943,6 +1952,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "adm_TankMaster");
+
+            migrationBuilder.DropTable(
+                name: "adm_MaterialMaster");
 
             migrationBuilder.DropTable(
                 name: "adm_ProductMaster");

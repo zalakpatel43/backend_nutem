@@ -36,6 +36,8 @@ namespace Infrastructure.Repositories
             .ThenInclude(pc => pc.ProductMaster)
          .Include(po => po.LiquidPreparation)
             .ThenInclude(wc => wc.ShiftMaster)
+         .Include(po => po.DowntimeTracking)
+            .ThenInclude(wc => wc.ProductMaster)
 
         .FirstOrDefaultAsync(po => po.Id == id);
         }

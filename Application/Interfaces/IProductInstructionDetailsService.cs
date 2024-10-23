@@ -10,6 +10,7 @@ namespace Application.Interfaces
     public interface IProductInstructionDetailsService
     {
         IQueryable<ProductInstructionDetailsList> GetAllProductInstructionAsync();
+        IQueryable<ProductInstructionDetailsList> GetProductInstructionByProductId(long productId);
         //Task<WeightCheckAddEdit> GetWeightCheckByIdAsync(long id);
         //Task<long> AddWeightCheckAsync(WeightCheckAddEdit model, Guid user);
         //Task<long> UpdateWeightCheckAsync(WeightCheckAddEdit model, Guid user);

@@ -162,9 +162,9 @@ namespace Application.Services
             using var httpClient = new HttpClient();
             //  var response = await httpClient.GetAsync("http://192.168.1.147:8989/api/Permission/GetAllPermissions");
 
-              var response = await httpClient.GetAsync("https://localhost:7032/api/Permission/GetAllPermissions");
+             var response = await httpClient.GetAsync("https://localhost:7032/api/Permission/GetAllPermissions");
 
-           // var response = await httpClient.GetAsync("http://nutemapi.skywardcloud.com/api/Permission/GetAllPermissions");
+            //  var response = await httpClient.GetAsync("http://nutemapi.skywardcloud.com/api/Permission/GetAllPermissions");
 
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();

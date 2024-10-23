@@ -21,5 +21,12 @@ namespace WebAPI.Controller
             var data = _ProductInstructionDetailsService.GetAllProductInstructionAsync();
             return Ok(data);
         }
+
+        [HttpGet("GetProductInstructionDetailsById")]
+        public async Task<IActionResult> GetProductInstructionDetailsById(long productId)
+        {
+            var data = _ProductInstructionDetailsService.GetProductInstructionByProductId(productId);
+            return Ok(data);
+        }
     }
 }

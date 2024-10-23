@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace Infrastructure.Repositories
         {
         }
 
-        // Implement methods specific to Company if needed
+        public IQueryable<ProductInstructionDetails> GetProductInstructionByProductId(long id)
+        {
+            return _context.ProductInstructionDetails
+                .Include(wc => wc.MaterialMaster) 
+                .Where(wc => wc.IsActive);
+        }
     }
 }

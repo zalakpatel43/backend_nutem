@@ -47,7 +47,9 @@ namespace Application.Services
                 PackingDateTime = pp.PackingDateTime,
                 ProductId = pp.ProductId,
                 ProductName =  pp.ProductMaster.ProductName,  // Ensure ProductName is mapped
-                TotalCasesProduced = pp.TotalCasesProduced
+                TotalCasesProduced = pp.TotalCasesProduced,
+                SAPProductionOrderId = pp.SAPProductionOrderId,
+                PONumber = pp.ProductionOrder.PONumber
             });
 
             return result;

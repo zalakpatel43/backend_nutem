@@ -13,6 +13,7 @@ namespace Domain.Entities
         public string SpecificationName { get; set; }
         public string HighValue { get; set; }
         public string LowValue { get; set; }
+        public long? ProductId { get; set; }
 
         public bool? IsActive { get; set; }
         public virtual ICollection<LiquidPreparationSpecificationDetails> LiquidPreparationSpecificationDetails { get; set; }

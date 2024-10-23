@@ -19,7 +19,8 @@ namespace Infrastructure.Repositories
         public IQueryable<PalletPacking> GetAllPalletPackingsWithProduct()
         {
             return _context.PalletPacking
-                .Include(pp => pp.ProductMaster) // Include the ProductMaster navigation property
+                .Include(pp => pp.ProductMaster)
+                .Include(pp => pp.ProductionOrder)
                 .Where(pp => pp.IsActive);
         }
 

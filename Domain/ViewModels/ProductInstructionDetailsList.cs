@@ -16,5 +16,8 @@ namespace Domain.ViewModels
         public long? ProductId { get; set; }
         public string Instruction { get; set; }
         public decimal? Weight { get; set; }
+        public long? MaterialId { get; set; } // material master id
+        public string MaterialName { get; set; }
+
     }
 }

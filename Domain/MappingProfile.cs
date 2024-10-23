@@ -143,7 +143,10 @@ namespace Domain
             CreateMap<StartEndBatchChecklist, StartEndBatchCheckListList>().ReverseMap();
             CreateMap<TankMaster, TankMasterList>().ReverseMap();
             CreateMap<MaterialMaster, MaterialMasterList>().ReverseMap();
-            CreateMap<ProductInstructionDetails, ProductInstructionDetailsList>().ReverseMap();
+            CreateMap<ProductInstructionDetails, ProductInstructionDetailsList>()
+               .ForMember(dest => dest.MaterialName, opt => opt.MapFrom(src => src.MaterialMaster.MaterialName))
+               .ReverseMap();
+
             CreateMap<QCTSpecificationMaster, QCTSpecificationMasterList>().ReverseMap();
 
             CreateMap<LiquidPreparation, LiquidPreparationList>()
@@ -174,6 +177,8 @@ namespace Domain
             CreateMap<LaborVariance, LaborVarianceAddEdit>()
             .ForMember(dest => dest.LaborVarianceDetails, opt => opt.MapFrom(src => src.LaborVarianceDetails))
             .ReverseMap();
+
+           
 
         }
 

@@ -419,6 +419,12 @@ namespace Infrastructure.Context
              .HasKey(nm => nm.Id);
 
             modelBuilder.Entity<ProductInstructionDetails>()
+              .HasOne(wc => wc.MaterialMaster)
+              .WithMany(po => po.ProductInstructionDetails)
+              .HasForeignKey(wc => wc.MaterialId);
+
+
+            modelBuilder.Entity<ProductInstructionDetails>()
                 .ToTable("adm_ProductInstructionDetails");
 
             modelBuilder.Entity<QCTSpecificationMaster>()

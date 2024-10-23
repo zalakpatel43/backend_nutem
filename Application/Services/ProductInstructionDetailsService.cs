@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.ViewModels;
+using Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,14 @@ namespace Application.Services
         public IQueryable<ProductInstructionDetailsList> GetAllProductInstructionAsync()
         {
             var entity = _productInstructionDetailsRepository.Get(m => m.IsActive == true);
+            return _dataMapper.Project<ProductInstructionDetails, ProductInstructionDetailsList>(entity);
+        }
+
+        public IQueryable<ProductInstructionDetailsList> GetProductInstructionByProductId(long productId)
+        {
+            var entity = _productInstructionDetailsRepository.
+                GetProductInstructionByProductId(productId).
+                Where(e => e.IsActive);
             return _dataMapper.Project<ProductInstructionDetails, ProductInstructionDetailsList>(entity);
         }
     }

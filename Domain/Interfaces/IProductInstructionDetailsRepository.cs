@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Domain.Interfaces
 {
     public interface IProductInstructionDetailsRepository : IGenericRepository<ProductInstructionDetails>
     {
-        // Add methods specific to Company if needed
+        IQueryable<ProductInstructionDetails> GetProductInstructionByProductId(long id);
     }
 }
