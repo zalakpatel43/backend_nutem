@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
         {
             return _context.ProductInstructionDetails
                 .Include(wc => wc.MaterialMaster) 
-                .Where(wc => wc.IsActive);
+                .Where(wc => wc.IsActive && wc.ProductId == id);
         }
     }
 }
