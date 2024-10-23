@@ -25,6 +25,7 @@ namespace WebAPI.Controller
         [HttpGet("GetProductInstructionDetailsById")]
         public async Task<IActionResult> GetProductInstructionDetailsById(long productId)
         {
+
             var data = _ProductInstructionDetailsService.GetProductInstructionByProductId(productId);
             return Ok(data);
         }
